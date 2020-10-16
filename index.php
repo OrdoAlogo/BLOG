@@ -3,7 +3,7 @@
     <head>
         <title>BLOG | INICIO</title>
         <link rel="stylesheet" type="text/css" href="css/fuentes-iconos/style.css">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/encabezado.css">
     </head>
     <body>
         <header>
@@ -24,6 +24,13 @@
             </div>
         </header>
         <main>
+            <div class="postPrincipales">
+
+            </div>
+            <div class="PostPopulares">
+                <div class="topPost">
+                </div>
+            </div>
             
         </main>
 
