@@ -1,6 +1,5 @@
-
-
 /*MAIN*/
-
-
-
+main{display: flex; height: 400px; flex-direction: row; justify-content: space-between; align-items: center; justify-items: center;}
+.aside{display: flex; flex-direction: column; justify-content: space-between; justify-items: center; align-items: center; background: #A43296; border: 2px solid black; height: 400px; width: 30%;}
+.aside div{border: 2px solid white;}
+.postPrincipales{width: 70%; background: grey; height: 400px;}

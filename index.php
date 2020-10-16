@@ -26,15 +26,23 @@
         </header>
         <main>
             <div class="postPrincipales">
-
+                <h3>POST PRINCIPALES</h3>
+                <div>POST</div>
             </div>
-            <div class="PostPopulares">
+
+            <div class="aside">
                 <div class="topPost">
+                    <h3>TOP POST</h3>
                 </div>
-            </div>
-            
-        </main>
 
-       
+                <div class="topUsuarios">
+                    <h3>TOP USUARIOS</h3>
+                </div>
+
+                <div class="piePagina">
+                    <h3>PIE DE PAGINA</h3>
+                </div>
+            </div>  
+        </main> 
     </body>
 </html>
