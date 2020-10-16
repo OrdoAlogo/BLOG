@@ -1,0 +1,27 @@
+aside, main{
+    border: 0.5em solid black;
+    border-radius: 1%;
+    width:60%;
+    margin-left: 8em;
+}
+body {
+    background-color:rgb(159, 187, 238) ;
+    display: grid;
+    grid-template-areas: "header header"
+                         "main aside"
+                         "footer footer";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+ }
+ header{
+     grid-area: header;
+ }
+ main{
+    grid-area: main;
+}
+aside{
+    grid-area: aside;
+}
+footer{
+    grid-area: footer;
+}
