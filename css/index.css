@@ -1,7 +1,14 @@
 *{margin: 0 auto;}
+/*ENCABEZADO*/
 header{height: 200px; background:  #56777F; display: flex; flex-direction: row; justify-content: space-around; justify-items: center; align-items: center;}
 .titulo{ margin: 0 auto; display: flex; flex-direction: row; justify-content: space-between; align-items: center; justify-items: center; }
 .titulo div img{display: block; margin: 0 auto; }
-.titulo div{ margin: 0 auto; }
 .titulo div h1{margin: 0 auto; text-align: center;}
+.registro a{text-decoration: none; color: white; padding: 3px; border-radius: 10px;}
+.icon-user{font-size: 20px; margin-left: 20px;}
+.registro a:hover{text-decoration: underline; background: white; color: #56777F ;}
+
+
+
+
 

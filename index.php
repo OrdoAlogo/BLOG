@@ -15,7 +15,7 @@
             <div class="buscador">
                 <form method="post" action="">
                     <input type="text" name="palabra">
-                    <input type="submit" name="submit" value="BUSCAR">
+                    <input type="submit" name="submit" id="buscador" value="BUSCAR">
                 </form>
             </div>
 
@@ -23,5 +23,10 @@
                 <a href="">Entrar | Registrarse</a><span class="icon-user"></span>
             </div>
         </header>
+        <main>
+            
+        </main>
+
+       
     </body>
 </html>
