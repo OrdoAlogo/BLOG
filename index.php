@@ -4,6 +4,7 @@
         <title>BLOG | INICIO</title>
         <link rel="stylesheet" type="text/css" href="css/fuentes-iconos/style.css">
         <link rel="stylesheet" type="text/css" href="css/encabezado.css">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
     </head>
     <body>
         <header>
