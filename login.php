@@ -16,7 +16,7 @@
             <input type="text" name="Nick"><br>
             <label for="Contra"> Contraseña</label><br>
             <input type="text" name="Contra"><br>
-            <input class="boton" type="submit" value="Entrar">
+            <input class="boton" type="submit" onclick="" value="Entrar">
             <input class="boton" type="reset" value="Borrar"/>
 
         </form>
@@ -32,7 +32,7 @@
             <label for="Arch"> Archivo</label><br>
             <input type="file" name="Arch"><br>
             <input class="boton" type="submit" value="Registrarse"/>
-            <input class="boton" type="reset" value="Borrar"/>
+            <input class="boton" type="reset"  value="Borrar"/>
         </form>
     </aside>
     <footer>
