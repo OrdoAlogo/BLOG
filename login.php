@@ -1,3 +1,5 @@
+<?php include 'PHP/conexion.php';?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,15 +24,15 @@
         </form>
     </main>
     <aside>
-        <form id="Registro" action="">
+        <form id="Registro" action="" method="post">
             <label for="Nick">Nickname</label></br>
-            <input type="text" name="Nick"><br>
+            <input type="text" id="nick" name="nick"><br>
             <label for="mail">Email</label></br>
-            <input type="text" name="mail"><br>
+            <input type="text"  id="email" name="email"><br>
             <label for="Contra"> Contraseña</label><br>
-            <input type="text" name="Contra"><br>
-            <label for="Arch"> Archivo</label><br>
-            <input type="file" name="Arch"><br>
+            <input type="text" id="contra" name="contra"><br>
+            <!-- <label for="Arch"> Archivo</label><br>
+            <input type="file" id="arch" name="arch"><br> -->
             <input class="boton" type="submit" value="Registrarse"/>
             <input class="boton" type="reset"  value="Borrar"/>
         </form>

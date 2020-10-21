@@ -1,4 +1,4 @@
-<?php include 'conexion.php';?>
+<?php include 'PHP/conexion.php';?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -22,7 +22,7 @@
             </div>
 
             <div class="registro">
-                <a href="">Entrar | Registrarse</a><span class="icon-user"></span>
+                <a href="login.php">Entrar | Registrarse</a><span class="icon-user"></span>
             </div>
         </header>
         <main>
