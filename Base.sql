@@ -3,6 +3,7 @@ USE Blog;
 CREATE TABLE Usuarios(
     nickname VARCHAR(40) NOT NULL PRIMARY KEY,
     e_mail VARCHAR(255),
+    contrasena VARCHAR(255),
     foto_nick VARCHAR(255),
     tipo_de_usuario VARCHAR(255) ,
     estado int 
@@ -32,9 +33,9 @@ CREATE TABLE Comentarios(
 
 /* Datos de prueba */
 
-INSERT INTO Usuarios VALUES('Jon','jonanderdecastro@gmail.com','enlaceFoto', 'admin', 0);
-INSERT INTO Usuarios VALUES('David','davitxu20@gmail.com','enlaceFoto', 'admin', 0);
-INSERT INTO Usuarios VALUES('Ordoño','email','enlaceFoto', 'mod', 0);
+INSERT INTO Usuarios VALUES('Jon','jonanderdecastro@gmail.com','1234','enlaceFoto', 'admin', 0);
+INSERT INTO Usuarios VALUES('David','davitxu20@gmail.com','1234','enlaceFoto', 'admin', 0);
+INSERT INTO Usuarios VALUES('Ordoño','email', '1234','enlaceFoto', 'mod', 0);
 
 INSERT INTO Posts (nickname, titulo, contenido, imagen_post, visitas, fecha) VALUES('Jon','este es el titulo del post 1', 'este es el contenido del post 1 ','imgPost', 0, '2020-10-20');
 INSERT INTO Posts (nickname, titulo, contenido, imagen_post, visitas, fecha) VALUES('David','este es el titulo del post 2', 'este es el contenido del post 2 ','imgPost', 0, '2020-10-18');
