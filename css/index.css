@@ -1,4 +1,9 @@
 /*MAIN*/
+@font-face{
+    font-family: fuenteBlog;
+    src: url(../css/ethnocentric\ rg\ it.ttf);
+}
+h3{font-size: fuenteBlog;}
 *{margin: 0;}
 main{display: flex; height: 600px; flex-direction: row; justify-content: space-between; justify-items: center; }
 
