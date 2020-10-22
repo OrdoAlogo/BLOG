@@ -4,7 +4,7 @@
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
-    $hostDB = '10.9.52.150';
+    $hostDB = '127.0.0.1';
     $nombreDB = 'blog';
     $usuarioDB = 'root';
     $passDB = '';
@@ -16,21 +16,69 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nick = isset($_REQUEST['nick']) ? $_REQUEST['nick'] : null;
     $email = isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
     $contra = isset($_REQUEST['contra']) ? $_REQUEST['contra'] : null;
-    echo "hola".$nick." ".$email." ".$contra;
+    $arch = isset($_REQUEST['arch']) ? $_REQUEST['arch'] : null;
+    
+    $tipo_de_usuario="normal";
+    $estado=0;
+    
 
-   
-    $stmt = $miPDO->prepare('INSERT INTO usuarios (nickname, contrasena, e_mail ) VALUES (:nick, :contra, :email )');
+    if (is_uploaded_file($_FILES['arch']['tmp_name'])) 
+    { 
+        //First, Validate the file name
+        if(empty($_FILES['arch']['name']))
+        {
+            echo " File name is empty! ";
+            exit;
+        }
+  
+        //$upload_file_name = $_FILES['arch']['name'];
+        $upload_file_name = $email.".png";
+        //Too long file name?
+        if(strlen ($upload_file_name)>100)
+        {
+            echo " too long file name ";
+            exit;
+        }
+  
+        //replace any non-alpha-numeric cracters in th file name
+        $upload_file_name = preg_replace("/[^A-Za-z0-9 \.\-_]/", '', $upload_file_name);
+  
+        //set a limit to the file upload size
+        if ($_FILES['arch']['size'] > 1000000) 
+        {
+          echo " too big file ";
+            exit;        
+      }
+  
+      //Save the file
+      $dest='img/usuarios/'.$upload_file_name;
+      if (move_uploaded_file($_FILES['arch']['tmp_name'], $dest)) 
+      {
+          echo 'File Has Been Uploaded !';
+      }
+    }
+
+    //echo "hola".$nick." ".$email." ".$contra." ".$dest;
+    $stmt = $miPDO->prepare('INSERT INTO usuarios (nickname, contrasena, foto_nick, e_mail, tipo_de_usuario, estado ) VALUES (:nick, :contra, :foto_nick, :email, :tipo_de_usuario, :estado )');
     
      $stmt->execute(
         array(
             'nick' => $nick,
             'contra' => $contra,
-            'email' => $email
+            'foto_nick'=>$dest,
+            'email' => $email,
+            'tipo_de_usuario'=>$tipo_de_usuario,
+            'estado'=>$estado
    
         )
     ); 
 
   
+
+   
+
+
+
   
 
   
