@@ -3,7 +3,7 @@
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-
+    
     $hostDB = '127.0.0.1';
     $nombreDB = 'blog';
     $usuarioDB = 'root';
@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
     $hostPDO = "mysql:host=$hostDB;dbname=$nombreDB;charset=utf8;";
-    $miPDO = new PDO($hostPDO, $usuarioDB, $passDB);
+    $miPDO = new PDO($hostPDO, $usuarioDB, $passDB); 
 
     $nick = isset($_REQUEST['nick']) ? $_REQUEST['nick'] : null;
     $email = isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
@@ -21,13 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $tipo_de_usuario="normal";
     $estado=0;
     
-
     if (is_uploaded_file($_FILES['arch']['tmp_name'])) 
     { 
         //First, Validate the file name
         if(empty($_FILES['arch']['name']))
         {
-            echo " File name is empty! ";
+            //echo " File name is empty! ";
             exit;
         }
   
@@ -36,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //Too long file name?
         if(strlen ($upload_file_name)>100)
         {
-            echo " too long file name ";
+            //echo " too long file name ";
             exit;
         }
   
@@ -46,11 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //set a limit to the file upload size
         if ($_FILES['arch']['size'] > 1000000) 
         {
-          echo " too big file ";
+          //echo " too big file ";
             exit;        
       }
-  
-      //Save the file
+
+      //Guarda la imagen
       $dest='img/usuarios/'.$upload_file_name;
       if (move_uploaded_file($_FILES['arch']['tmp_name'], $dest)) 
       {
@@ -74,52 +73,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     ); 
 
   
+}
 
-   
+function registro(){
 
+}
 
-
-  
-
-  
+if ($_SERVER["REQUEST_METHOD"]=='GET'){
+    comprobarExistencia($_GET["Nick"],$_GET["Contra"],conexion());
 }
 
 function conexion(){
-    //Conexion
-    $hostDB = '10.9.52.150';
-    $nombreDB = 'blog';
-    $usuarioDB = 'root';
-    $passDB = '';
-
-
-    $hostPDO = "mysql:host=$hostDB;dbname=$nombreDB;charset=utf8;";
-    $miPDO = new PDO($hostDB, $usuarioDB, $passDB);
+//Conexion
+$hostDB = '127.0.0.1';
+$nombreDB = 'blog';
+$usuarioDB = 'root';
+$passDB = '';
+$hostPDO = "mysql:host=$hostDB;dbname=$nombreDB;charset=utf8;";
+$miPDO = new PDO($hostPDO, $usuarioDB, $passDB);
+return $miPDO;
 }
-function comprobarExistencia($nickname,$contraseña){
-    $stmt = $miPDO->prepare('SELECT * FROM usuarios WHERE nickname LIKE :nick ;');
-    $usuario->execute(
-        [
-            'nick' => $nickname
-        ]);
-    if(sizeoff($usuario)>0){
-        foreach ($usuario as $usu => $valor){
-            if($valor['contrasena'] == $contraseña){
-                console.log("Estas dentro");
-            }else{
-                console.log("ERROR");
-            }
+function comprobarExistencia($nickname,$contraseña,$login){
+$usuario = $login->prepare('SELECT * FROM usuarios WHERE nickname LIKE :nick;');
+$usuario->execute(
+    array(
+        'nick' => $nickname)
+    );
+$numero = $usuario->rowcount();
+if($numero>0){
+    foreach ($usuario as $usu => $valor){
+        if($valor['contrasena'] == $contraseña){
+            session_start();
+            $_SESSION["usuarioLogeado"] = $valor['nickname'];
+            header('Location: index.php');
+        }else{
+            echo("contraseña erronea");
         }
-    }else{
-        console.log("ERROR");
     }
+}else{
+    echo("Usuario no  existe");
 }
-function login($nickname,$contraseña){
-    conexion();
-    comprobarExistencia($nickname,$contraseña);
 }
-function register(){
 
-}
+
 
 
 

@@ -13,7 +13,7 @@
     </header>
         <h2>En esta pagina te podras loguear o registar en nuestro blog para encontrar los mejores posts sobre benchmarks</h2>
     <main>
-        <form id="Login" action="">
+        <form id="Login" action="" method="$_GET">
             <label for="Nick">Nickname</label></br>
             <input type="text" name="Nick"><br>
             <label for="Contra"> Contraseña</label><br>
