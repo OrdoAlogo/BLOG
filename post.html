@@ -1,9 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
         <title>BLOG | INICIO</title>
-        <link rel="stylesheet" type="text/css" href="css/fuentes-iconos/style.css">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <!-- <link rel="stylesheet" type="text/css" href="css/fuentes-iconos/style.css"> -->
+        <!-- <link rel="stylesheet" type="text/css" href="css/index.css"> -->
+        <link rel="stylesheet" type="text/css" href="css/post.css">
     </head>
     <body>
         <header>
@@ -20,19 +22,24 @@
             </div>
 
             <div class="registro">
-                <?php session_start(); 
-                if(isset($_SESSION["usuarioLogeado"])){ 
-                echo ("<a href=''>".$_SESSION["usuarioLogeado"]."</a><span class=icon-user></span>");
-                }
-                else{
-                    print ("<a href='login.php'>Entrar | Registrarse</a><span class=icon-user></span>");
-                 }
-                ?>
+                <a href="">Entrar | Registrarse</a><span class="icon-user"></span>
+            </div>
         </header>
-        <main>
-            
-        </main>
 
+        <section>
+            <article>
+                <h2>Titulo de contenido</h2>
+                <p> Contenido </p>
+            </article>
+         </section>
+         <aside>
+            <h3>Titulo de contenido</h3>
+                <p>contenido</p>
+         </aside>
+
+
+
+    
        
     </body>
 </html>
