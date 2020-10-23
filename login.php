@@ -15,9 +15,9 @@
     <main>
         <form id="Login" action="" method="$_GET">
             <label for="Nick">Nickname</label></br>
-            <input type="text" name="Nick"><br>
+            <input type="text" name="Nick" id="Nick"><br>
             <label for="Contra"> Contraseña</label><br>
-            <input type="text" name="Contra"><br>
+            <input type="text" name="Contra" id="Contra"><br>
             <input class="boton" type="submit" onclick="" value="Entrar">
             <input class="boton" type="reset" value="Borrar"/>
 
