@@ -25,9 +25,15 @@
             </div>
 
             <div class="registro">
-                <a href="login.php" class="login">Entrar | Registrarse</a><span class="icon-user"></span>
-                <a href="index.php" class="casa"><span class="icon-home"></span></a>
-            </div>
+                <?php session_start(); 
+                if(isset($_SESSION["usuarioLogeado"])){ 
+                echo ("<a href=''>".$_SESSION["usuarioLogeado"]."</a><span class=icon-user></span>");
+                }
+                else{
+                    print ("<a href='login.php'>Entrar | Registrarse</a><span class=icon-user></span>");
+                 }
+                ?>
+
         </header>
         <?php
             //CREDENCIALES
