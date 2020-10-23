@@ -1,3 +1,11 @@
+
+<html>
+<head>
+    <script src="JSCRIPT/usuario.js" type="text/javascript"></script>
+</head>
+
+</html>
+
 <?php
 if ($_SERVER["REQUEST_METHOD"]=='GET'){
    if(isset( $_GET["tipo"])){
@@ -6,8 +14,6 @@ if ($_SERVER["REQUEST_METHOD"]=='GET'){
         comprobarExistencia($_GET["Nick"],$_GET["Contra"],conexion());
     }
    } 
-       
-   
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -67,11 +73,8 @@ function insertarUsuario($loginBD){
     $tipo_de_usuario="normal";
     $estado=0;
     
-
     //echo "hola".$nick." ".$email." ".$contra." ".$dest;
-
-
-    //Combrobamos si el nickname y email existen en la bse de datos
+    //Combrobamos si el nickname y email existen en la base de datos
 
     $stmt = $loginBD->prepare('SELECT nickname FROM usuarios WHERE nickname= :nick;');
     $stmt->execute(['nick' => $nick]);
@@ -82,14 +85,20 @@ function insertarUsuario($loginBD){
     $correo =$stmt->fetch();
     //echo $nombre[0]." " .$correo[0];
 
-    if(isset($nombre[0])==$nick){
-        echo "El nick ya existe";
 
-
-    }if(isset($correo[0])==$email){
-        echo "El correo ya existe";
-
-    }else{
+    if(empty($nick)||empty($email)||empty($contra)){
+        //echo "Introduce todos los datos";
+        echo '<script type="text/javascript">faltaDatos();</script>';
+    }
+    else if(isset($nombre[0])==$nick){
+        //echo "El nick ya existe";
+        echo '<script type="text/javascript">registroExisteNick();</script>';
+    }
+    else if(isset($correo[0])==$email){
+        //echo "El correo ya existe";
+        echo '<script type="text/javascript">registroExisteEmail();</script>';
+    }
+    else{
 
         if (is_uploaded_file($_FILES['arch']['tmp_name'])) { 
             //Valida el nombre del archivo
@@ -116,7 +125,21 @@ function insertarUsuario($loginBD){
                 //echo " archivo demasiado pesado ";
                 exit;        
             }
+
+            $stmt = $loginBD->prepare('INSERT INTO usuarios (nickname, contrasena, foto_nick, e_mail, tipo_de_usuario, estado ) VALUES (:nick, :contra, :foto_nick, :email, :tipo_de_usuario, :estado )');
     
+            $stmt->execute(
+                array(
+                    'nick' => $nick,
+                    'contra' => $contra,
+                    'foto_nick'=>$dest,
+                    'email' => $email,
+                    'tipo_de_usuario'=>$tipo_de_usuario,
+                    'estado'=>$estado
+        
+                )
+            ); 
+
             //Guarda la imagen
             $dest='img/usuarios/'.$upload_file_name;
             if (move_uploaded_file($_FILES['arch']['tmp_name'], $dest)) 
@@ -125,22 +148,9 @@ function insertarUsuario($loginBD){
             }
         }
 
+        
 
 
-
-        $stmt = $loginBD->prepare('INSERT INTO usuarios (nickname, contrasena, foto_nick, e_mail, tipo_de_usuario, estado ) VALUES (:nick, :contra, :foto_nick, :email, :tipo_de_usuario, :estado )');
-    
-        $stmt->execute(
-            array(
-                'nick' => $nick,
-                'contra' => $contra,
-                'foto_nick'=>$dest,
-                'email' => $email,
-                'tipo_de_usuario'=>$tipo_de_usuario,
-                'estado'=>$estado
-    
-            )
-        ); 
 
     }
     

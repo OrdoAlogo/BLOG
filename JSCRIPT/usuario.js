@@ -10,6 +10,7 @@ class Usuario{
 }
 
 
+
 var nombreUsuario = document.getElementById("nickUsu").addEventListener("click",nombreUsuarioPulsado,true);
 function nombreUsuarioPulsado(){
     let element = document.getElementById('desplegable');
@@ -23,3 +24,29 @@ function nombreUsuarioPulsado(){
     }
 }
 var nombreUsuario = document.getElementById("cerrarSesion").addEventListener("click",cerrarSesion,true);
+
+
+//Oculta elementos del formulario registro
+var nickExiste = document.getElementsByClassName("existe")[0];
+var emailExiste = document.getElementsByClassName("existe")[1];
+nickExiste.style.display = "none";
+emailExiste.style.display = "none";
+
+function registroExisteNick(){
+    console.log("script registro");
+    document.getElementById("nick").style.borderColor = "red";
+    nickExiste.style.display = "block";
+}
+
+function registroExisteEmail(){
+    console.log("script registro");
+    document.getElementById("email").style.borderColor = "red";
+    emailExiste.style.display = "block";
+}
+
+function faltaDatos(){
+    document.getElementById("nick").style.borderColor = "red";
+    document.getElementById("email").style.borderColor = "red";
+    document.getElementById("contra").style.borderColor = "red";
+
+} 
