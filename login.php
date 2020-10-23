@@ -9,9 +9,9 @@
    <link rel="stylesheet" href="css/login.css">
 <body>
     <header>
-        <h1>BenhBlog</h1>
+        <h1>BenchBlog</h1>
     </header>
-        <h2>En esta pagina te podras loguear o registar en nuestro blog para encontrar los mejores posts sobre benchmarks</h2>
+        <h2>En esta pagina te podras loguear o registrar en nuestro blog para encontrar los mejores posts sobre benchmarks</h2>
     <main>
         <form id="Login" action="" method="$_GET">
             <label for="Nick">Nickname</label></br>
@@ -28,8 +28,10 @@
         <form id="Registro" action="" method="post" enctype="multipart/form-data">
             <label for="Nick">Nickname</label></br>
             <input type="text" id="nick" name="nick"><br>
+            <p class="existe"> El nick ya existe</p><br>
             <label for="mail">Email</label></br>
             <input type="text"  id="email" name="email"><br>
+            <p class="existe"> El email ya existe</p><br>
             <label for="Contra"> Contraseña</label><br>
             <input type="text" id="contra" name="contra"><br>
             <label for="Arch"> Archivo</label><br>
