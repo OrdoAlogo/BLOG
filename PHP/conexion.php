@@ -1,20 +1,26 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"]=='GET'){
+   if(isset( $_GET["tipo"])){
     $tipo = $_GET["tipo"];
-    
     if($tipo=="Login"){
         comprobarExistencia($_GET["Nick"],$_GET["Contra"],conexion());
     }
+   } 
+    
+    
    
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $tipo = $_POST["tipo"];
-    echo($tipo);
-    if($tipo=="Registro"){
-        echo "estoy enrtando";
-        insertarUsuario(conexion());
-    }
+    if(isset( $_POST["tipo"])){
+        $tipo = $_POST["tipo"];
+        if($tipo=="Registro"){
+            echo "estoy enrtando";
+            insertarUsuario(conexion());
+        }
+       } 
+    
+   
 }
 
 
