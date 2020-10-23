@@ -1,14 +1,16 @@
-*{margin: 0 auto;}
-/*ENCABEZADO*/
-header{height: 200px; background:  #56777F; display: flex; flex-direction: row; justify-content: space-around; justify-items: center; align-items: center;}
-.titulo{ margin: 0 auto; display: flex; flex-direction: row; justify-content: space-between; align-items: center; justify-items: center; }
-.titulo div img{display: block; margin: 0 auto; }
-.titulo div h1{margin: 0 auto; text-align: center;}
-.registro a{text-decoration: none; color: white; padding: 3px; border-radius: 10px;}
-.icon-user{font-size: 20px; margin-left: 20px;}
-.registro a:hover{text-decoration: underline; background: white; color: #56777F ;}
+/*MAIN*/
+@font-face{
+    font-family: fuenteBlog;
+    src: url(../css/ethnocentric\ rg\ it.ttf);
+}
+h3{font-size: fuenteBlog;}
+*{margin: 0;}
+main{display: flex; height: 600px; flex-direction: row; justify-content: space-between; justify-items: center; }
 
-
-
-
+.aside{display: flex; flex-direction: column; justify-content: space-between; justify-items: center; align-items: center; 
+    background: orange; border: 2px solid black; height: 400px; width: 30%;  padding: 18px;}
+.aside div{border: 2px solid white; height: 100px;}
+.postPrincipales{width: 70%; background: grey; height: 400px; padding: 20px;}
+.piePagina{background: white; padding: 5px;}
+.piePagina p{color: black;}
 

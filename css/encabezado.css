@@ -1,0 +1,22 @@
+*{margin: 0;}
+@font-face{
+    font-family: fuenteBlog;
+    src: url(../css/ethnocentric\ rg\ it.ttf);
+}
+/*ENCABEZADO*/
+header{height: 200px; background:  #56777F; display: flex; flex-direction: row; justify-content: space-around; justify-items: center; align-items: center; margin: 0 auto;
+        width: 100%;}
+.titulo{ display: flex; flex-direction: row; justify-content: space-between; align-items: center; justify-items: center; }
+.titulo h1 { font-family: fuenteBlog; font-size:50px; color:white; margin: 0 auto; text-align: center; }
+.titulo h1 span{color: orange; font-family: fuenteBlog; }
+.login{text-decoration: none; color: white; padding: 3px; border-radius: 10px;}
+.icon-user{font-size: 20px; margin-left: 20px;}
+.login:hover{text-decoration: underline; background: white; color: #56777F ;}
+.icon-home{font-size: 25px; padding: 0;}
+.icon-home:hover{text-decoration: underline; background: white; color: #56777F;}
+.casa{text-decoration: none; color: white;}
+#btnBuscar:hover{background: orange; color: white;}
+
+@media screen and(max-width:500px){
+    header{}
+}
