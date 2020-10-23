@@ -1,4 +1,4 @@
-<?php include 'PHP/conexion.php';?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +18,7 @@
             <input type="text" name="Nick"><br>
             <label for="Contra"> Contraseña</label><br>
             <input type="text" name="Contra"><br>
+            <input type="hidden" name="tipo" value="Login">
             <input class="boton" type="submit" onclick="" value="Entrar">
             <input class="boton" type="reset" value="Borrar"/>
 
@@ -32,7 +33,8 @@
             <label for="Contra"> Contraseña</label><br>
             <input type="text" id="contra" name="contra"><br>
             <label for="Arch"> Archivo</label><br>
-            <input type="file" id="arch" name="arch"><br> 
+            <input type="file" id="arch" name="arch"><br>
+            <input type="hidden" name="tipo" id ="tipo" value="Registro"> 
             <input class="boton" type="submit" value="Registrarse"/>
             <input class="boton" type="reset"  value="Borrar"/>
         </form>
@@ -41,3 +43,4 @@
     </footer>
 </body>
 </html>
+<?php include 'PHP/conexion.php';?>
