@@ -6,8 +6,7 @@ if ($_SERVER["REQUEST_METHOD"]=='GET'){
         comprobarExistencia($_GET["Nick"],$_GET["Contra"],conexion());
     }
    } 
-    
-    
+       
    
 }
 

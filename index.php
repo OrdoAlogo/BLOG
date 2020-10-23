@@ -3,8 +3,9 @@
     <head>
         <title>BLOG | INICIO</title>
         <link rel="stylesheet" type="text/css" href="css/fuentes-iconos/style.css">
-        <link rel="stylesheet" type="text/css" href="css/encabezado.css">
         <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/encabezado.css">
+        
     </head>
     
     <body>
@@ -43,7 +44,7 @@
         </div>
         <?php
             //HACEMOS UNA CONSULTA POR DEFECTO
-            include('conexion.php');
+            include('PHP/conexion.php');
             try{
                 $consulta = 'SELECT * FROM posts,usuarios where posts.nickname=usuarios.nickname';
                  $texto = null;
@@ -53,7 +54,7 @@
                     $consulta = 'SELECT * FROM posts WHERE titulo LIKE :titulo or contenido LIKE :contenido or nickname LIKE :nickname';
                 } 
                 //Preparamos la sentencia e indicar que vamos a usar un cursor
-                $sentencia = $miPDO->prepare($consulta);
+                $sentencia = conexion()->prepare($consulta);
                 $sentencia->setFetchMode(PDO::FETCH_ASSOC);
             }catch(PDOException $pe){
                 die("Error occurred:" . $pe->getMessage());
@@ -70,17 +71,16 @@
         ?>
         <main>
             <div class="postPrincipales">
-                <h3>POST PRINCIPALES</h3>
+                <h3 id="titulo_principal">POST PRINCIPALES</h3>
                     <?php 
                         foreach($resultado as $posicion =>$columna){
                             ?>
                         <div id="tarjetaPost">
-                            <h2><?php echo $columna['titulo'] ?> </h2>
-
-                            <span>Nº visitas:<?php echo $columna['visitas'] ?></span>
-                            <p><?php echo $columna['contenido'] ?> </p>
-                            <p>Usuario: <?php echo $columna['nickname'] ?> </p>
-                            <span class="fecha"><?php echo $columna['fecha'] ?></span>
+                            <h2 class="tituloPost"><?php echo $columna['titulo'] ?> </h2>
+                            <p class="contenido"><?php echo $columna['contenido'] ?> </p>
+                            <p class="visualizaciones"><span class="icon-eye"></span><?php echo (" ".$columna['visitas']) ?></p>
+                            <p class="autor">Autor: <?php echo $columna['nickname'] ?> </p>
+                            <span class="fecha"><?php echo ("Fecha: ".$columna['fecha'] )?></span>
                         </div>
                         <?php
                         }
@@ -94,7 +94,7 @@
                     <?php 
                     try{
                         $procedimiento = 'SELECT id_post, titulo,imagen_post, visitas FROM posts HAVING(visitas>2) ORDER by visitas DESC';
-                        $llamadaProc = $miPDO->query($procedimiento);
+                        $llamadaProc = conexion()->query($procedimiento);
                         $llamadaProc->setFetchMode(PDO::FETCH_ASSOC);
                         
                     }catch(PDOException $pe){
@@ -121,7 +121,7 @@
                     <?php 
                         try{
                             $topUser = "SELECT posts.nickname, e_mail, foto_nick, COUNT(id_post) as 'post' FROM posts,usuarios WHERE usuarios.nickname=posts.nickname GROUP BY posts.nickname HAVING COUNT(id_post>1) ORDER BY COUNT(id_post) DESC";
-                            $topUsuarios = $miPDO->query($topUser);
+                            $topUsuarios = conexion()->query($topUser);
                             $topUsuarios->setFetchMode(PDO::FETCH_ASSOC);
 
                         }catch(PDOException $pe){
