@@ -3,14 +3,27 @@
     font-family: fuenteBlog;
     src: url(../css/ethnocentric\ rg\ it.ttf);
 }
+body{background:#56777F;}
 h3{font-size: fuenteBlog;}
 *{margin: 0;}
-main{display: flex; height: 600px; flex-direction: row; justify-content: space-between; justify-items: center; }
+.nuevoPost{background:  #56777F; text-align: center; margin: 0 auto; height: 40px;}
+.nuevoPost a {text-align: center; background: white; width: 30px; padding: 5px; border-radius: 5px; color: #56777F ; text-decoration: none;}
+.nuevoPost a:hover{text-decoration: underline; background: #56777F; color: white;}
+main{display: flex; height: 100%; flex-direction: row; justify-content: space-between; justify-items: center; }
 
 .aside{display: flex; flex-direction: column; justify-content: space-between; justify-items: center; align-items: center; 
-    background: orange; border: 2px solid black; height: 400px; width: 30%;  padding: 18px;}
-.aside div{border: 2px solid white; height: 100px;}
-.postPrincipales{width: 70%; background: grey; height: 400px; padding: 20px;}
+    background: orange; border: 2px solid black; height: 100%; width: 30%;  padding: 15px;}
+.aside div{border: 2px solid white; }
+
+.datosDB{border: none;}
+.postPrincipales{width: 70%; background: grey; height: 100%; padding: 20px;}
+.postPrincipales div{border-bottom: 2px solid white;}
+.postPrincipales div h3{color: white;}
+
+.topPost,.topUsuarios{height: 100%; margin-bottom: 10px; width: 100%;}
+.topPost div,.topUsuarios div{border: none; border-bottom: 1px solid white; padding: 5px;}
+
+.fecha{position: relative; left:85%;  /* margin-right: 20px; */ color: red;}
 .piePagina{background: white; padding: 5px;}
 .piePagina p{color: black;}
 
