@@ -27,13 +27,16 @@
             <div class="registro">
                 <?php session_start(); 
                 if(isset($_SESSION["usuarioLogeado"])){ 
-                echo ("<a href=''>".$_SESSION["usuarioLogeado"]."</a><span class=icon-user></span>");
+                echo ("<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/></br><a id='nickUsu' >".$_SESSION["usuarioLogeado"]."</a>");
+                echo("<div id='desplegable'></br><a class='botonesUsuario' href='#'> Ajustes</a></br></br><a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a></div>");
                 }
                 else{
-                    print ("<a href='login.php'>Entrar | Registrarse</a><span class=icon-user></span>");
+                    print ("<a id='nickUsu'href='login.php'>Entrar | Registrarse</a><span class=icon-user></span>");
                  }
                 ?>
-
+                <?php echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>")?>
+                
+               
         </header>
         <?php
             //CREDENCIALES
@@ -69,11 +72,10 @@
         <main>
             <div class="postPrincipales">
                 <h3>POST PRINCIPALES</h3>
-                
                     <?php 
                         foreach($resultado as $posicion =>$columna){
                             ?>
-                        <div>
+                        <div id="tarjetaPost">
                             <h2><?php echo $columna['titulo'] ?> </h2>
                             <span>Nº visitas:<?php echo $columna['visitas'] ?></span>
                             <p><?php echo $columna['contenido'] ?> </p>

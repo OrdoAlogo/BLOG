@@ -47,6 +47,7 @@ function comprobarExistencia($nickname,$contraseña,$login){
             if($valor['contrasena'] == $contraseña){
                 session_start();
                 $_SESSION["usuarioLogeado"] = $valor['nickname'];
+                $_SESSION["fotoLogeado"] = $valor['foto_nick'];
                 header('Location: index.php');
                 
             }else{
@@ -117,5 +118,11 @@ function insertarUsuario($loginBD){
    
         )
     ); 
+}
+
+function cerrarSesion(){
+    session_start();
+    unset($_SESSION["usuarioLogeado"]);
+    print "Sesion borrada";
 }
 ?>
