@@ -1,17 +1,58 @@
 <?php
-
+if ($_SERVER["REQUEST_METHOD"]=='GET'){
+    $tipo = $_GET["tipo"];
+    
+    if($tipo=="Login"){
+        comprobarExistencia($_GET["Nick"],$_GET["Contra"],conexion());
+    }
+   
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $tipo = $_POST["tipo"];
+    echo($tipo);
+    if($tipo=="Registro"){
+        echo "estoy enrtando";
+        insertarUsuario(conexion());
+    }
+}
 
-    
+
+function conexion(){
+    //Conexion
     $hostDB = '127.0.0.1';
     $nombreDB = 'blog';
     $usuarioDB = 'root';
     $passDB = '';
-
-
     $hostPDO = "mysql:host=$hostDB;dbname=$nombreDB;charset=utf8;";
-    $miPDO = new PDO($hostPDO, $usuarioDB, $passDB); 
+    $miPDO = new PDO($hostPDO, $usuarioDB, $passDB);
+    return $miPDO;
+}
+
+function comprobarExistencia($nickname,$contraseña,$login){
+    $usuario = $login->prepare('SELECT * FROM usuarios WHERE nickname LIKE :nick;');
+    $usuario->execute(
+        array(
+            'nick' => $nickname)
+        );
+    $numero = $usuario->rowcount();
+    if($numero>0){
+        foreach ($usuario as $usu => $valor){
+            if($valor['contrasena'] == $contraseña){
+                session_start();
+                $_SESSION["usuarioLogeado"] = $valor['nickname'];
+                header('Location: index.php');
+                
+            }else{
+                echo("contraseña erronea");
+            }
+        }
+    }else{
+        echo("Usuario no  existe");
+    }
+}
+
+function insertarUsuario($loginBD){
 
     $nick = isset($_REQUEST['nick']) ? $_REQUEST['nick'] : null;
     $email = isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
@@ -21,8 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $tipo_de_usuario="normal";
     $estado=0;
     
-    if (is_uploaded_file($_FILES['arch']['tmp_name'])) 
-    { 
+    if (is_uploaded_file($_FILES['arch']['tmp_name'])) { 
         //First, Validate the file name
         if(empty($_FILES['arch']['name']))
         {
@@ -57,8 +97,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       }
     }
 
-    //echo "hola".$nick." ".$email." ".$contra." ".$dest;
-    $stmt = $miPDO->prepare('INSERT INTO usuarios (nickname, contrasena, foto_nick, e_mail, tipo_de_usuario, estado ) VALUES (:nick, :contra, :foto_nick, :email, :tipo_de_usuario, :estado )');
+    echo "hola".$nick." ".$email." ".$contra." ".$dest;
+    $stmt = $loginBD->prepare('INSERT INTO usuarios (nickname, contrasena, foto_nick, e_mail, tipo_de_usuario, estado ) VALUES (:nick, :contra, :foto_nick, :email, :tipo_de_usuario, :estado )');
     
      $stmt->execute(
         array(
@@ -71,95 +111,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
    
         )
     ); 
-
-  
 }
-
-function registro(){
-
-}
-
-if ($_SERVER["REQUEST_METHOD"]=='GET'){
-    comprobarExistencia($_GET["Nick"],$_GET["Contra"],conexion());
-}
-
-function conexion(){
-//Conexion
-$hostDB = '127.0.0.1';
-$nombreDB = 'blog';
-$usuarioDB = 'root';
-$passDB = '';
-$hostPDO = "mysql:host=$hostDB;dbname=$nombreDB;charset=utf8;";
-$miPDO = new PDO($hostPDO, $usuarioDB, $passDB);
-return $miPDO;
-}
-function comprobarExistencia($nickname,$contraseña,$login){
-$usuario = $login->prepare('SELECT * FROM usuarios WHERE nickname LIKE :nick;');
-$usuario->execute(
-    array(
-        'nick' => $nickname)
-    );
-$numero = $usuario->rowcount();
-if($numero>0){
-    foreach ($usuario as $usu => $valor){
-        if($valor['contrasena'] == $contraseña){
-            session_start();
-            $_SESSION["usuarioLogeado"] = $valor['nickname'];
-            header('Location: index.php');
-        }else{
-            echo("contraseña erronea");
-        }
-    }
-}else{
-    echo("Usuario no  existe");
-}
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-$usuarios=[];
-$posts=[];
-$comentarios=[];
-
-$stmt = $miPDO->prepare('SELECT * FROM usuarios;');
-
-$stmt->execute();
-
- while($row = $stmt->fetch()) {
-
-    echo $row['nickname']." ";
-    echo $row['e_mail']." ";
-    echo $row['foto_nick']." ";
-    echo $row['tipo_de_usuario']." ";
-    echo $row['estado']. "<br>";
-
-}  */
-
 ?>
