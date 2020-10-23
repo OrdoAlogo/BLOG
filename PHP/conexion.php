@@ -86,7 +86,7 @@ function insertarUsuario($loginBD){
     //echo $nombre[0]." " .$correo[0];
 
 
-    if(empty($nick)||empty($email)||empty($contra)||empty($arch)){
+    if(empty($nick)||empty($email)||empty($contra)){
         //echo "Introduce todos los datos";
         echo '<script type="text/javascript">faltaDatos();</script>';
     }
