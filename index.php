@@ -40,7 +40,7 @@
         </div>
         <?php
             //HACEMOS UNA CONSULTA POR DEFECTO
-            include('conexion.php');
+            include('PHP/conexion.php');
             try{
                 $consulta = 'SELECT * FROM posts,usuarios where posts.nickname=usuarios.nickname';
                  $texto = null;
@@ -50,7 +50,7 @@
                     $consulta = 'SELECT * FROM posts WHERE titulo LIKE :titulo or contenido LIKE :contenido or nickname LIKE :nickname';
                 } 
                 //Preparamos la sentencia e indicar que vamos a usar un cursor
-                $sentencia = $miPDO->prepare($consulta);
+                $sentencia = conexion()->prepare($consulta);
                 $sentencia->setFetchMode(PDO::FETCH_ASSOC);
             }catch(PDOException $pe){
                 die("Error occurred:" . $pe->getMessage());
@@ -91,7 +91,7 @@
                     <?php 
                     try{
                         $procedimiento = 'SELECT id_post, titulo,imagen_post, visitas FROM posts HAVING(visitas>2) ORDER by visitas DESC';
-                        $llamadaProc = $miPDO->query($procedimiento);
+                        $llamadaProc = conexion()->query($procedimiento);
                         $llamadaProc->setFetchMode(PDO::FETCH_ASSOC);
                         
                     }catch(PDOException $pe){
@@ -118,7 +118,7 @@
                     <?php 
                         try{
                             $topUser = "SELECT posts.nickname, e_mail, foto_nick, COUNT(id_post) as 'post' FROM posts,usuarios WHERE usuarios.nickname=posts.nickname GROUP BY posts.nickname HAVING COUNT(id_post>1) ORDER BY COUNT(id_post) DESC";
-                            $topUsuarios = $miPDO->query($topUser);
+                            $topUsuarios = conexion()->query($topUser);
                             $topUsuarios->setFetchMode(PDO::FETCH_ASSOC);
 
                         }catch(PDOException $pe){
