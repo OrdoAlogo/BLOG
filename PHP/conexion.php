@@ -23,6 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if($tipo=="Registro"){
             insertarUsuario(conexion());
         }
+        else if($tipo=="nuevoPost"){
+            crearPost(conexion());
+        }
        } 
     
    
@@ -125,6 +128,12 @@ function insertarUsuario($loginBD){
                 //echo " archivo demasiado pesado ";
                 exit;        
             }
+            //Guarda la imagen
+                        $dest='img/usuarios/'.$upload_file_name;
+                        if (move_uploaded_file($_FILES['arch']['tmp_name'], $dest)) 
+                        {
+                            //echo 'Imagen subida !';
+                        }
 
             $stmt = $loginBD->prepare('INSERT INTO usuarios (nickname, contrasena, foto_nick, e_mail, tipo_de_usuario, estado ) VALUES (:nick, :contra, :foto_nick, :email, :tipo_de_usuario, :estado )');
     
@@ -140,12 +149,7 @@ function insertarUsuario($loginBD){
                 )
             ); 
 
-            //Guarda la imagen
-            $dest='img/usuarios/'.$upload_file_name;
-            if (move_uploaded_file($_FILES['arch']['tmp_name'], $dest)) 
-            {
-                //echo 'Imagen subida !';
-            }
+            
         }
 
         
@@ -154,26 +158,70 @@ function insertarUsuario($loginBD){
 
     }
     
+}
+
+
+function crearPost($loginBD){
+
+    session_start();
+
+    $titulo = isset($_REQUEST['titulo']) ? $_REQUEST['titulo'] : null;
+    $contenido = isset($_REQUEST['contenido']) ? $_REQUEST['contenido'] : null;
+    $foto = isset($_REQUEST['foto']) ? $_REQUEST['foto'] : null;
+    $autor=$_SESSION["usuarioLogeado"];
+    $visitas=0;
+    $fecha=date("Y-m-d");
+
+
+
+    if (is_uploaded_file($_FILES['foto']['tmp_name'])) { 
+        //Valida el nombre del archivo
+        if(empty($_FILES['foto']['name']))
+        {
+            //echo " no tiene nombre ";
+            exit;
+        }
     
+        $upload_file_name = $titulo.".png";
+        if(strlen ($upload_file_name)>100)
+        {
+            //echo " nombre muy largo ";
+            exit;
+        }
+    
+        //quita los caracteres no alfanumericos
+        $upload_file_name = preg_replace("/[^A-Za-z0-9 \.\-_]/", '', $upload_file_name);
+    
+        //limite de tamañp
+        if ($_FILES['foto']['size'] > 1000000) 
+        {
+            //echo " archivo demasiado pesado ";
+            exit;        
+        }
+        //Guarda la imagen
+        $dest='img/posts/'.$upload_file_name;
+        if (move_uploaded_file($_FILES['foto']['tmp_name'], $dest)) 
+        {
+            //echo 'Imagen subida !';
+        }
 
+        $stmt = $loginBD->prepare('INSERT INTO posts (nickname, titulo, contenido, imagen_post, visitas, fecha ) VALUES (:nickname, :titulo, :contenido, :imagen_post, :visitas, :fecha )');
 
-
+        $stmt->execute(
+            array(
+                'nickname' => $autor,
+                'titulo' => $titulo,
+                'contenido'=>$contenido,
+                'imagen_post' => $dest,
+                'visitas'=>$visitas,
+                'fecha'=>$fecha
+    
+            )
+        ); 
 
         
-    
-
-
-        
-    
-
-            
-   
-
-    
-
-
-   
-
+    }
+     
 
 }
 ?>
