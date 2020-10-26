@@ -42,7 +42,7 @@
             </div>
         </header>
         <h2>COMENTAR</h2>
-    <main>    
+    <main>   
         <div class="posts">
             <?php
                 include('conexion.php');
