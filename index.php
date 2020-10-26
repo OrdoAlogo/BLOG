@@ -45,9 +45,9 @@
             <div class="aside">
                 <div class="topPost">
                     <h3>TOP POST</h3>
-                    <?php 
-                    cargarTopPosts();
+                    <?php cargarTopPosts();
                     ?>
+
                 </div>
                 <div class="topUsuarios">
                     <h3>TOP USUARIOS</h3>
