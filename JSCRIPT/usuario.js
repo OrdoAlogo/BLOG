@@ -52,9 +52,9 @@ function faltaDatos(){
     document.getElementById("contra").style.borderColor = "red";
 
 } 
-//Cojer el Id de post seleccionado
+//Coger el Id de post seleccionado
 var tarjetaPost = document.getElementById("tituloPost").addEventListener("click",recojerIdPost,true);
-function recojerIdPost(codigoNum){
+function recogerIdPost(codigoNum){
     var codigoPost = document.getElementsByClassName("codigoPost")[codigoNum-1].innerHTML;
     alert(codigoPost);
 }
