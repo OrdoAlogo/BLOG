@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
    <link rel="stylesheet" href="css/login.css">
+   <script src="JSCRIPT/usuario.js" type="text/javascript"></script>
 <body>
     <header>
         <h1>BenchBlog</h1>
@@ -28,10 +27,10 @@
         <form id="Registro" action="" method="post" enctype="multipart/form-data">
             <label for="Nick">Nickname</label></br>
             <input type="text" id="nick" name="nick"><br>
-            <p class="existe"> El nick ya existe</p><br>
+            <p id="nickExiste" class="existe"> El nick ya existe</p><br>
             <label for="mail">Email</label></br>
             <input type="text"  id="email" name="email"><br>
-            <p class="existe"> El email ya existe</p><br>
+            <p id="emailExiste"class="existe"> El email ya existe</p><br>
             <label for="Contra"> Contraseña</label><br>
             <input type="text" id="contra" name="contra"><br>
             <label for="Arch"> Archivo</label><br>

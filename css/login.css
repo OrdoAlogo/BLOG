@@ -60,6 +60,6 @@ form{
     text-align: center;
 }
 .existe{
- color: red;
- 
+    color: red;
+    display: none;
 }

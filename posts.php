@@ -41,7 +41,7 @@
         <main>    
         <div class="posts">
             <?php
-                include('conexion.php');
+                include('PHP/conexion.php');
                 
             ?>
         </div>

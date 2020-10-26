@@ -11,23 +11,31 @@ class Usuario{
 
 
 
-
-//Oculta elementos del formulario registro
-var nickExiste = document.getElementsByClassName("existe")[0];
-var emailExiste = document.getElementsByClassName("existe")[1];
-nickExiste.style.display = "none";
-emailExiste.style.display = "none";
+var nombreUsuario = document.getElementById("nickUsu").addEventListener("click",nombreUsuarioPulsado,true);
+function nombreUsuarioPulsado(){
+    let element = document.getElementById('desplegable');
+    let elementStyle = window.getComputedStyle(element);
+    let elementColor = elementStyle.getPropertyValue('visibility');
+    
+    if(elementColor == 'hidden'){
+        element.style.visibility = 'visible'
+    }else{
+        element.style.visibility = 'hidden';
+    }
+}
+var nombreUsuario = document.getElementById("cerrarSesion").addEventListener("click",cerrarSesion,true);
 
 function registroExisteNick(){
     console.log("script registro");
     document.getElementById("nick").style.borderColor = "red";
-    nickExiste.style.display = "block";
+    document.getElementById("nickExiste").style.display = "block";
+    
 }
 
 function registroExisteEmail(){
-    console.log("script registro");
+    console.log("script registro mail");
     document.getElementById("email").style.borderColor = "red";
-    emailExiste.style.display = "block";
+    document.getElementById("emailExiste").style.display = "block";
 }
 
 function faltaDatos(){
