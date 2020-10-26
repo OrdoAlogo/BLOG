@@ -258,11 +258,12 @@ function recibirPosts(){
 }
 
 function cargarPosts($posts){
-   
+    echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
     foreach($posts as $posicion =>$columna){
         ?>
     <div id="tarjetaPost">
-        <h2 class="tituloPost"><?php echo $columna['titulo'] ?> </h2>
+        <p class="codigoPost"style="display: none;" ><?php echo $columna['id_post'] ?><p>
+        <h2 class="tituloPost" onclick="recojerIdPost(<?php echo  $columna['id_post'] ?>)"><?php echo $columna['titulo'] ?> </h2>
         <p class="contenido"><?php echo $columna['contenido'] ?> </p>
         <p class="visualizaciones"><span class="icon-eye"></span><?php echo (" ".$columna['visitas']) ?></p>
         <p class="autor">Autor: <?php echo $columna['nickname'] ?> </p>
@@ -288,7 +289,7 @@ function cargarTopPosts(){
         ?>  
         <div class="datosDB">
             <p>Id post: <?php echo $fila['id_post']; ?> </p>
-            <p>Titulo: <?php  echo  $fila['titulo']; ?> </p>
+            <p onclick="recojerIdPost(<?php echo  $fila['id_post']?>)">Titulo: <?php  echo  $fila['titulo']; ?> </p>
             <p>Img: <?php  echo $fila['imagen_post']; ?> </p>
             <p>Nº visitas: <?php echo $fila['visitas']; ?> </p>
         </div>     
@@ -326,6 +327,6 @@ function logearRegistrarUsuario(){
     else{
         print ("<a id='nickUsu'href='login.php'>Entrar | Registrarse</a><span class=icon-user></span>");
     }
-    echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
+    //echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
 }
 ?>

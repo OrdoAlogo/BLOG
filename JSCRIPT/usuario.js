@@ -23,6 +23,14 @@ function nombreUsuarioPulsado(){
         element.style.visibility = 'hidden';
     }
 }
+
+document.addEventListener("click", quitar,true);
+
+function quitar(){   
+    
+    document.getElementById('desplegable').style.visibility = 'hidden';
+};
+
 var nombreUsuario = document.getElementById("cerrarSesion").addEventListener("click",cerrarSesion,true);
 
 function registroExisteNick(){
@@ -44,3 +52,9 @@ function faltaDatos(){
     document.getElementById("contra").style.borderColor = "red";
 
 } 
+//Cojer el Id de post seleccionado
+var tarjetaPost = document.getElementById("tituloPost").addEventListener("click",recojerIdPost,true);
+function recojerIdPost(codigoNum){
+    var codigoPost = document.getElementsByClassName("codigoPost")[codigoNum-1].innerHTML;
+    alert(codigoPost);
+}
