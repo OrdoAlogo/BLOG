@@ -265,7 +265,7 @@ function cargarPosts($posts){
         ?>
     <div id="tarjetaPost">
         <p class="codigoPost"style="display: none;" ><?php echo $columna['id_post'] ?><p>
-        <h2 class="tituloPost" onclick="recojerIdPost(<?php echo  $columna['id_post'] ?>)"><?php echo $columna['titulo'] ?> </h2>
+        <h2 class="tituloPost" onclick="recogerIdPost(<?php echo  $columna['id_post'] ?>)"><?php echo $columna['titulo'] ?> </h2>
         <p class="contenido"><?php echo $columna['contenido'] ?> </p>
         <p class="visualizaciones"><span class="icon-eye"></span><?php echo (" ".$columna['visitas']) ?></p>
         <p class="autor">Autor: <?php echo $columna['nickname'] ?> </p>
@@ -292,7 +292,7 @@ function cargarTopPosts(){
         ?>  
         <div class="datosDB">
             <p>Id post: <?php echo $fila['id_post']; ?> </p>
-            <p onclick="recojerIdPost(<?php echo  $fila['id_post']?>)">Titulo: <?php  echo  $fila['titulo']; ?> </p>
+            <p onclick="recogerIdPost(<?php echo  $fila['id_post']?>)">Titulo: <?php  echo  $fila['titulo']; ?> </p>
             <p>Img: <?php  echo $fila['imagen_post']; ?> </p>
             <p>Nº visitas: <?php echo $fila['visitas']; ?> </p>
         </div>     
