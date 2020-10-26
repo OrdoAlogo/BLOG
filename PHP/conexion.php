@@ -1,10 +1,10 @@
 
-<!--<html>
+<html>
 <head>
     <script src="JSCRIPT/usuario.js" type="text/javascript"></script>
 </head>
 
-</html>-->
+</html>
 
 <?php
 if ($_SERVER["REQUEST_METHOD"]=='GET'){
@@ -220,6 +220,8 @@ function crearPost($loginBD){
             )
         ); 
 
+        header('Location: index.php');
+
         
     }
      
@@ -269,6 +271,7 @@ function cargarPosts($posts){
         <p class="visualizaciones"><span class="icon-eye"></span><?php echo (" ".$columna['visitas']) ?></p>
         <p class="autor">Autor: <?php echo $columna['nickname'] ?> </p>
         <span class="fecha"><?php echo ("Fecha: ".$columna['fecha'] )?></span>
+        
     </div>
     <?php
     }
