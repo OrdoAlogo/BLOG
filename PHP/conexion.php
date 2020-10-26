@@ -25,9 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         else if($tipo=="nuevoPost"){
             crearPost(conexion());
         }
-       } 
-    
-   
+       }    
 }
 
 
