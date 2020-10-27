@@ -8,6 +8,7 @@
    <link rel="stylesheet" type="text/css" href="css/encabezado.css">
    <link rel="stylesheet" type="text/css" href="css/index.css">
    <link rel="stylesheet" type="text/css" href="css/nuevoPost.css">
+   <script src="JSCRIPT/usuario.js" type="text/javascript"></script>
    
 
 <body>
@@ -32,7 +33,7 @@
             <label for="foto"> Imagen (opcional)</label><br>
             <input type="file" id="foto" name="foto"><br>
             <input type="hidden" name="tipo" id ="tipo" value="nuevoPost"> 
-            <input class="boton" type="submit" value="Publicar"/>
+            <input class="boton" type="submit" value="Publicar"  />
             
         </form>
     </main>
