@@ -1,3 +1,11 @@
+
+<!--<html>
+<head>
+    <script src="JSCRIPT/usuario.js" type="text/javascript"></script>
+</head>
+
+</html>-->
+
 <?php
 if ($_SERVER["REQUEST_METHOD"]=='GET'){
    if(isset( $_GET["tipo"])){
@@ -6,9 +14,6 @@ if ($_SERVER["REQUEST_METHOD"]=='GET'){
         comprobarExistencia($_GET["Nick"],$_GET["Contra"],conexion());
     }
    } 
-    
-    
-   
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -16,6 +21,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $tipo = $_POST["tipo"];
         if($tipo=="Registro"){
             insertarUsuario(conexion());
+        }
+        else if($tipo=="nuevoPost"){
+            crearPost(conexion());
         }
        } 
     
@@ -46,6 +54,7 @@ function comprobarExistencia($nickname,$contraseña,$login){
             if($valor['contrasena'] == $contraseña){
                 session_start();
                 $_SESSION["usuarioLogeado"] = $valor['nickname'];
+                $_SESSION["fotoLogeado"] = $valor['foto_nick'];
                 header('Location: index.php');
                 
             }else{
@@ -67,11 +76,8 @@ function insertarUsuario($loginBD){
     $tipo_de_usuario="normal";
     $estado=0;
     
-
     //echo "hola".$nick." ".$email." ".$contra." ".$dest;
-
-
-    //Combrobamos si el nickname y email existen en la bse de datos
+    //Combrobamos si el nickname y email existen en la base de datos
 
     $stmt = $loginBD->prepare('SELECT nickname FROM usuarios WHERE nickname= :nick;');
     $stmt->execute(['nick' => $nick]);
@@ -82,14 +88,21 @@ function insertarUsuario($loginBD){
     $correo =$stmt->fetch();
     //echo $nombre[0]." " .$correo[0];
 
+
+    if(empty($nick)||empty($email)||empty($contra)){
+        //echo "Introduce todos los datos";
+        echo '<script type="text/javascript">faltaDatos();</script>';
+    }
+    if(isset($correo[0])==$email){
+        //echo "El correo ya existe";
+        echo '<script type="text/javascript">registroExisteEmail();</script>';
+    }
     if(isset($nombre[0])==$nick){
-        echo "El nick ya existe";
-
-
-    }if(isset($correo[0])==$email){
-        echo "El correo ya existe";
-
-    }else{
+        //echo "El nick ya existe";
+        echo '<script type="text/javascript">registroExisteNick();</script>';
+    }
+    
+    else{
 
         if (is_uploaded_file($_FILES['arch']['tmp_name'])) { 
             //Valida el nombre del archivo
@@ -116,54 +129,261 @@ function insertarUsuario($loginBD){
                 //echo " archivo demasiado pesado ";
                 exit;        
             }
-    
             //Guarda la imagen
-            $dest='img/usuarios/'.$upload_file_name;
-            if (move_uploaded_file($_FILES['arch']['tmp_name'], $dest)) 
-            {
-                //echo 'Imagen subida !';
-            }
+                        $dest='img/usuarios/'.$upload_file_name;
+                        if (move_uploaded_file($_FILES['arch']['tmp_name'], $dest)) 
+                        {
+                            //echo 'Imagen subida !';
+                        }
+
+            $stmt = $loginBD->prepare('INSERT INTO usuarios (nickname, contrasena, foto_nick, e_mail, tipo_de_usuario, estado ) VALUES (:nick, :contra, :foto_nick, :email, :tipo_de_usuario, :estado )');
+    
+            $stmt->execute(
+                array(
+                    'nick' => $nick,
+                    'contra' => $contra,
+                    'foto_nick'=>$dest,
+                    'email' => $email,
+                    'tipo_de_usuario'=>$tipo_de_usuario,
+                    'estado'=>$estado
+        
+                )
+            ); 
+
+            
         }
 
+        
 
 
 
-        $stmt = $loginBD->prepare('INSERT INTO usuarios (nickname, contrasena, foto_nick, e_mail, tipo_de_usuario, estado ) VALUES (:nick, :contra, :foto_nick, :email, :tipo_de_usuario, :estado )');
+    }
     
+}
+
+
+function crearPost($loginBD){
+
+    session_start();
+
+    $titulo = isset($_REQUEST['titulo']) ? $_REQUEST['titulo'] : null;
+    $contenido = isset($_REQUEST['contenido']) ? $_REQUEST['contenido'] : null;
+    $foto = isset($_REQUEST['foto']) ? $_REQUEST['foto'] : null;
+    $autor=$_SESSION["usuarioLogeado"];
+    $visitas=0;
+    $fecha=date("Y-m-d");
+
+
+
+    if (is_uploaded_file($_FILES['foto']['tmp_name'])) { 
+        //Valida el nombre del archivo
+        if(empty($_FILES['foto']['name']))
+        {
+            //echo " no tiene nombre ";
+            exit;
+        }
+    
+        $upload_file_name = $titulo.".png";
+        if(strlen ($upload_file_name)>100)
+        {
+            //echo " nombre muy largo ";
+            exit;
+        }
+    
+        //quita los caracteres no alfanumericos
+        $upload_file_name = preg_replace("/[^A-Za-z0-9 \.\-_]/", '', $upload_file_name);
+    
+        //limite de tamañp
+        if ($_FILES['foto']['size'] > 1000000) 
+        {
+            //echo " archivo demasiado pesado ";
+            exit;        
+        }
+        //Guarda la imagen
+        $dest='img/posts/'.$upload_file_name;
+        if (move_uploaded_file($_FILES['foto']['tmp_name'], $dest)) 
+        {
+            //echo 'Imagen subida !';
+        }
+
+        $stmt = $loginBD->prepare('INSERT INTO posts (nickname, titulo, contenido, imagen_post, visitas, fecha ) VALUES (:nickname, :titulo, :contenido, :imagen_post, :visitas, :fecha )');
+
         $stmt->execute(
             array(
-                'nick' => $nick,
-                'contra' => $contra,
-                'foto_nick'=>$dest,
-                'email' => $email,
-                'tipo_de_usuario'=>$tipo_de_usuario,
-                'estado'=>$estado
+                'nickname' => $autor,
+                'titulo' => $titulo,
+                'contenido'=>$contenido,
+                'imagen_post' => $dest,
+                'visitas'=>$visitas,
+                'fecha'=>$fecha
     
             )
         ); 
 
+        
     }
-    
-    
+     
 
+}
 
+function cerrarSesion(){
+    session_start();
+    unset($_SESSION["usuarioLogeado"]);
+    print "Sesion borrada";
+}
 
+function recibirPosts(){
+    try{
+        $consulta = 'SELECT * FROM posts,usuarios where posts.nickname=usuarios.nickname';
+            $texto = null;
+        if(isset($_POST['palabra'])){
+            //Si hay una busqueda, cambiamos la consulta
+            $texto = $_POST['palabra'];
+            $consulta = 'SELECT * FROM posts WHERE titulo LIKE :titulo or contenido LIKE :contenido or nickname LIKE :nickname';
+        } 
+        //Preparamos la sentencia e indicar que vamos a usar un cursor
+        $sentencia = conexion()->prepare($consulta);
+        $sentencia->setFetchMode(PDO::FETCH_ASSOC);
+    }catch(PDOException $pe){
+        die("Error occurred:" . $pe->getMessage());
+    }
+    $sentencia->execute(
+        array(
+            ':titulo' => "%$texto%",
+            ':contenido' => "%$texto%",
+            ':nickname' => "%$texto%"
+        )
+        );
+    //Imprimo los resultados
+    $resultado = $sentencia->fetchAll();
+    return $resultado;
+}
 
-        
-    
-
-
-        
-    
-
-            
+function cargarPosts($posts){
    
+    foreach($posts as $posicion =>$columna){
+        ?>
+    <div id="tarjetaPost">
+        <h2 class="tituloPost"><?php echo $columna['titulo'] ?> </h2>
+        <p class="contenido"><?php echo $columna['contenido'] ?> </p>
+        <p class="visualizaciones"><span class="icon-eye"></span><?php echo (" ".$columna['visitas']) ?></p>
+        <p class="autor">Autor: <?php echo $columna['nickname'] ?> </p>
+        <span class="fecha"><?php echo ("Fecha: ".$columna['fecha'] )?></span>
+        <!-- Aqui seleccinamos el post que queremos ver o comentar
+     mandaremos el id de este post a la pagina 'posts.php'-->
+        <a href="posts.php?idPost=<?php echo $columna['id_post']; ?>">Ver más</a>
+    </div>
+    <?php
+    }
 
-    
+}
+function cargarTopPosts(){
+    try{
+        $procedimiento = 'SELECT id_post, titulo,imagen_post, visitas FROM posts HAVING(visitas>2) ORDER by visitas DESC';
+        $llamadaProc = conexion()->query($procedimiento);
+        $llamadaProc->setFetchMode(PDO::FETCH_ASSOC);
+        
+    }catch(PDOException $pe){
+        die("Error occurred:" . $pe->getMessage());
+    }
+        
+     $llamadaProc->execute();
+     $result = $llamadaProc->fetchAll();
+    foreach($result as $p => $fila){
+        ?>  
+        <div class="datosDB">
+            <p>Id post: <?php echo $fila['id_post']; ?> </p>
+            <p>Titulo: <?php  echo  $fila['titulo']; ?> </p>
+            <p>Img: <?php  echo $fila['imagen_post']; ?> </p>
+            <p>Nº visitas: <?php echo $fila['visitas']; ?> </p>
+        </div>     
+        <?php
+    }           
+}
+function cargarTopUsuarios(){
+    try{
+        $topUser = "SELECT posts.nickname, e_mail, foto_nick, COUNT(id_post) as 'post' FROM posts,usuarios WHERE usuarios.nickname=posts.nickname GROUP BY posts.nickname HAVING COUNT(id_post>1) ORDER BY COUNT(id_post) DESC";
+        $topUsuarios = conexion()->query($topUser);
+        $topUsuarios->setFetchMode(PDO::FETCH_ASSOC);
 
+    }catch(PDOException $pe){
+        die("Error occurred:" . $pe->getMessage());
+    }
+    $topUsuarios->execute();
+    $resultUsuarios = $topUsuarios->fetchAll();
+    foreach($resultUsuarios as $p => $col){
+        ?>
+        <div class="datosDB">
+            <p>Usuario:  <?php echo $col['nickname'] ?> </p>
+            <p>E-mail:<?php echo $col['e_mail'] ?></p>
+            <p>Nº post_: <?php echo $col['post'] ?></p>
+            <p>Imagen: <?php echo $col['foto_nick'] ?></p>
+        </div>
+    <?php
+    }
+}
 
-   
+//Para visualizar el post entero una vez seleccionarlo en la pagina principal
+/* $idP = $_GET['idPost'];
+function postEntero(){
+    try{
+        $cargarPost = "SELECT * FROM posts WHERE id_post=$idp";
+        $sentenciaP = conexion()->query($cargarPost);
+        $sentenciaP->setFetchMode(PDO::FETCH_ASSOC);
 
+    }catch(PDOException $pe){
+        die("Error occurred:" . $pe->getMessage());
+    }
+    $sentenciaP->execute();
+    $resultadoP = $sentenciaP->fetchAll();
+    foreach($resultadoP as $posP => $filaP){
+        ?>
+        <div>
+            <img src="<?php echo $filaP['imagen_post']?>">
+            <h4><?php echo $filaP['titulo']?> </h4>
+            <p><?php echo $filaP['contenido']?></p>
+            <p>Nº visitas: <?php echo $filaP['visitas']; ?> </p>
+            <span>Fecha:<?php echo $filaP['fecha']?></span>
 
+        </div>
+        <?php
+    }
+
+} */
+
+//Para cargar los comentarios del post seleccionado en el index
+/* $idP = $_GET['idPost']; */
+/* function comentariosPost(){
+    try{
+        
+        $comentarios = "SELECT nickname,comentario,fecha FROM comentarios WHERE id_post=$idP";
+        $sentenciaC =conexion()->query($comentarios);
+        $sentenciaC->setFetchMode(PDO::FETCH_ASSOC);
+        }catch(PDOException $pe){
+            die("Error occurred:" . $pe->getMessage());
+        }
+        $sentenciaC->execute();
+        $resultadoC = $sentenciaC->fetchAll();
+        foreach($resultadoC as $posicionC => $filaC){
+            ?>
+        <div>
+            <p>Usuario: <?php echo $filaC['nickname']?></p>
+            <p>Contenido<?php echo $filaC['comentario']?></p>
+            <p>Fecha: <?php echo $filaC['fecha']?></p>
+        </div> 
+           <?php
+        }
+}
+ */
+function logearRegistrarUsuario(){
+    session_start(); 
+    if(isset($_SESSION["usuarioLogeado"])){ 
+        echo ("<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/></br><a id='nickUsu' >".$_SESSION["usuarioLogeado"]."</a>");
+        echo("<div id='desplegable'></br><a class='botonesUsuario' href='#'> Ajustes</a></br></br><a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a></div>");
+    }
+    else{
+        print ("<a id='nickUsu'href='login.php'>Entrar | Registrarse</a><span class=icon-user></span>");
+    }
+    echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
 }
 ?>

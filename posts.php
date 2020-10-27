@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
-        <title>BLOG | COMENTARIO</title>
+        <title>BLOG | POSTS</title>
         <link rel="stylesheet" type="text/css" href="css/fuentes-iconos/style.css">
         <link rel="stylesheet" type="text/css" href="css/encabezado.css">
         <link rel="stylesheet" type="text/css" href="css/index.css">
     </head>
     <style type="text/css">
-    main{background:grey; width:70%; border:1px solid black; margin:0 auto; height:100%; display:flex; flex-direction:column;align-items:center;justify-content:flex-start;}
+    main{background-image: url(img/portatil.jpg); background-size: cover;background-attachment:scroll; width:70%; border:1px solid black; margin:0 auto; height:100%; display:flex; flex-direction:column;align-items:center;justify-content:flex-start;}
     h2{text-align: center; margin: 0 auto;}
-        form{margin: 0 auto; width: 100%; }
-         table{margin: 0 auto; width: 100%; } 
-         legend{text-align: center;} 
-        tr,td{text-align: center; margin: 0 auto;}
-        .envio{text-align:center; margin:0 auto; position:relative; bottom:6px;}
-        .caracteres{text-align:center; margin:0 auto; position:relative; bottom:2px;}
-        .comentarios{margin-top: 30px; width: 60%; background:white;}
-        .comentarios div{padding:5px; border-bottom:2px solid orange;}
-        .comentarios h3{margin: 0 auto; text-align:center; color:orange;}
+    form{margin: 0 auto; width: 100%; }
+    table{margin: 0 auto; width: 100%; } 
+    legend{text-align: center;} 
+    tr,td{text-align: center; margin: 0 auto;}
+    .envio{text-align:center; margin:0 auto; position:relative; bottom:6px;}
+    .caracteres{text-align:center; margin:0 auto; position:relative; bottom:2px;}
+    .comentarios{margin-top: 30px; width: 60%; background:#C1510F; margin-bottom:10px;}
+    .comentarios div{padding:5px; border-bottom:2px solid orange;}
+    .comentarios h3{margin: 0 auto; text-align:center; color:white;}
+    .posts{padding:20px; background:white; margin-top:20px; width:90%; }
+    .posts h4{color:orangered;}
+    .formC{margin-top:10px;}
     </style>
     <body>
     <header>
@@ -26,7 +29,7 @@
             </div>
 
             <div class="titulo">
-                <h1>BENCH<span>BLOG</span></h1>
+                <a href="index.php"><h1>BENCH<span>BLOG</span></h1> </a>
             </div>
 
             <div class="buscador">
@@ -37,39 +40,47 @@
             </div>
 
             <div class="registro">
-                <a href="login.php" class="login">Entrar | Registrarse</a><span class="icon-user"></span>
-                <a href="index.php" class="casa"><span class="icon-home"></span></a>
+               <!--  <a href="login.php" class="login">Entrar | Registrarse</a><span class="icon-user"></span>
+                <a href="index.php" class="casa"><span class="icon-home"></span></a> -->
+                <?php include ('PHP/conexion.php');logearRegistrarUsuario();?>
             </div>
         </header>
-        <h2>COMENTAR</h2>
+        <h2>POST</h2>
     <main>   
         <div class="posts">
             <?php
-                include('conexion.php');
-               try {
-                   $consulta = "SELECT id_post,titulo,contenido,imagen_post,nickname FROM posts WHERE id_post=1";
-                   $sentencia = $miPDO->prepare($consulta);
-                   $sentencia->setFetchMode(PDO::FETCH_ASSOC);
-                }catch(PDOException $pe){
-                    die("Error occurred:" . $pe->getMessage());
-                }
-                $sentencia->execute();
-                $resultado = $sentencia->fetchAll();
-                foreach($resultado as $posicion =>$fila){
-                    ?>
-                    <div>
-                        <p>Titulo: <?php echo$fila['titulo'] ?></p>
-                        <img src="<?php echo$fila['imagen_post'] ?>">
-                        <p>Usuario: <?php echo$fila['nickname'] ?></p>
-                    </div>
-                    
-                    <?php
-                }
+              $idP = $_GET['idPost'];
+                  try{
+                      $cargarPost = "SELECT * FROM posts WHERE id_post=:id_post";
+                      $sentenciaP = conexion()->prepare($cargarPost);
+                      $sentenciaP->setFetchMode(PDO::FETCH_ASSOC);
+              
+                  }catch(PDOException $pe){
+                      die("Error occurred:" . $pe->getMessage());
+                  }
+                  $sentenciaP->execute(
+                      array(
+                          ':id_post' => $idP
+                      )
+                  );
+                  $resultadoP = $sentenciaP->fetchAll();
+                  foreach($resultadoP as $posP => $filaP){
+                      ?>
+                      <div>
+                          <img src="<?php echo $filaP['imagen_post']?>">
+                          <h4><?php echo $filaP['titulo']?> </h4>
+                          <p><?php echo $filaP['contenido']?></p>
+                          <p>Nº visitas: <?php echo $filaP['visitas']; ?> </p>
+                          <span>Fecha:<?php echo $filaP['fecha']?></span>
+              
+                      </div>
+                      <?php
+                  }  
             ?>
         </div>
-        <div>
+        <div class="formC">
             <form action="#" method="post">       
-                <textarea cols="40" rows="1" name="comentario" onkeydown="valida_longitud()" onkeyup="valida_longitud()"> </textarea> 
+                <textarea cols="40" rows="1" name="comentario" placeholder="Limite carateres: 400" onkeydown="valida_longitud()" onkeyup="valida_longitud()"> </textarea> 
                 <input class="caracteres" type="button" name="caracteres" >
                 <button  class="envio"><span class="icon-direction"></span></buton> 
             </form>
@@ -78,9 +89,9 @@
             <h3>COMENTARIOS</h3>
             <?php
                 try{
-
-                    $comentarios = "SELECT nickname,comentario,fecha FROM comentarios WHERE id_post=1";
-                    $sentenciaC = $miPDO->prepare($comentarios);
+        
+                    $comentarios = "SELECT nickname,comentario,fecha FROM comentarios WHERE id_post=$idP";
+                    $sentenciaC =conexion()->query($comentarios);
                     $sentenciaC->setFetchMode(PDO::FETCH_ASSOC);
                     }catch(PDOException $pe){
                         die("Error occurred:" . $pe->getMessage());
@@ -96,7 +107,8 @@
                     </div> 
                        <?php
                     }
-            ?>
+                
+            ?>  
         </div>    
     </main> 
     <script>
