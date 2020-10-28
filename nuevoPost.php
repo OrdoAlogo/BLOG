@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuevo post</title>
+    <title>BLOG | Nuevo Post</title>
   
    <link rel="stylesheet" type="text/css" href="css/encabezado.css">
    <link rel="stylesheet" type="text/css" href="css/index.css">
@@ -19,7 +19,7 @@
         </div>
 
         <div class="titulo">
-            <h1>BENCH<span>BLOG</span></h1>
+            <a href="index.php"><h1>BENCH<span>BLOG</span></h1> </a>
         </div>
 
     </header>

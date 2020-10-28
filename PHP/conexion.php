@@ -253,7 +253,47 @@ function crearPost($loginBD){
             
         }else{
             $stmt = $loginBD->prepare('INSERT INTO posts (nickname, titulo, contenido, visitas, fecha ) VALUES (:nickname, :titulo, :contenido, :visitas, :fecha )');
+    }
+    
+}
 
+
+function crearPost($loginBD){
+
+    session_start();
+
+    $titulo = isset($_REQUEST['titulo']) ? $_REQUEST['titulo'] : null;
+    $contenido = isset($_REQUEST['contenido']) ? $_REQUEST['contenido'] : null;
+    $foto = isset($_REQUEST['foto']) ? $_REQUEST['foto'] : null;
+    $autor=$_SESSION["usuarioLogeado"];
+    $visitas=0;
+    $fecha=date("Y-m-d");
+
+
+
+    if (is_uploaded_file($_FILES['foto']['tmp_name'])) { 
+        //Valida el nombre del archivo
+        if(empty($_FILES['foto']['name']))
+        {
+            //echo " no tiene nombre ";
+            exit;
+        }
+    
+        $upload_file_name = $titulo.".png";
+        if(strlen ($upload_file_name)>100)
+        {
+            //echo " nombre muy largo ";
+            exit;
+        }
+    
+        //quita los caracteres no alfanumericos
+        $upload_file_name = preg_replace("/[^A-Za-z0-9 \.\-_]/", '', $upload_file_name);
+    
+        //limite de tamañp
+        if ($_FILES['foto']['size'] > 1000000) 
+        {
+            //echo " archivo demasiado pesado ";
+            exit;        
             $stmt->execute(
                 array(
                     'nickname' => $autor,
@@ -305,13 +345,14 @@ function recibirPosts(){
     return $resultado;
 }
 
+//PAGINA INDEX en los pos principales
 function cargarPosts($posts){
     echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
     foreach($posts as $posicion =>$columna){
         ?>
     <div id="tarjetaPost">
-        <p class="codigoPost"style="display: none;" ><?php echo $columna['id_post'] ?><p>
-        <h2 class="tituloPost" onclick="recogerIdPost(<?php echo  $columna['id_post'] ?>)"><?php echo $columna['titulo'] ?> </h2>
+       // <img src="<?php echo $columna['imagen_post'] ?>">
+        <a href="posts.php?idPost=<?php echo $columna['id_post']; ?>"> <h2 class="tituloPost"><?php echo $columna['titulo'] ?> </h2> </a>
         <p class="contenido"><?php echo $columna['contenido'] ?> </p>
         <p class="visualizaciones"><span class="icon-eye"></span><?php echo (" ".$columna['visitas']) ?></p>
         <p class="autor">Autor: <?php echo $columna['nickname'] ?> </p>
@@ -367,6 +408,7 @@ function cargarTopUsuarios(){
     <?php
     }
 }
+
 function logearRegistrarUsuario(){
     session_start(); 
     if(isset($_SESSION["usuarioLogeado"])){ 
