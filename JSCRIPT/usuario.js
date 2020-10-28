@@ -47,9 +47,11 @@ function registroExisteEmail(){
 }
 
 function faltaDatos(){
-    document.getElementById("nick").style.borderColor = "red";
+    /* document.getElementById("nick").style.borderColor = "red";
     document.getElementById("email").style.borderColor = "red";
-    document.getElementById("contra").style.borderColor = "red"; 
+    document.getElementById("contra").style.borderColor = "red";  */
+
+    document.getElementById("faltaDato").style.display = "block";
 
    
 
