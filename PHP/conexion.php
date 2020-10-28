@@ -153,10 +153,6 @@ function insertarUsuario($loginBD){
             
         }
 
-        
-
-
-
     }
     
 }
@@ -259,19 +255,18 @@ function recibirPosts(){
     return $resultado;
 }
 
+//PAGINA INDEX en los pos principales
 function cargarPosts($posts){
    
     foreach($posts as $posicion =>$columna){
         ?>
     <div id="tarjetaPost">
-        <h2 class="tituloPost"><?php echo $columna['titulo'] ?> </h2>
+        <img src="<?php echo $columna['imagen_post'] ?>">
+        <a href="posts.php?idPost=<?php echo $columna['id_post']; ?>"> <h2 class="tituloPost"><?php echo $columna['titulo'] ?> </h2> </a>
         <p class="contenido"><?php echo $columna['contenido'] ?> </p>
         <p class="visualizaciones"><span class="icon-eye"></span><?php echo (" ".$columna['visitas']) ?></p>
         <p class="autor">Autor: <?php echo $columna['nickname'] ?> </p>
         <span class="fecha"><?php echo ("Fecha: ".$columna['fecha'] )?></span>
-        <!-- Aqui seleccinamos el post que queremos ver o comentar
-     mandaremos el id de este post a la pagina 'posts.php'-->
-        <a href="posts.php?idPost=<?php echo $columna['id_post']; ?>">Ver más</a>
     </div>
     <?php
     }
@@ -323,58 +318,6 @@ function cargarTopUsuarios(){
     }
 }
 
-//Para visualizar el post entero una vez seleccionarlo en la pagina principal
-/* $idP = $_GET['idPost'];
-function postEntero(){
-    try{
-        $cargarPost = "SELECT * FROM posts WHERE id_post=$idp";
-        $sentenciaP = conexion()->query($cargarPost);
-        $sentenciaP->setFetchMode(PDO::FETCH_ASSOC);
-
-    }catch(PDOException $pe){
-        die("Error occurred:" . $pe->getMessage());
-    }
-    $sentenciaP->execute();
-    $resultadoP = $sentenciaP->fetchAll();
-    foreach($resultadoP as $posP => $filaP){
-        ?>
-        <div>
-            <img src="<?php echo $filaP['imagen_post']?>">
-            <h4><?php echo $filaP['titulo']?> </h4>
-            <p><?php echo $filaP['contenido']?></p>
-            <p>Nº visitas: <?php echo $filaP['visitas']; ?> </p>
-            <span>Fecha:<?php echo $filaP['fecha']?></span>
-
-        </div>
-        <?php
-    }
-
-} */
-
-//Para cargar los comentarios del post seleccionado en el index
-/* $idP = $_GET['idPost']; */
-/* function comentariosPost(){
-    try{
-        
-        $comentarios = "SELECT nickname,comentario,fecha FROM comentarios WHERE id_post=$idP";
-        $sentenciaC =conexion()->query($comentarios);
-        $sentenciaC->setFetchMode(PDO::FETCH_ASSOC);
-        }catch(PDOException $pe){
-            die("Error occurred:" . $pe->getMessage());
-        }
-        $sentenciaC->execute();
-        $resultadoC = $sentenciaC->fetchAll();
-        foreach($resultadoC as $posicionC => $filaC){
-            ?>
-        <div>
-            <p>Usuario: <?php echo $filaC['nickname']?></p>
-            <p>Contenido<?php echo $filaC['comentario']?></p>
-            <p>Fecha: <?php echo $filaC['fecha']?></p>
-        </div> 
-           <?php
-        }
-}
- */
 function logearRegistrarUsuario(){
     session_start(); 
     if(isset($_SESSION["usuarioLogeado"])){ 

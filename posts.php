@@ -7,18 +7,19 @@
         <link rel="stylesheet" type="text/css" href="css/index.css">
     </head>
     <style type="text/css">
-    main{background-image: url(img/portatil.jpg); background-size: cover;background-attachment:scroll; width:70%; border:1px solid black; margin:0 auto; height:100%; display:flex; flex-direction:column;align-items:center;justify-content:flex-start;}
-    h2{text-align: center; margin: 0 auto;}
+    main{background-image: url(img/portatil.jpg); background-size: cover;background-attachment:scroll; width:70%; border:1px solid white; margin:0 auto; height:100%; display:flex; flex-direction:column;align-items:center;justify-content:flex-start;}
+    h2{text-align: center; margin: 0 auto; color:white;}
     form{margin: 0 auto; width: 100%; }
     table{margin: 0 auto; width: 100%; } 
     legend{text-align: center;} 
     tr,td{text-align: center; margin: 0 auto;}
     .envio{text-align:center; margin:0 auto; position:relative; bottom:6px;}
     .caracteres{text-align:center; margin:0 auto; position:relative; bottom:2px;}
-    .comentarios{margin-top: 30px; width: 60%; background:#C1510F; margin-bottom:10px;}
-    .comentarios div{padding:5px; border-bottom:2px solid orange;}
+    .comentarios{margin-top: 30px; width: 60%; background:#613808; margin-bottom:10px;}
+    .comentarios div{padding:5px; border-bottom:2px solid #886A08;}
     .comentarios h3{margin: 0 auto; text-align:center; color:white;}
-    .posts{padding:20px; background:white; margin-top:20px; width:90%; }
+    .contenido{color:white;}
+    .posts{padding:20px; background:#886A08; margin-top:20px; width:90%; }
     .posts h4{color:orangered;}
     .formC{margin-top:10px;}
     </style>
@@ -40,8 +41,6 @@
             </div>
 
             <div class="registro">
-               <!--  <a href="login.php" class="login">Entrar | Registrarse</a><span class="icon-user"></span>
-                <a href="index.php" class="casa"><span class="icon-home"></span></a> -->
                 <?php include ('PHP/conexion.php');logearRegistrarUsuario();?>
             </div>
         </header>
@@ -102,7 +101,7 @@
                         ?>
                     <div>
                         <p>Usuario: <?php echo $filaC['nickname']?></p>
-                        <p>Contenido<?php echo $filaC['comentario']?></p>
+                        <p class="contenido">Contenido<?php echo $filaC['comentario']?></p>
                         <p>Fecha: <?php echo $filaC['fecha']?></p>
                     </div> 
                        <?php

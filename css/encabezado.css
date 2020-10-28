@@ -4,9 +4,9 @@
     src: url(../css/ethnocentric\ rg\ it.ttf);
 }
 /*ENCABEZADO*/
-header{height: 200px; background:  #56777F; display: flex; flex-direction: row; justify-content: space-around; justify-items: center; align-items: center; margin: 0 auto;
+header{height: 200px; background: #886A08; display: flex; flex-direction: row; justify-content: space-around; justify-items: center; align-items: center; margin: 0 auto;
         width: 100%;}
-.logo div img{border-width: 20px;}
+.logo div img{border-width: 20px; border-radius: 20px;}
 .titulo{ display: flex; flex-direction: row; justify-content: space-between; align-items: center; justify-items: center; }
 .titulo h1 { font-family: fuenteBlog; font-size:50px; color:white; margin: 0 auto; text-align: center; }
 .titulo h1 span{color: orange; font-family: fuenteBlog; }

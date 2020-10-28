@@ -58,6 +58,7 @@
                 </div>
 
                 <div class="piePagina">
+                    <h3>INFO</h3>
                     <p>2DW3 - GRUPO 2 Cast </p>
                     <p>Tel: 444 444 444</p>
                     <p>Email: coreo@gmail.com</p>
