@@ -171,11 +171,31 @@ function crearPost($loginBD){
     $visitas=0;
     $fecha=date("Y-m-d");
 
-    if(empty($titulo)||empty($contenido)){
+    if(empty($titulo)||empty($contenido)){ 
         //echo "Introduce todos los datos";
         //echo "<script type='text/javascript'>prueba();</script>"
-
-    }else{
+        if(empty($titulo)){
+        ?>
+        <style type="text/css">
+        #titulo {
+            border: 2px solid red;
+        }
+        </style><?php
+        }
+        
+        if(empty($contenido)){
+            ?>
+            <style type="text/css">
+            #contenido {
+                border: 2px solid red;
+            }
+            </style>
+       <?php 
+       }
+        
+    }
+    
+    else{
 
         if (is_uploaded_file($_FILES['foto']['tmp_name'])) { 
             //Valida el nombre del archivo

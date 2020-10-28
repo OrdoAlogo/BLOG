@@ -47,15 +47,11 @@ function registroExisteEmail(){
 }
 
 function faltaDatos(){
-  /*   document.getElementById("nick").style.borderColor = "red";
+    document.getElementById("nick").style.borderColor = "red";
     document.getElementById("email").style.borderColor = "red";
-    document.getElementById("contra").style.borderColor = "red"; */
+    document.getElementById("contra").style.borderColor = "red"; 
 
-    //alert("hola "+document.getElementById("titulo").value );
-    
-    /* if(document.getElementById("titulo").value =""){
-        document.getElementById("titulo").style.borderColor = "red";
-    } */
+   
 
 
 } 
