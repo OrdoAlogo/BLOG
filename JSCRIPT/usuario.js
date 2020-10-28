@@ -9,16 +9,15 @@ class Usuario{
     }
 }
 
-
-
 var nombreUsuario = document.getElementById("nickUsu").addEventListener("click",nombreUsuarioPulsado,true);
+
 function nombreUsuarioPulsado(){
     let element = document.getElementById('desplegable');
     let elementStyle = window.getComputedStyle(element);
     let elementColor = elementStyle.getPropertyValue('visibility');
     
     if(elementColor == 'hidden'){
-        element.style.visibility = 'visible'
+        element.style.visibility = 'visible';
     }else{
         element.style.visibility = 'hidden';
     }
@@ -52,11 +51,10 @@ function faltaDatos(){
     document.getElementById("contra").style.borderColor = "red";  */
 
     document.getElementById("faltaDato").style.display = "block";
-
-   
-
-
 } 
+
+
+
 
 
 

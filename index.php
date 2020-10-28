@@ -5,6 +5,7 @@
         <link rel="stylesheet" type="text/css" href="css/fuentes-iconos/style.css">
         <link rel="stylesheet" type="text/css" href="css/encabezado.css">
         <link rel="stylesheet" type="text/css" href="css/index.css">
+        <script src="JSCRIPT/usuario.js" type="text/javascript"></script>
         
     </head>
     
