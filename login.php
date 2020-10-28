@@ -35,6 +35,7 @@
             <input type="text" id="contra" name="contra"><br>
             <label for="Arch"> Archivo</label><br>
             <input type="file" id="arch" name="arch"><br>
+            <p id="faltaDato" class="existe"> Faltan datos </p>
             <input type="hidden" name="tipo" id ="tipo" value="Registro"> 
             <input class="boton" type="submit" value="Registrarse"/>
             <input class="boton" type="reset"  value="Borrar"/>
