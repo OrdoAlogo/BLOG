@@ -81,9 +81,29 @@
         </div>
        
     </main>
+
     <marquee>LO MEJOR DE BENCHMARKS </marquee>
-    
-    
+    <aside>
+        <form id="Registro" action="" method="post" enctype="multipart/form-data">
+            <label for="Nick">Nickname</label></br>
+            <input type="text" id="nick" name="nick"><br>
+            <p id="nickExiste" class="existe"> El nick ya existe</p><br>
+            <label for="mail">Email</label></br>
+            <input type="text"  id="email" name="email"><br>
+            <p id="emailExiste"class="existe"> El email ya existe</p><br>
+            <label for="Contra"> Contraseña</label><br>
+            <input type="text" id="contra" name="contra"><br>
+            <label for="Arch"> Archivo</label><br>
+            <input type="file" id="arch" name="arch"><br>
+            <p id="faltaDato" class="existe"> Faltan datos </p>
+            <input type="hidden" name="tipo" id ="tipo" value="Registro"> 
+            <input class="boton" type="submit" value="Registrarse"/>
+            <input class="boton" type="reset"  value="Borrar"/>
+        </form>
+    </aside>
+    <footer>
+    </footer>
+
 </body>
 </html>
 <?php include 'PHP/conexion.php';?>

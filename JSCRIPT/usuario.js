@@ -23,6 +23,14 @@ function nombreUsuarioPulsado(){
         element.style.visibility = 'hidden';
     }
 }
+
+document.addEventListener("click", quitar,true);
+
+function quitar(){   
+    
+    document.getElementById('desplegable').style.visibility = 'hidden';
+};
+
 var nombreUsuario = document.getElementById("cerrarSesion").addEventListener("click",cerrarSesion,true);
 
 function registroExisteNick(){
@@ -39,9 +47,15 @@ function registroExisteEmail(){
 }
 
 function faltaDatos(){
-    document.getElementById("nick").style.borderColor = "red";
+    /* document.getElementById("nick").style.borderColor = "red";
     document.getElementById("email").style.borderColor = "red";
-    document.getElementById("contra").style.borderColor = "red";
+    document.getElementById("contra").style.borderColor = "red";  */
+
+    document.getElementById("faltaDato").style.display = "block";
+
+   
+
+
 
 }
 

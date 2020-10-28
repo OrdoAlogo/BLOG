@@ -29,4 +29,5 @@ main{display: flex; height: 100%; flex-direction: row; justify-content: space-be
 .visualizaciones{color: orange;font-size: 1.5vw; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;}
 .contenido{font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-style: 'normal';font-size: 1vw; margin-left:2vw;}
 .autor{font-weight: bolder;font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;}
+#codigoPost{display: none;}
 
