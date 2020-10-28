@@ -23,7 +23,7 @@ function nombreUsuarioPulsado(){
         element.style.visibility = 'hidden';
     }
 }
-
+//$(header>".registro">".tarjetaPost").hidde();
 document.addEventListener("click", quitar,true);
 
 function quitar(){   
@@ -53,8 +53,12 @@ function faltaDatos(){
 
 } 
 //Cojer el Id de post seleccionado
-var tarjetaPost = document.getElementById("tituloPost").addEventListener("click",recojerIdPost,true);
-function recojerIdPost(codigoNum){
-    var codigoPost = document.getElementsByClassName("codigoPost")[codigoNum-1].innerHTML;
-    alert(codigoPost);
-}
+
+//var tarjetaPost = document.getElementById("tituloPost").addEventListener("click",recojerIdPost,true);
+ /* function recojerIdPost(codigoNum){
+    var codigoPost = document.getElementsByClassName('codigoPost')[codigoNum-1].innerHTML;
+    alert(codigoPost);}
+}  */
+
+
+

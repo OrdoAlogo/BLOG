@@ -17,6 +17,7 @@
     </style>
     <body>
     <header>
+    <?php include('PHP/conexion.php');?>
             <div class="logo">
                 <div><img src="img/cpu.png" alt="Imagen no soportada"></div>
             </div>
@@ -37,14 +38,11 @@
                 <a href="index.php" class="casa"><span class="icon-home"></span></a>
             </div>
         </header>
-        <h2>COMENTAR</h2>
+        
         <main>    
-        <div class="posts">
-            <?php
-                include('PHP/conexion.php');
-                
-            ?>
-        </div>
+        <?php cargarpost()?>
+        <h2>COMENTAR</h2>
+            
         <form action="#" method="post">       
             <textarea cols="40" rows="1" name="comentario" onkeydown="valida_longitud()" onkeyup="valida_longitud()"> </textarea> 
             <input type="button" name="caracteres" >

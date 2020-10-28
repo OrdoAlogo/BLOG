@@ -24,6 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         else if($tipo=="nuevoPost"){
             crearPost(conexion());
+        }else if($tipo=="filtrado"){
+           // cargarPosts(recibirPosts());
+            //echo strip_tags( "<header><div id='tarjetaPost'></div></header>");
         }
        }    
 }
@@ -258,21 +261,21 @@ function recibirPosts(){
 }
 
 function cargarPosts($posts){
-    echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
     foreach($posts as $posicion =>$columna){
         ?>
     <div id="tarjetaPost">
-        <p class="codigoPost"style="display: none;" ><?php echo $columna['id_post'] ?><p>
-        <h2 class="tituloPost" onclick="recojerIdPost(<?php echo  $columna['id_post'] ?>)"><?php echo $columna['titulo'] ?> </h2>
+        <p class="codigoPost"  style="display: none;" ><p>
+        <h2 class="tituloPost" id="<?php echo  $columna['id_post']?>" ><?php echo $columna['titulo'] ?> <a style="visibility:hidden; width:100%;" class="cosa" title="<?php echo $columna['id_post'] ?>"></a> </h2>
         <p class="contenido"><?php echo $columna['contenido'] ?> </p>
         <p class="visualizaciones"><span class="icon-eye"></span><?php echo (" ".$columna['visitas']) ?></p>
         <p class="autor">Autor: <?php echo $columna['nickname'] ?> </p>
         <span class="fecha"><?php echo ("Fecha: ".$columna['fecha'] )?></span>
     </div>
     <?php
+    echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
     }
-
 }
+
 function cargarTopPosts(){
     try{
         $procedimiento = 'SELECT id_post, titulo,imagen_post, visitas FROM posts HAVING(visitas>2) ORDER by visitas DESC';
@@ -296,6 +299,7 @@ function cargarTopPosts(){
         <?php
     }           
 }
+
 function cargarTopUsuarios(){
     try{
         $topUser = "SELECT posts.nickname, e_mail, foto_nick, COUNT(id_post) as 'post' FROM posts,usuarios WHERE usuarios.nickname=posts.nickname GROUP BY posts.nickname HAVING COUNT(id_post>1) ORDER BY COUNT(id_post) DESC";
@@ -318,6 +322,7 @@ function cargarTopUsuarios(){
     <?php
     }
 }
+
 function logearRegistrarUsuario(){
     session_start(); 
     if(isset($_SESSION["usuarioLogeado"])){ 
