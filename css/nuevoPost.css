@@ -1,24 +1,19 @@
-body {
-    background-color:rgb(159, 187, 238);
-}
 
 h2{
     margin: 1%;
     font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
     text-align: center;
     font-size: 1.3rem;
+    background:#5F4C0B ;
 }
  
-main{
-    margin: 1%;
-    margin-top: 2%;
-    
-}
+main{  margin: 1%;  margin-top: 2%;}
 
 form{
     margin: 0 auto; 
     border: 0.5em solid black;
     width: 85%;
+    background: #886A08;
 }
 
 label{
