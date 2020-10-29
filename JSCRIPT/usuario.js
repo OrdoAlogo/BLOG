@@ -9,9 +9,11 @@ class Usuario{
     }
 }
 
-var nombreUsuario = document.getElementById("nickUsu").addEventListener("click",nombreUsuarioPulsado,true);
+var nombreUsuario = document.getElementById("nickUsu");
+nombreUsuario.addEventListener("click", nombreUsuarioPulsado, true);
 
 function nombreUsuarioPulsado(){
+    console.log("pulso");
     let element = document.getElementById('desplegable');
     let elementStyle = window.getComputedStyle(element);
     let elementColor = elementStyle.getPropertyValue('visibility');
@@ -115,5 +117,10 @@ function longContra(){
        alert("La contraseña debe tener 10 caracteres mínimo");
        cancelar()
     }
+}
+
+function logeado(){
+    console.log("logeado");
+    document.getElementById("nuevoPost").style.display= "block";
 }
 

@@ -166,7 +166,7 @@ function insertarUsuario($loginBD){
 }
 
 
-function crearPost($loginBD){
+ function crearPost($loginBD){
 
     session_start();
 
@@ -253,64 +253,10 @@ function crearPost($loginBD){
             
         }else{
             $stmt = $loginBD->prepare('INSERT INTO posts (nickname, titulo, contenido, visitas, fecha ) VALUES (:nickname, :titulo, :contenido, :visitas, :fecha )');
+        }
     }
     
-}
-
-
-function crearPost($loginBD){
-
-    session_start();
-
-    $titulo = isset($_REQUEST['titulo']) ? $_REQUEST['titulo'] : null;
-    $contenido = isset($_REQUEST['contenido']) ? $_REQUEST['contenido'] : null;
-    $foto = isset($_REQUEST['foto']) ? $_REQUEST['foto'] : null;
-    $autor=$_SESSION["usuarioLogeado"];
-    $visitas=0;
-    $fecha=date("Y-m-d");
-
-
-
-    if (is_uploaded_file($_FILES['foto']['tmp_name'])) { 
-        //Valida el nombre del archivo
-        if(empty($_FILES['foto']['name']))
-        {
-            //echo " no tiene nombre ";
-            exit;
-        }
-    
-        $upload_file_name = $titulo.".png";
-        if(strlen ($upload_file_name)>100)
-        {
-            //echo " nombre muy largo ";
-            exit;
-        }
-    
-        //quita los caracteres no alfanumericos
-        $upload_file_name = preg_replace("/[^A-Za-z0-9 \.\-_]/", '', $upload_file_name);
-    
-        //limite de tamañp
-        if ($_FILES['foto']['size'] > 1000000) 
-        {
-            //echo " archivo demasiado pesado ";
-            exit;        
-            $stmt->execute(
-                array(
-                    'nickname' => $autor,
-                    'titulo' => $titulo,
-                    'contenido'=>$contenido,
-                    'visitas'=>$visitas,
-                    'fecha'=>$fecha
-        
-                )
-            ); 
-
-            header('Location: index.php');
-        }
-}
-     
-
-}
+} 
 
 function cerrarSesion(){
     session_start();
@@ -351,7 +297,7 @@ function cargarPosts($posts){
     foreach($posts as $posicion =>$columna){
         ?>
     <div id="tarjetaPost">
-       // <img src="<?php echo $columna['imagen_post'] ?>">
+       <!-- <img src="<//?php //echo $columna['imagen_post'] ?>"> -->
         <a href="posts.php?idPost=<?php echo $columna['id_post']; ?>"> <h2 class="tituloPost"><?php echo $columna['titulo'] ?> </h2> </a>
         <p class="contenido"><?php echo $columna['contenido'] ?> </p>
         <p class="visualizaciones"><span class="icon-eye"></span><?php echo (" ".$columna['visitas']) ?></p>
@@ -405,19 +351,24 @@ function cargarTopUsuarios(){
             <p>Nº post_: <?php echo $col['post'] ?></p>
             <p>Imagen: <?php echo $col['foto_nick'] ?></p>
         </div>
-    <?php
+        <?php
     }
 }
 
 function logearRegistrarUsuario(){
     session_start(); 
     if(isset($_SESSION["usuarioLogeado"])){ 
-        echo ("<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/></br><a id='nickUsu' >".$_SESSION["usuarioLogeado"]."</a>");
-        echo("<div id='desplegable'></br><a class='botonesUsuario' href='#'> Ajustes</a></br></br><a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a></div>");
+        echo "<script type='text/javascript' src='JSCRIPT/usuario.js'></script>";
+        echo "<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/><br>";
+        echo "<a id='nickUsu' >".$_SESSION["usuarioLogeado"]."</a>";
+        echo "<div id='desplegable'></br><a class='botonesUsuario' href='#'> Ajustes</a></br></br><a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a></div>";
+        echo "<script type='text/javascript'>logeado();</script>";
     }
     else{
         print ("<a id='nickUsu'href='login.php'>Entrar | Registrarse</a><span class=icon-user></span>");
     }
-    //echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
+   
 }
+
+
 ?>
