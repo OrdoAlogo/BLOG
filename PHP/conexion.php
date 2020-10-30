@@ -1,10 +1,10 @@
 
-<!--<html>
+<html>
 <head>
     <script src="JSCRIPT/usuario.js" type="text/javascript"></script>
 </head>
 
-</html>-->
+</html>
 
 <?php
 if ($_SERVER["REQUEST_METHOD"]=='GET'){
@@ -87,34 +87,134 @@ function insertarUsuario($loginBD){
     $stmt = $loginBD->prepare('SELECT e_mail FROM usuarios WHERE e_mail= :email;');
     $stmt->execute(['email' => $email]);
     $correo =$stmt->fetch();
-    //echo $nombre[0]." " .$correo[0];
+    
+    //echo $nombre[0]." y " .$correo[0];
 
 
     if(empty($nick)||empty($email)||empty($contra)){
         //echo "Introduce todos los datos";
         echo '<script type="text/javascript">faltaDatos();</script>';
-    }
-    if(isset($correo[0])==$email){
+    }else{
+        if(isset($correo[0])==$email){
         //echo "El correo ya existe";
         echo '<script type="text/javascript">registroExisteEmail();</script>';
+        }
+        if(isset($nombre[0])==$nick){
+            //echo "El nick ya existe";
+            echo '<script type="text/javascript">registroExisteNick();</script>';
+        }
+
+        else{
+
+            if (is_uploaded_file($_FILES['arch']['tmp_name'])) { 
+                //Valida el nombre del archivo
+                if(empty($_FILES['arch']['name']))
+                {
+                    //echo " no tiene nombre ";
+                    exit;
+                }
+            
+                //$upload_file_name = $_FILES['arch']['name'];
+                $upload_file_name = $email.".png";
+                if(strlen ($upload_file_name)>100)
+                {
+                    //echo " nombre muy largo ";
+                    exit;
+                }
+            
+                //quita los caracteres no alfanumericos
+                $upload_file_name = preg_replace("/[^A-Za-z0-9 \.\-_]/", '', $upload_file_name);
+            
+                //limite de tamañp
+                if ($_FILES['arch']['size'] > 1000000) 
+                {
+                    //echo " archivo demasiado pesado ";
+                    exit;        
+                }
+                //Guarda la imagen
+                            $dest='img/usuarios/'.$upload_file_name;
+                            if (move_uploaded_file($_FILES['arch']['tmp_name'], $dest)) 
+                            {
+                                //echo 'Imagen subida !';
+                            }
+    
+                $stmt = $loginBD->prepare('INSERT INTO usuarios (nickname, contrasena, foto_nick, e_mail, tipo_de_usuario, estado ) VALUES (:nick, :contra, :foto_nick, :email, :tipo_de_usuario, :estado )');
+        
+                $stmt->execute(
+                    array(
+                        'nick' => $nick,
+                        'contra' => $contra,
+                        'foto_nick'=>$dest,
+                        'email' => $email,
+                        'tipo_de_usuario'=>$tipo_de_usuario,
+                        'estado'=>$estado
+            
+                    )
+                ); 
+    
+                
+            }
+    
+            
+    
+    
+    
+        }
+
     }
-    if(isset($nombre[0])==$nick){
-        //echo "El nick ya existe";
-        echo '<script type="text/javascript">registroExisteNick();</script>';
+    
+    
+    
+    
+}
+
+
+function crearPost($loginBD){
+
+    session_start();
+
+    $titulo = isset($_REQUEST['titulo']) ? $_REQUEST['titulo'] : null;
+    $contenido = isset($_REQUEST['contenido']) ? $_REQUEST['contenido'] : null;
+    $foto = isset($_REQUEST['foto']) ? $_REQUEST['foto'] : null;
+    $autor=$_SESSION["usuarioLogeado"];
+    $visitas=0;
+    $fecha=date("Y-m-d");
+
+    if(empty($titulo)||empty($contenido)){ 
+        //echo "Introduce todos los datos";
+        //echo "<script type='text/javascript'>prueba();</script>"
+        if(empty($titulo)){
+        ?>
+        <style type="text/css">
+        #titulo {
+            border: 2px solid red;
+        }
+        </style><?php
+        }
+        
+        if(empty($contenido)){
+            ?>
+            <style type="text/css">
+            #contenido {
+                border: 2px solid red;
+            }
+            </style>
+       <?php 
+       }
+        
     }
     
     else{
 
-        if (is_uploaded_file($_FILES['arch']['tmp_name'])) { 
+        if (is_uploaded_file($_FILES['foto']['tmp_name'])) { 
             //Valida el nombre del archivo
-            if(empty($_FILES['arch']['name']))
+            if(empty($_FILES['foto']['name']))
             {
                 //echo " no tiene nombre ";
                 exit;
             }
         
-            //$upload_file_name = $_FILES['arch']['name'];
-            $upload_file_name = $email.".png";
+            $upload_file_name = $titulo.".png";
             if(strlen ($upload_file_name)>100)
             {
                 //echo " nombre muy largo ";
@@ -125,41 +225,40 @@ function insertarUsuario($loginBD){
             $upload_file_name = preg_replace("/[^A-Za-z0-9 \.\-_]/", '', $upload_file_name);
         
             //limite de tamañp
-            if ($_FILES['arch']['size'] > 1000000) 
+            if ($_FILES['foto']['size'] > 1000000) 
             {
                 //echo " archivo demasiado pesado ";
                 exit;        
             }
             //Guarda la imagen
-                        $dest='img/usuarios/'.$upload_file_name;
-                        if (move_uploaded_file($_FILES['arch']['tmp_name'], $dest)) 
-                        {
-                            //echo 'Imagen subida !';
-                        }
+            $dest='img/posts/'.$upload_file_name;
+            if (move_uploaded_file($_FILES['foto']['tmp_name'], $dest)) 
+            {
+                //echo 'Imagen subida !';
+            }
 
-            $stmt = $loginBD->prepare('INSERT INTO usuarios (nickname, contrasena, foto_nick, e_mail, tipo_de_usuario, estado ) VALUES (:nick, :contra, :foto_nick, :email, :tipo_de_usuario, :estado )');
-    
+            $stmt = $loginBD->prepare('INSERT INTO posts (nickname, titulo, contenido, imagen_post, visitas, fecha ) VALUES (:nickname, :titulo, :contenido, :imagen_post, :visitas, :fecha )');
+
             $stmt->execute(
                 array(
-                    'nick' => $nick,
-                    'contra' => $contra,
-                    'foto_nick'=>$dest,
-                    'email' => $email,
-                    'tipo_de_usuario'=>$tipo_de_usuario,
-                    'estado'=>$estado
+                    'nickname' => $autor,
+                    'titulo' => $titulo,
+                    'contenido'=>$contenido,
+                    'imagen_post' => $dest,
+                    'visitas'=>$visitas,
+                    'fecha'=>$fecha
         
                 )
             ); 
 
+            header('Location: index.php');
+
             
-        }
-
-        
-
-
-
+        }else{
+            $stmt = $loginBD->prepare('INSERT INTO posts (nickname, titulo, contenido, visitas, fecha ) VALUES (:nickname, :titulo, :contenido, :visitas, :fecha )');
     }
     
+}
 }
 
 
@@ -199,30 +298,20 @@ function crearPost($loginBD){
         {
             //echo " archivo demasiado pesado ";
             exit;        
-        }
-        //Guarda la imagen
-        $dest='img/posts/'.$upload_file_name;
-        if (move_uploaded_file($_FILES['foto']['tmp_name'], $dest)) 
-        {
-            //echo 'Imagen subida !';
-        }
-
-        $stmt = $loginBD->prepare('INSERT INTO posts (nickname, titulo, contenido, imagen_post, visitas, fecha ) VALUES (:nickname, :titulo, :contenido, :imagen_post, :visitas, :fecha )');
-
-        $stmt->execute(
-            array(
-                'nickname' => $autor,
-                'titulo' => $titulo,
-                'contenido'=>$contenido,
-                'imagen_post' => $dest,
-                'visitas'=>$visitas,
-                'fecha'=>$fecha
-    
-            )
-        ); 
-
+            $stmt->execute(
+                array(
+                    'nickname' => $autor,
+                    'titulo' => $titulo,
+                    'contenido'=>$contenido,
+                    'visitas'=>$visitas,
+                    'fecha'=>$fecha
         
-    }
+                )
+            ); 
+
+            header('Location: index.php');
+        }
+}
      
 
 }
@@ -260,16 +349,18 @@ function recibirPosts(){
     return $resultado;
 }
 
+//PAGINA INDEX en los pos principales
 function cargarPosts($posts){
     foreach($posts as $posicion =>$columna){
         ?>
     <div id="tarjetaPost">
-        <p class="codigoPost"  style="display: none;" ><p>
-        <h2 class="tituloPost" id="<?php echo  $columna['id_post']?>" ><?php echo $columna['titulo'] ?> <a style="visibility:hidden; width:100%;" class="cosa" title="<?php echo $columna['id_post'] ?>"></a> </h2>
+       <!--<img src="//<//?//php echo $columna['imagen_post'] ?>">-->
+        <a href="posts.php?idPost=<?php echo $columna['id_post']; ?>"> <h2 class="tituloPost"><?php echo $columna['titulo'] ?> </h2> </a>
         <p class="contenido"><?php echo $columna['contenido'] ?> </p>
         <p class="visualizaciones"><span class="icon-eye"></span><?php echo (" ".$columna['visitas']) ?></p>
         <p class="autor">Autor: <?php echo $columna['nickname'] ?> </p>
         <span class="fecha"><?php echo ("Fecha: ".$columna['fecha'] )?></span>
+        
     </div>
     <?php
     echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
@@ -292,7 +383,7 @@ function cargarTopPosts(){
         ?>  
         <div class="datosDB">
             <p>Id post: <?php echo $fila['id_post']; ?> </p>
-            <p onclick="recojerIdPost(<?php echo  $fila['id_post']?>)">Titulo: <?php  echo  $fila['titulo']; ?> </p>
+            <p onclick="recogerIdPost(<?php echo  $fila['id_post']?>)">Titulo: <?php  echo  $fila['titulo']; ?> </p>
             <p>Img: <?php  echo $fila['imagen_post']; ?> </p>
             <p>Nº visitas: <?php echo $fila['visitas']; ?> </p>
         </div>     
@@ -334,4 +425,5 @@ function logearRegistrarUsuario(){
     }
     //echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
 }
+
 ?>

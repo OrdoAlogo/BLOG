@@ -14,7 +14,7 @@
             </div>
 
             <div class="titulo">
-                <h1>BENCH<span>BLOG</span></h1>
+                <a href="index.php"><h1>BENCH<span>BLOG</span></h1> </a>
             </div>
 
             <div class="buscador">
@@ -36,8 +36,9 @@
                 <h3 id="titulo_principal">POST PRINCIPALES</h3>
                     <?php 
                     cargarPosts(recibirPosts());
+                    
                     ?>
-                
+                    
             </div>
             <div class="aside">
                 <div class="topPost">
@@ -52,6 +53,7 @@
                     ?>
                 </div>
                 <div class="piePagina">
+                    <h3>INFO</h3>
                     <p>2DW3 - GRUPO 2 Cast </p>
                     <p>Tel: 444 444 444</p>
                     <p>Email: coreo@gmail.com</p>
