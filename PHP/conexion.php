@@ -313,7 +313,7 @@ function cargarPosts($posts){
         
     </div>
     <?php
-    echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
+   // echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
     }
 }
 
