@@ -1,10 +1,10 @@
-
+<!-- 
 <html>
 <head>
     <script src="JSCRIPT/usuario.js" type="text/javascript"></script>
 </head>
 
-</html>
+</html> -->
 
 <?php
 if ($_SERVER["REQUEST_METHOD"]=='GET'){
@@ -24,8 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         else if($tipo=="nuevoPost"){
             crearPost(conexion());
-        }
        }    
+    }
 }
 
 
@@ -144,10 +144,7 @@ function insertarUsuario($loginBD){
                         'foto_nick'=>$dest,
                         'email' => $email,
                         'tipo_de_usuario'=>$tipo_de_usuario,
-                        'estado'=>$estado
-            
-                    )
-                ); 
+                        'estado'=>$estado )); 
     
                 
             }
@@ -164,7 +161,19 @@ function insertarUsuario($loginBD){
     
     
 }
+function CargarPost($id){
+    $contenido= $id;
+    $consulta = 'SELECT contenido FROM posts WHERE id_post = :id_post';
+    echo ($consulta);
+    $sentencia = conexion()->prepare($consulta);
+    //$sentencia->setFetchMode(PDO::FETCH_ASSOC);
+    $sentencia->execute(['id_post' => $contenido]);
+    $hola = $sentencia->fetch();
+    return ($hola[0]);
 
+    //Imprimo los resultados
+    
+}
 
 function crearPost($loginBD){
 
@@ -253,65 +262,10 @@ function crearPost($loginBD){
             
         }else{
             $stmt = $loginBD->prepare('INSERT INTO posts (nickname, titulo, contenido, visitas, fecha ) VALUES (:nickname, :titulo, :contenido, :visitas, :fecha )');
-    }
+    }}
     
 }
-
-
-function crearPost($loginBD){
-
-    session_start();
-
-    $titulo = isset($_REQUEST['titulo']) ? $_REQUEST['titulo'] : null;
-    $contenido = isset($_REQUEST['contenido']) ? $_REQUEST['contenido'] : null;
-    $foto = isset($_REQUEST['foto']) ? $_REQUEST['foto'] : null;
-    $autor=$_SESSION["usuarioLogeado"];
-    $visitas=0;
-    $fecha=date("Y-m-d");
-
-
-
-    if (is_uploaded_file($_FILES['foto']['tmp_name'])) { 
-        //Valida el nombre del archivo
-        if(empty($_FILES['foto']['name']))
-        {
-            //echo " no tiene nombre ";
-            exit;
-        }
-    
-        $upload_file_name = $titulo.".png";
-        if(strlen ($upload_file_name)>100)
-        {
-            //echo " nombre muy largo ";
-            exit;
-        }
-    
-        //quita los caracteres no alfanumericos
-        $upload_file_name = preg_replace("/[^A-Za-z0-9 \.\-_]/", '', $upload_file_name);
-    
-        //limite de tamañp
-        if ($_FILES['foto']['size'] > 1000000) 
-        {
-            //echo " archivo demasiado pesado ";
-            exit;        
-            $stmt->execute(
-                array(
-                    'nickname' => $autor,
-                    'titulo' => $titulo,
-                    'contenido'=>$contenido,
-                    'visitas'=>$visitas,
-                    'fecha'=>$fecha
-        
-                )
-            ); 
-
-            header('Location: index.php');
-        }
-}
-     
-
-}
-
+   
 function cerrarSesion(){
     session_start();
     unset($_SESSION["usuarioLogeado"]);
@@ -347,22 +301,22 @@ function recibirPosts(){
 
 //PAGINA INDEX en los pos principales
 function cargarPosts($posts){
-    echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
     foreach($posts as $posicion =>$columna){
         ?>
     <div id="tarjetaPost">
-       // <img src="<?php echo $columna['imagen_post'] ?>">
-        <a href="posts.php?idPost=<?php echo $columna['id_post']; ?>"> <h2 class="tituloPost"><?php echo $columna['titulo'] ?> </h2> </a>
-        <p class="contenido"><?php echo $columna['contenido'] ?> </p>
+       <!--<img src="//<//?//php echo $columna['imagen_post'] ?>">-->
+        <a href="paginaPost.php?idPost=<?php echo $columna['id_post']; ?>"> <h2 class="tituloPost"><?php echo $columna['titulo'] ?> </h2> </a>
+        <p class="contenido"><?php $resultado = substr($columna['contenido'], 0, 400)."..."; echo $resultado?> </p>
         <p class="visualizaciones"><span class="icon-eye"></span><?php echo (" ".$columna['visitas']) ?></p>
         <p class="autor">Autor: <?php echo $columna['nickname'] ?> </p>
         <span class="fecha"><?php echo ("Fecha: ".$columna['fecha'] )?></span>
         
     </div>
     <?php
+    echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
     }
-
 }
+
 function cargarTopPosts(){
     try{
         $procedimiento = 'SELECT id_post, titulo,imagen_post, visitas FROM posts HAVING(visitas>2) ORDER by visitas DESC';
@@ -386,7 +340,8 @@ function cargarTopPosts(){
         <?php
     }           
 }
-function cargarTopUsuarios(){
+
+ function cargarTopUsuarios(){
     try{
         $topUser = "SELECT posts.nickname, e_mail, foto_nick, COUNT(id_post) as 'post' FROM posts,usuarios WHERE usuarios.nickname=posts.nickname GROUP BY posts.nickname HAVING COUNT(id_post>1) ORDER BY COUNT(id_post) DESC";
         $topUsuarios = conexion()->query($topUser);
@@ -407,9 +362,9 @@ function cargarTopUsuarios(){
         </div>
     <?php
     }
-}
+} 
 
-function logearRegistrarUsuario(){
+ function logearRegistrarUsuario(){
     session_start(); 
     if(isset($_SESSION["usuarioLogeado"])){ 
         echo ("<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/></br><a id='nickUsu' >".$_SESSION["usuarioLogeado"]."</a>");
@@ -419,5 +374,7 @@ function logearRegistrarUsuario(){
         print ("<a id='nickUsu'href='login.php'>Entrar | Registrarse</a><span class=icon-user></span>");
     }
     //echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
-}
+
+ }
+
 ?>
