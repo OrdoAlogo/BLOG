@@ -19,17 +19,6 @@
             <a href="index.php"><h1>BENCH<span>BLOG</span></h1> </a>
         </div>
 
-        <div class="buscador">
-            <form method="post" action="index.php">
-                <input type="text" name="palabra">
-                <input type="submit" name="submit" id="btnBuscar" value="BUSCAR">
-            </form>
-        </div>
-
-        <div class="registro">
-            <?php include ('PHP/conexion.php');logearRegistrarUsuario();?>
-        </div>
-               
 </header>
       <h2>EN ESTA PÁGINA TE PODRAS LOGUEAR O REGISTRAR EN NUESTRO BLOG PARA ENCONTRAR LOS MEJORES POSTS SOBRE BENCHMARKS</h2>  
    
@@ -74,6 +63,7 @@
                 </label><br>
                 <label for="Arch"> Archivo</label><br>
                 <input type="file" id="arch" name="arch"><br>
+                <p id="faltaDato" class="existe"> Faltan datos </p>
                 <input type="hidden" name="tipo" id ="tipo" value="Registro"> 
                 <button id="btnRegistro" onclick="validarForm()" class="boton">REGISTRARSE</button>
                 <input class="boton" type="reset"  value="Borrar"/>
@@ -83,7 +73,7 @@
     </main>
 
     <marquee>LO MEJOR DE BENCHMARKS </marquee>
-    <aside>
+    <!-- <aside>
         <form id="Registro" action="" method="post" enctype="multipart/form-data">
             <label for="Nick">Nickname</label></br>
             <input type="text" id="nick" name="nick"><br>
@@ -100,7 +90,7 @@
             <input class="boton" type="submit" value="Registrarse"/>
             <input class="boton" type="reset"  value="Borrar"/>
         </form>
-    </aside>
+    </aside> -->
     <footer>
     </footer>
 

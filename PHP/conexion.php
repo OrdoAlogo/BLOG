@@ -6,7 +6,10 @@
 
 </html>
 
-<?php
+<?php 
+
+session_start();
+
 if ($_SERVER["REQUEST_METHOD"]=='GET'){
    if(isset( $_GET["tipo"])){
     $tipo = $_GET["tipo"];
@@ -50,7 +53,7 @@ function comprobarExistencia($nickname,$contraseña,$login){
     if($numero>0){
         foreach ($usuario as $usu => $valor){
             if($valor['contrasena'] == $contraseña){
-                session_start();
+                
                 $_SESSION["usuarioLogeado"] = $valor['nickname'];
                 $_SESSION["fotoLogeado"] = $valor['foto_nick'];
                 header('Location: index.php');
@@ -168,7 +171,7 @@ function insertarUsuario($loginBD){
 
  function crearPost($loginBD){
 
-    session_start();
+    //session_start();
 
     $titulo = isset($_REQUEST['titulo']) ? $_REQUEST['titulo'] : null;
     $contenido = isset($_REQUEST['contenido']) ? $_REQUEST['contenido'] : null;
@@ -259,7 +262,7 @@ function insertarUsuario($loginBD){
 } 
 
 function cerrarSesion(){
-    session_start();
+    //session_start();
     unset($_SESSION["usuarioLogeado"]);
     print "Sesion borrada";
 }
@@ -356,13 +359,14 @@ function cargarTopUsuarios(){
 }
 
 function logearRegistrarUsuario(){
-    session_start(); 
+    //session_start(); 
+    
     if(isset($_SESSION["usuarioLogeado"])){ 
         echo "<script type='text/javascript' src='JSCRIPT/usuario.js'></script>";
         echo "<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/><br>";
         echo "<a id='nickUsu' >".$_SESSION["usuarioLogeado"]."</a>";
         echo "<div id='desplegable'></br><a class='botonesUsuario' href='#'> Ajustes</a></br></br><a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a></div>";
-        echo "<script type='text/javascript'>logeado();</script>";
+        echo '<script type="text/javascript">logeado();</script>';
     }
     else{
         print ("<a id='nickUsu'href='login.php'>Entrar | Registrarse</a><span class=icon-user></span>");

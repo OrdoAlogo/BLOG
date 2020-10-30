@@ -17,12 +17,13 @@ input[type=reset]:hover{background: orangered; color: white;}
 label{
     
     font-weight: bold;
-    text-align: center;;
+    text-align: center;
     margin: 1em;
     font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
 }
 input{
     margin: 1em;
+    
 }
 form{
     text-align: center;
