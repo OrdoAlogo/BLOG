@@ -1,3 +1,4 @@
+<?php include 'PHP/conexion.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +27,7 @@
         
         <div class="sesion">
             <h4>INICIAR SESIÓN</h4>
-            <form id="Login" action="" method="$_GET">
+            <form id="Login"  method="$_GET">
                 <label for="Nick">Nickname
                     </br>
                     <input type="text" name="Nick" id="Nick"><br>
@@ -38,7 +39,7 @@
                     <input type="hidden" name="tipo" value="Login">
                 </label><br>
                 
-                <input class="boton" type="submit" onclick="" value="Entrar">
+                <input class="boton" type="submit"  value="Entrar">
                 <input class="boton" type="reset" value="Borrar"/>
 
             </form>
@@ -70,27 +71,27 @@
             </form> -->
             <aside>
                 <form id="Registro" action="" method="post" enctype="multipart/form-data">
-                <label for="Nick">Nickname
-                            </br>
-                            <input type="text" id="nick" name="nick"><br>
-                            <p id="nickExiste" class="existe"> El nick ya existe</p>
-                        </label></br>
-                        <label for="mail">Email
-                            </br>
-                            <input type="text"  id="email" name="email"><br>
-                            <p id="emailExiste"class="existe"> El email ya existe</p>
-                        </label></br>
-                    
-                        <label for="Contra"> Contraseña
-                            </br>
-                            <input type="password" id="contra" name="contra" onkeydown="longContrasenia()" onkeyup="longContrasenia()"><br>
-                        </label><br>
-                        <label for="Arch"> Archivo</label><br>
-                        <input type="file" id="arch" name="arch"><br>
-                        <p id="faltaDato" class="existe">Faltan Datos</p>
-                        <input type="hidden" name="tipo" id ="tipo" value="Registro"> 
-                        <button id="btnRegistro" onclick="validarForm()" class="boton">REGISTRARSE</button>
-                        <input class="boton" type="reset"  value="Borrar"/>
+                    <label for="Nick">Nickname
+                        </br>
+                        <input type="text" id="nick" name="nick"><br>
+                        <p id="nickExiste" class="existe"> El nick ya existe</p>
+                    </label></br>
+                    <label for="mail">Email
+                        </br>
+                        <input type="text"  id="email" name="email"><br>
+                        <p id="emailExiste"class="existe"> El email ya existe</p>
+                    </label></br>
+                
+                    <label for="Contra"> Contraseña
+                        </br>
+                        <input type="password" id="contra" name="contra" onkeydown="longContrasenia()" onkeyup="longContrasenia()"><br>
+                    </label><br>
+                    <label for="Arch"> Archivo</label><br>
+                    <input type="file" id="arch" name="arch"><br>
+                    <p id="faltaDato" class="existe">Faltan Datos</p>
+                    <input type="hidden" name="tipo" id ="tipo" value="Registro"> 
+                    <button id="btnRegistro" onclick="validarForm()" class="boton">REGISTRARSE</button>
+                    <input class="boton" type="reset"  value="Borrar"/>
                 </form>
         </aside>
         </div>

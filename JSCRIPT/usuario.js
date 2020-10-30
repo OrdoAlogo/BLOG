@@ -1,7 +1,9 @@
 
-console.log("hola");
+
 var nombreUsuario = document.getElementById("nickUsu");
 nombreUsuario.addEventListener("click", nombreUsuarioPulsado, true);
+document.getElementById("nuevoPost1").style.display= "block"; 
+
 
 function nombreUsuarioPulsado(){
     console.log("pulso");
@@ -111,6 +113,9 @@ function longContrasenia(){
 
 function logeado(){
     console.log("logeado");
-    document.getElementById("nuevoPost").style.display= "block";
+    /* document.getElementById("nuevoPost").style.display= "block";  */
+
+
+  
 }
 
