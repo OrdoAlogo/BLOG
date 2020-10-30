@@ -265,18 +265,10 @@ function CargarPost($id){
             
         }else{
             $stmt = $loginBD->prepare('INSERT INTO posts (nickname, titulo, contenido, visitas, fecha ) VALUES (:nickname, :titulo, :contenido, :visitas, :fecha )');
-<<<<<<< HEAD
-        }
-    }
-    
-} 
-
-=======
     }}
     
 }
    
->>>>>>> 9eee0d6a36a9cc70cbe7741bfdd61cc89b7dfc28
 function cerrarSesion(){
     //session_start();
     unset($_SESSION["usuarioLogeado"]);
@@ -315,15 +307,9 @@ function cargarPosts($posts){
     foreach($posts as $posicion =>$columna){
         ?>
     <div id="tarjetaPost">
-<<<<<<< HEAD
-       <!-- <img src="<//?php //echo $columna['imagen_post'] ?>"> -->
-        <a href="posts.php?idPost=<?php echo $columna['id_post']; ?>"> <h2 class="tituloPost"><?php echo $columna['titulo'] ?> </h2> </a>
-        <p class="contenido"><?php echo $columna['contenido'] ?> </p>
-=======
        <!--<img src="//<//?//php echo $columna['imagen_post'] ?>">-->
         <a href="paginaPost.php?idPost=<?php echo $columna['id_post']; ?>"> <h2 class="tituloPost"><?php echo $columna['titulo'] ?> </h2> </a>
         <p class="contenido"><?php $resultado = substr($columna['contenido'], 0, 400)."..."; echo $resultado?> </p>
->>>>>>> 9eee0d6a36a9cc70cbe7741bfdd61cc89b7dfc28
         <p class="visualizaciones"><span class="icon-eye"></span><?php echo (" ".$columna['visitas']) ?></p>
         <p class="autor">Autor: <?php echo $columna['nickname'] ?> </p>
         <span class="fecha"><?php echo ("Fecha: ".$columna['fecha'] )?></span>
@@ -381,14 +367,8 @@ function cargarTopPosts(){
     }
 } 
 
-<<<<<<< HEAD
-function logearRegistrarUsuario(){
-    //session_start(); 
-    
-=======
  function logearRegistrarUsuario(){
     session_start(); 
->>>>>>> 9eee0d6a36a9cc70cbe7741bfdd61cc89b7dfc28
     if(isset($_SESSION["usuarioLogeado"])){ 
         echo "<script type='text/javascript' src='JSCRIPT/usuario.js'></script>";
         echo "<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/><br>";
@@ -399,14 +379,8 @@ function logearRegistrarUsuario(){
     else{
         print ("<a id='nickUsu'href='login.php'>Entrar | Registrarse</a><span class=icon-user></span>");
     }
-<<<<<<< HEAD
-   
-}
-
-=======
     //echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
 
  }
->>>>>>> 9eee0d6a36a9cc70cbe7741bfdd61cc89b7dfc28
 
 ?>
