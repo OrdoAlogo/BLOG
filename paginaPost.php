@@ -9,43 +9,30 @@
     <link rel="stylesheet" type="text/css" href="css/encabezado.css">
     <!-- <link rel="stylesheet" type="text/css" href="css/index.css"> -->
     <link rel="stylesheet" href="css/post.css"> 
+    <?php session_start(); ?>
 </head>
 <body>
     <header></header>
 
     <main>
-        <img src="img/cpu.png" alt="" style="width:15vw; height:15vw; float: right;">
-        <p><?php include ('PHP/conexion.php'); echo(CargarPost($_GET["idPost"]));?></p> 
+        <h1><?php include ('PHP/conexion.php'); echo(cargarTituloPost($_GET["idPost"]))?></h1>
+        <img src='<?php echo (cargarFotoPost($_GET["idPost"]))?>' alt="" style="width:15vw; height:15vw; float: right;">
+        <p><?php echo(CargarPost($_GET["idPost"]));?></p> 
         <div class="comentarios">
+        <?php if(isset($_SESSION["usuarioLogeado"])){ echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");?>
         <div class="formC">
-                <form action="#" method="post">       
-                    <textarea cols="40" rows="1" name="comentario" placeholder="Limite carateres: 400" onkeydown="valida_longitud()" onkeyup="valida_longitud()"> </textarea> 
+                <h3>Escriba aqui su comentario</h3> <br>
+                <form method="GET">       
+                    <textarea id = "textoArea" cols="40" rows="1" name="comentario" placeholder="Limite carateres: 400" > </textarea> 
                     <input class="caracteres" type="button" name="caracteres" >
                     <button  class="envio"><span class="icon-direction"></span></buton> 
+                    <input type="hidden" name="idPost" value='<?php echo ($_GET["idPost"]) ?>'>
+                    <input type="hidden" name="tipo" value="InsertarComentario">
                 </form>
             </div>
+            <?php };?>
             <h3>COMENTARIOS</h3>
-            <?php
-            $idP=$_GET["idPost"];
-                try{
-                   $comentarios = "SELECT nickname,comentario,fecha FROM comentarios WHERE id_post=$idP";
-                    $sentenciaC =conexion()->query($comentarios);
-                    $sentenciaC->setFetchMode(PDO::FETCH_ASSOC);
-                    }catch(PDOException $pe){
-                        die("Error occurred:" . $pe->getMessage());
-                    }
-                    $sentenciaC->execute();
-                    $resultadoC = $sentenciaC->fetchAll();
-                    foreach($resultadoC as $posicionC => $filaC){
-                    ?>
-                    <div>
-                        <p> <?php echo $filaC['nickname']?></p>
-                        <p class="contenido"><?php echo $filaC['comentario']?></p>
-                        <p>Fecha: <?php echo $filaC['fecha']?></p>
-                    </div> 
-                       <?php
-                    }
-            ?>  
+            <?php cargarComentariosBlog();  ?>  
         </div>    
     </main>
     <script>
@@ -66,13 +53,15 @@ function valida_longitud(){
             document.forms[1].caracteres.style.background="green";
             document.forms[1].caracteres.style.color="white";
         }
+
      cuenta()
     }
-    function cuenta(){
-     //Mostramos el Nº de carateres introducidos en la caja de texto
-        document.forms[1].caracteres.value=document.forms[1].comentario.value.length;
-    }
+        function cuenta(){
+        //Mostramos el Nº de carateres introducidos en la caja de texto
+        document.forms[1].caracteres.value=document.forms[1].comentario.value.length
+        }
         </script>
+
     <footer></footer>
 </body>
 </html>

@@ -13,6 +13,7 @@ class Usuario{
 
 var nombreUsuario = document.getElementById("nickUsu").addEventListener("click",nombreUsuarioPulsado,true);
 function nombreUsuarioPulsado(){
+    console.log("hola");
     let element = document.getElementById('desplegable');
     let elementStyle = window.getComputedStyle(element);
     let elementColor = elementStyle.getPropertyValue('visibility');
@@ -24,12 +25,12 @@ function nombreUsuarioPulsado(){
     }
 }
 //$(header>".registro">".tarjetaPost").hidde();
-document.addEventListener("click", quitar,true);
+/* document.addEventListener("click", quitar,true);
 
 function quitar(){   
     
     document.getElementById('desplegable').style.visibility = 'hidden';
-};
+}; */
 
 var nombreUsuario = document.getElementById("cerrarSesion").addEventListener("click",cerrarSesion,true);
 
@@ -52,10 +53,6 @@ function faltaDatos(){
     document.getElementById("contra").style.borderColor = "red";  */
 
     document.getElementById("faltaDato").style.display = "block";
-
-   
-
-
 
 }
 
@@ -120,5 +117,28 @@ function longContrasenia(){
         alert("La contraseña debe tener 10 caracteres mínimo");
         cancelar()
         }
+        
+document.getElementById("textoArea").addEventListener("keyup",valida_longitud,true);
+function valida_longitud(){
+    //Contamos los caracteres de la caja de texto
+    NumCarateres = document.forms[1].comentario.value.length
+    //si alcanzamos el limite de caracteres, el programa deja de cojer texto
+    if (NumCarateres > maxCarateres){
+        document.forms[1].comentario.value = texto
+    }else{
+        texto = document.forms[1].comentario.value
+    }if (NumCarateres >= maxCarateres){
+        document.forms[1].caracteres.style.background="red";
+    }else{
+        document.forms[1].caracteres.style.background="green";
+        document.forms[1].caracteres.style.color="white";
+    }
+
+    cuenta();
+}
+    function cuenta(){
+    //Mostramos el Nº de carateres introducidos en la caja de texto
+    document.forms[1].caracteres.value=document.forms[1].comentario.value.length
+    }
 }
 
