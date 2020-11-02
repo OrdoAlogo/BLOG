@@ -265,8 +265,24 @@ function CargarPost($id){
 
             
         }else{
+            echo "hola buenos dias";
             $stmt = $loginBD->prepare('INSERT INTO posts (nickname, titulo, contenido, visitas, fecha ) VALUES (:nickname, :titulo, :contenido, :visitas, :fecha )');
-    }}
+            
+            $stmt->execute(
+                array(
+                    'nickname' => $autor,
+                    'titulo' => $titulo,
+                    'contenido'=>$contenido,
+                    'visitas'=>$visitas,
+                    'fecha'=>$fecha
+        
+                )
+            ); 
+
+            header('Location: index.php');
+        }
+
+    }
     
 }
    
@@ -376,7 +392,7 @@ function cargarTopPosts(){
         echo "<a id='nickUsu' >".$_SESSION["usuarioLogeado"]."</a>";
         echo "<div id='desplegable'></br><a class='botonesUsuario' href='#'> Ajustes</a></br></br><a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a></div>";
         
-         echo '<script type="text/javascript">logeado();</script>'; 
+        /* echo '<script type="text/javascript">logeado();</script>';  */
     }
     else{
         print ("<a id='nickUsu'href='login.php'>Entrar | Registrarse</a><span class=icon-user></span>");
@@ -397,7 +413,7 @@ function cargarTopPosts(){
     else{
         
     }
-    echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
+    /* echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>"); */
 
  }
 
