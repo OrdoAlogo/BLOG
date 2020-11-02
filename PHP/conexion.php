@@ -28,7 +28,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         else if($tipo=="nuevoPost"){
             crearPost(conexion());
-       }    
+       }  
+       
+       else if($tipo=="cambioContrasena"){
+            actualizarContrasena(conexion());
+       }
+       else if($tipo=="cambioFoto"){
+           actualizarFotoPerfil(conexion());
+
+
+       }
     }
 }
 
@@ -116,7 +125,7 @@ function insertarUsuario($loginBD){
                 }
             
                 //$upload_file_name = $_FILES['arch']['name'];
-                $upload_file_name = $email.".png";
+                $upload_file_name = $nick.".png";
                 if(strlen ($upload_file_name)>100)
                 {
                     //echo " nombre muy largo ";
@@ -285,6 +294,102 @@ function CargarPost($id){
     }
     
 }
+
+function actualizarContrasena($loginBD){
+
+    session_start();
+
+    $passActual = isset($_REQUEST['passActual']) ? $_REQUEST['passActual'] : null;
+    $passNueva = isset($_REQUEST['passNueva']) ? $_REQUEST['passNueva'] : null;
+    $passRepetir = isset($_REQUEST['passRepetir']) ? $_REQUEST['passRepetir'] : null;
+    $usuario=$_SESSION["usuarioLogeado"];
+
+    $stmt = $loginBD->prepare('SELECT contrasena FROM usuarios WHERE nickname= :nick;');
+    $stmt->execute(['nick' => $usuario]);
+    $contrasena =$stmt->fetch();
+    //echo $contrasena[0];
+
+    if($passActual==$contrasena[0]){
+
+        if($passNueva==$passRepetir){
+
+            $stmt = $loginBD->prepare('UPDATE usuarios set contrasena=:contrasena WHERE nickname=:nickname');
+            $stmt->execute(
+                array(
+                    'nickname' => $usuario,
+                    'contrasena' => $passNueva
+                )
+            ); 
+
+        }else{
+            //Error constraseñas nuevas no coinciden
+            //echo "Error constraseñas nuevas no coinciden";
+            echo "<script type='text/javascript'>ajustesPassNoCoincide();</script>";
+            
+        }
+
+
+    }else{
+
+        //Contraseña erronea
+        //echo "Contraseña erronea";
+        echo "<script type='text/javascript'>ajustesErrorPass();</script>";
+    }
+
+
+}
+
+
+function actualizarFotoPerfil($loginBD){
+
+    session_start();
+    $usuario=$_SESSION["usuarioLogeado"];
+
+
+    if (is_uploaded_file($_FILES['foto']['tmp_name'])) { 
+        //Valida el nombre del archivo
+        if(empty($_FILES['foto']['name']))
+        {
+            //echo " no tiene nombre ";
+            exit;
+        }
+    
+        $upload_file_name = $usuario.".png";
+        if(strlen ($upload_file_name)>100)
+        {
+            //echo " nombre muy largo ";
+            exit;
+        }
+    
+        //quita los caracteres no alfanumericos
+        $upload_file_name = preg_replace("/[^A-Za-z0-9 \.\-_]/", '', $upload_file_name);
+    
+        //limite de tamañp
+        if ($_FILES['foto']['size'] > 1000000) 
+        {
+            //echo " archivo demasiado pesado ";
+            exit;        
+        }
+        //Guarda la imagen
+        $dest='img/usuarios/'.$upload_file_name;
+        if (move_uploaded_file($_FILES['foto']['tmp_name'], $dest)) 
+        {
+            //echo 'Imagen subida !';
+        }
+
+        $stmt = $loginBD->prepare('UPDATE usuarios SET foto_nick=:foto_nick WHERE nickname=:nickname');
+
+        $stmt->execute(
+            array(
+                'nickname' => $usuario,
+                'foto_nick' => $dest
+            )
+        ); 
+
+    }
+
+
+}
    
 function cerrarSesion(){
     session_start();
@@ -390,7 +495,7 @@ function cargarTopPosts(){
         echo "<script type='text/javascript' src='JSCRIPT/usuario.js'></script>";
         echo "<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/><br>";
         echo "<a id='nickUsu' >".$_SESSION["usuarioLogeado"]."</a>";
-        echo "<div id='desplegable'></br><a class='botonesUsuario' href='#'> Ajustes</a></br></br><a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a></div>";
+        echo "<div id='desplegable'></br><a class='botonesUsuario' href='ajustes.php'> Ajustes</a></br></br><a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a></div>";
         
         /* echo '<script type="text/javascript">logeado();</script>';  */
     }

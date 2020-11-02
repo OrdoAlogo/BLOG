@@ -47,6 +47,13 @@ function faltaDatos(){
     document.getElementById("faltaDato").style.display = "block";
 } 
 
+function ajustesErrorPass(){
+    document.getElementById("contrasenaActualError").style.display = "block";
+}
+function ajustesPassNoCoincide(){
+    document.getElementById("contrasenaNoCoincide").style.display = "block";
+}
+
 
 //Funcion para cancelar el envio del formulario
 //en caso de que los datos sean incorrectos
