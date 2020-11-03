@@ -7,7 +7,7 @@ document.addEventListener("click", quitar,true);
 /* Al pulsar en el nombre de usuario
 aparece un menú con botones ajustes y cerrar sesión */
 function nombreUsuarioPulsado(){
-    console.log("pulso");
+
     let element = document.getElementById('desplegable');
     let elementStyle = window.getComputedStyle(element);
     let elementColor = elementStyle.getPropertyValue('visibility');
@@ -20,10 +20,12 @@ function nombreUsuarioPulsado(){
 }
 //$(header>".registro">".tarjetaPost").hidde();
 
+/* document.addEventListener("click", quitar,true);
 
 function quitar(){   
     document.getElementById('desplegable').style.visibility = 'hidden';
-}
+}; */
+
 
 var nombreUsuario = document.getElementById("cerrarSesion").addEventListener("click",cerrarSesion,true);
 
@@ -46,6 +48,7 @@ function registroExisteEmail(){
 Aparece un texto rejo advirtiendo */
 function faltaDatos(){
     document.getElementById("faltaDato").style.display = "block";
+
 } 
 
 /* Al cambiar la contraseña, si la contraseña actual no es correcta.
@@ -58,7 +61,6 @@ Aparece un texto rejo advirtiendo */
 function ajustesPassNoCoincide(){
     document.getElementById("contrasenaNoCoincide").style.display = "block";
 }
-
 
 //Funcion para cancelar el envio del formulario
 //en caso de que los datos sean incorrectos
@@ -109,7 +111,15 @@ function validarContra(){
     if(contenido.length == 0){
         alert("Introduzca la contraseña");
         document.getElementById('contra').style.border = "thick solid red";
-        cancelar()
+        cancelar();
+    }
+}
+    //Funcion para controlar la longitud de caracteres de la contraseña
+function longContra(){
+    numCar = document.getElementById('contra').value.length;
+    if(numCar<10){
+    alert("La contraseña debe tener 10 caracteres mínimo");
+    cancelar()
     }
 }
 

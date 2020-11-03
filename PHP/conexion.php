@@ -14,7 +14,9 @@ if ($_SERVER["REQUEST_METHOD"]=='GET'){
     $tipo = $_GET["tipo"];
     if($tipo=="Login"){
         comprobarExistencia($_GET["Nick"],$_GET["Contra"],conexion());
-       
+
+    }elseif($tipo=="InsertarComentario"){
+        insertarComentario();
     }
    } 
 }
@@ -164,10 +166,10 @@ function insertarUsuario($loginBD){
     }
     
 }
+
 function CargarPost($id){
     $contenido= $id;
     $consulta = 'SELECT contenido FROM posts WHERE id_post = :id_post';
-    echo ($consulta);
     $sentencia = conexion()->prepare($consulta);
     //$sentencia->setFetchMode(PDO::FETCH_ASSOC);
     $sentencia->execute(['id_post' => $contenido]);
@@ -177,9 +179,29 @@ function CargarPost($id){
     
 }
 
-/* Función para crear un post */
- function crearPost($loginBD){
+function cargarTituloPost($id){
+    $contenido= $id;
+    $consulta = 'SELECT titulo FROM posts WHERE id_post = :id_post';
+    $sentencia = conexion()->prepare($consulta);
+    //$sentencia->setFetchMode(PDO::FETCH_ASSOC);
+    $sentencia->execute(['id_post' => $contenido]);
+    $hola = $sentencia->fetch();
+    return ($hola[0]);
+    //Imprimo los resultados
+}
 
+function cargarFotoPost($id){
+    $contenido= $id;
+    $consulta = 'SELECT imagen_post FROM posts WHERE id_post = :id_post';
+    $sentencia = conexion()->prepare($consulta);
+    //$sentencia->setFetchMode(PDO::FETCH_ASSOC);
+    $sentencia->execute(['id_post' => $contenido]);
+    $hola = $sentencia->fetch();
+    return ($hola[0]);
+    //Imprimo los resultados
+}
+function crearPost($loginBD){
+  
     session_start();
     $titulo = isset($_REQUEST['titulo']) ? $_REQUEST['titulo'] : null;
     $contenido = isset($_REQUEST['contenido']) ? $_REQUEST['contenido'] : null;
@@ -436,7 +458,9 @@ function cargarPosts($posts){
         
     </div>
     <?php
-    //echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
+          
+   // echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
+
     }
 }
 
@@ -486,7 +510,7 @@ function cargarTopPosts(){
         </div>
         <?php
     }
-} 
+}
 
 /* Función que muestra una de las dos:
 -Iniciar sesion/ Registrase  
@@ -517,3 +541,45 @@ function cargarTopPosts(){
 }
 
 ?>
+
+
+ function cargarComentariosBlog(){
+    echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
+    $idP=$_GET["idPost"];
+    try{
+       $comentarios = "SELECT nickname,comentario,fecha FROM comentarios WHERE id_post=$idP";
+        $sentenciaC =conexion()->query($comentarios);
+        $sentenciaC->setFetchMode(PDO::FETCH_ASSOC);
+        }catch(PDOException $pe){
+            die("Error occurred:" . $pe->getMessage());
+        }
+        $sentenciaC->execute();
+        $resultadoC = $sentenciaC->fetchAll();
+        foreach($resultadoC as $posicionC => $filaC){
+        ?>
+        <div>
+            <p> <?php echo $filaC['nickname']?></p>
+            <p class="contenido"><?php echo $filaC['comentario']?></p>
+            <p>Fecha: <?php echo $filaC['fecha']?></p>
+        </div> 
+           <?php
+        }
+    }
+
+function insertarComentario(){
+    $stmt = conexion()->prepare('INSERT INTO comentarios (id_post, nickname, comentario, fecha ) VALUES (:id_post, :nickname, :comentario, :fecha)');
+    $_SESSION["postActual"]=$_GET["idPost"];
+            $stmt->execute(
+                array(
+                    'id_post' => $_GET["idPost"],
+                    'nickname' => $_SESSION["usuarioLogeado"],
+                    'comentario'=>$_GET["comentario"],
+                    'fecha'=> date("Y-m-d")
+                )
+            ); 
+            header("Location: paginaPost.php?idPost=".$_SESSION["postActual"]);
+}
+
+
+?>  
+
