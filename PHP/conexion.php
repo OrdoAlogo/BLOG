@@ -540,9 +540,6 @@ function cargarTopPosts(){
     }
 }
 
-?>
-
-
  function cargarComentariosBlog(){
     echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
     $idP=$_GET["idPost"];
