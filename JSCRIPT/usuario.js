@@ -1,54 +1,66 @@
-class Usuario{
-    usuarios(nickname, e_mail, foto_nick, tipo_de_usuario, estado){
-        this.nickname=nickname;
-        this.e_mail=e_mail;
-        this.foto_nick=foto_nick;
-        this.tipo_de_usuario=tipo_de_usuario;
-        this.estado=estado;
-    }
-}
 
+var nombreUsuario = document.getElementById("nickUsu");
+nombreUsuario.addEventListener("click", nombreUsuarioPulsado, true);
+document.getElementById("nuevoPost1").style.display= "block"; 
+document.addEventListener("click", quitar,true);
 
-
-var nombreUsuario = document.getElementById("nickUsu").addEventListener("click",nombreUsuarioPulsado,true);
+/* Al pulsar en el nombre de usuario
+aparece un menú con botones ajustes y cerrar sesión */
 function nombreUsuarioPulsado(){
-    console.log("hola");
+
     let element = document.getElementById('desplegable');
     let elementStyle = window.getComputedStyle(element);
     let elementColor = elementStyle.getPropertyValue('visibility');
     
     if(elementColor == 'hidden'){
-        element.style.visibility = 'visible'
+        element.style.visibility = 'visible';
     }else{
         element.style.visibility = 'hidden';
     }
 }
 //$(header>".registro">".tarjetaPost").hidde();
+
 /* document.addEventListener("click", quitar,true);
 
 function quitar(){   
     document.getElementById('desplegable').style.visibility = 'hidden';
 }; */
 
+
 var nombreUsuario = document.getElementById("cerrarSesion").addEventListener("click",cerrarSesion,true);
 
+/* Al registrarse, si el nickname introducido existe
+aparece un texto rojo. */
 function registroExisteNick(){
-    console.log("script registro");
     document.getElementById("nick").style.borderColor = "red";
     document.getElementById("nickExiste").style.display = "block";
-    
 }
 
+/* Al registrarse, si el email introducido existe
+aparece un texto rojo. */
 function registroExisteEmail(){
     console.log("script registro mail");
     document.getElementById("email").style.borderColor = "red";
     document.getElementById("emailExiste").style.display = "block";
 }
 
+/* Al registrarse, si algún campo esta vacio.
+Aparece un texto rejo advirtiendo */
 function faltaDatos(){
     document.getElementById("faltaDato").style.display = "block";
-}
 
+} 
+
+/* Al cambiar la contraseña, si la contraseña actual no es correcta.
+Aparece un texto rejo advirtiendo */
+function ajustesErrorPass(){
+    document.getElementById("contrasenaActualError").style.display = "block";
+}
+/* Al cambiar la contraseña, si la contraseña nueva y la confirmación no coinciden
+Aparece un texto rejo advirtiendo */
+function ajustesPassNoCoincide(){
+    document.getElementById("contrasenaNoCoincide").style.display = "block";
+}
 
 //Funcion para cancelar el envio del formulario
 //en caso de que los datos sean incorrectos
@@ -69,69 +81,53 @@ function longContrasenia(){
     }else if(numCaracteres>10){
         campo.style.border = "thick solid green";
     }
-    contar()
-
-    }
-    function contar(){
+    contar();
+}
+function contar(){
     document.forms[2].contra.value.length  
-    }
+}
 
-    //Funcion para validar el formulario de registro
-    function validarForm(){
-        validarContra();
-        longContra();
-        
-    }
+//Funcion para validar el formulario de registro
+function validarForm(){
+    validarContra();
+    longContra();  
+}
 
-    //Funcion para validar las contraseñas en el registro
-    function validarContra(){
+//Funcion para validar las contraseñas en el registro
+function validarContra(){
     contenido = document.getElementById('contra').value;
     espacios = false;
     contador = 0;
     while(!espacios && (contador <contenido.length)){
-        if(contenido.charAt(contador) == " ")
+        if(contenido.charAt(contador) == " "){
             espacios = true;
             contador++;
+        }
     }
     if(espacios){
         alert("La contraseña no admite espacios");
-            cancelar();
+        cancelar();
     }
     if(contenido.length == 0){
         alert("Introduzca la contraseña");
-        document.getElementById('contra').style.border = "thick solid red"
-        cancelar()
+        document.getElementById('contra').style.border = "thick solid red";
+        cancelar();
     }
-    }
+}
     //Funcion para controlar la longitud de caracteres de la contraseña
-    function longContra(){
-        numCar = document.getElementById('contra').value.length;
-        if(numCar<10){
+function longContra(){
+    numCar = document.getElementById('contra').value.length;
+    if(numCar<10){
+    alert("La contraseña debe tener 10 caracteres mínimo");
+    cancelar()
+    }
+}
+
+//Funcion para controlar la longitud de caracteres de la contraseña
+function longContra(){
+    numCar = document.getElementById('contra').value.length;
+    if(numCar<10){
         alert("La contraseña debe tener 10 caracteres mínimo");
-        cancelar()
-        }
-        
-document.getElementById("textoArea").addEventListener("keyup",valida_longitud,true);
-function valida_longitud(){
-    //Contamos los caracteres de la caja de texto
-    NumCarateres = document.forms[1].comentario.value.length
-    //si alcanzamos el limite de caracteres, el programa deja de cojer texto
-    if (NumCarateres > maxCarateres){
-        document.forms[1].comentario.value = texto
-    }else{
-        texto = document.forms[1].comentario.value
-    }if (NumCarateres >= maxCarateres){
-        document.forms[1].caracteres.style.background="red";
-    }else{
-        document.forms[1].caracteres.style.background="green";
-        document.forms[1].caracteres.style.color="white";
-    }
-
-    cuenta();
-}
-    function cuenta(){
-    //Mostramos el Nº de carateres introducidos en la caja de texto
-    document.forms[1].caracteres.value=document.forms[1].comentario.value.length
+        cancelar();
     }
 }
-
