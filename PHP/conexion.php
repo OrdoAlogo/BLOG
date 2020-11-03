@@ -14,8 +14,10 @@ if ($_SERVER["REQUEST_METHOD"]=='GET'){
         comprobarExistencia($_GET["Nick"],$_GET["Contra"],conexion());
     }elseif($tipo=="InsertarComentario"){
         insertarComentario();
+    }elseif($tipo="visita"){
+        incrementarvisitas();
     }
-   } 
+   }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -328,7 +330,7 @@ function cargarPosts($posts){
         ?>
     <div id="tarjetaPost">
        <!--<img src="//<//?//php echo $columna['imagen_post'] ?>">-->
-        <a href="paginaPost.php?idPost=<?php echo $columna['id_post']; ?>"> <h2 class="tituloPost"><?php echo $columna['titulo'] ?> </h2> </a>
+        <a href="paginaPost.php?tipo=visita&idPost=<?php echo $columna['id_post']; ?>"> <h2 class="tituloPost"><?php echo $columna['titulo'] ?> </h2> </a>
         <p class="contenido"><?php $resultado = substr($columna['contenido'], 0, 400)."..."; echo $resultado?> </p>
         <p class="visualizaciones"><span class="icon-eye"></span><?php echo (" ".$columna['visitas']) ?></p>
         <p class="autor">Autor: <?php echo $columna['nickname'] ?> </p>
@@ -441,7 +443,12 @@ function insertarComentario(){
             header("Location: paginaPost.php?idPost=".$_SESSION["postActual"]);
 }
 
-
+function incrementarvisitas(){
+    $idP=$_GET["idPost"];
+    $updateVisitas = "UPDATE posts SET posts.visitas = posts.visitas+1 where id_post LIKE $idP ";
+    $update =conexion()->query($updateVisitas);
+    //$update->execute();
+}
 
 
 

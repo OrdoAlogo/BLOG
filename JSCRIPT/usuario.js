@@ -111,27 +111,6 @@ function longContrasenia(){
         cancelar()
         }
         
-document.getElementById("textoArea").addEventListener("keyup",valida_longitud,true);
-function valida_longitud(){
-    //Contamos los caracteres de la caja de texto
-    NumCarateres = document.forms[1].comentario.value.length
-    //si alcanzamos el limite de caracteres, el programa deja de cojer texto
-    if (NumCarateres > maxCarateres){
-        document.forms[1].comentario.value = texto
-    }else{
-        texto = document.forms[1].comentario.value
-    }if (NumCarateres >= maxCarateres){
-        document.forms[1].caracteres.style.background="red";
-    }else{
-        document.forms[1].caracteres.style.background="green";
-        document.forms[1].caracteres.style.color="white";
-    }
 
-    cuenta();
-}
-    function cuenta(){
-    //Mostramos el Nº de carateres introducidos en la caja de texto
-    document.forms[1].caracteres.value=document.forms[1].comentario.value.length
-    }
 }
 
