@@ -9,13 +9,32 @@
     <link rel="stylesheet" type="text/css" href="css/encabezado.css">
     <!-- <link rel="stylesheet" type="text/css" href="css/index.css"> -->
     <link rel="stylesheet" href="css/post.css"> 
-    <?php session_start(); ?>
+  
 </head>
 <body>
-    <header></header>
+    <header>
+    <div class="logo">
+                <div><img src="img/cpu.png" alt="Imagen no soportada"></div>
+            </div>
+
+            <div class="titulo">
+                <a href="index.php"><h1>BENCH<span>BLOG</span></h1> </a>
+            </div>
+
+            <div class="buscador">
+                <form method="post">
+                    <input type="text" name="palabra">
+                    <input type="submit" name="submit" id="btnBuscar" value="BUSCAR">
+                    <input type="hidden" name="tipo" value="filtrado">
+                </form>
+            </div>
+            <div class="registro">
+                <?php include ('PHP/conexion.php');logearRegistrarUsuario();  ?>
+            </div>   
+    </header>
 
     <main>
-        <h1><?php include ('PHP/conexion.php'); echo(cargarTituloPost($_GET["idPost"]))?></h1>
+        <h1><?php echo(cargarTituloPost($_GET["idPost"]))?></h1>
         <img src='<?php echo (cargarFotoPost($_GET["idPost"]))?>' alt="" style="width:15vw; height:15vw; float: right;">
         <p><?php echo(CargarPost($_GET["idPost"]));?></p> 
         <div class="comentarios">
