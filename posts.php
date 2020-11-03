@@ -27,7 +27,7 @@
             </div>
 
             <div class="registro">
-                <?php include ('PHP/conexion.php');logearRegistrarUsuario();?>
+                <?php logearRegistrarUsuario();?>
             </div>
         </header>
         <h2>POST</h2>
