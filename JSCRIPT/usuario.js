@@ -2,8 +2,10 @@
 var nombreUsuario = document.getElementById("nickUsu");
 nombreUsuario.addEventListener("click", nombreUsuarioPulsado, true);
 document.getElementById("nuevoPost1").style.display= "block"; 
+document.addEventListener("click", quitar,true);
 
-
+/* Al pulsar en el nombre de usuario
+aparece un menú con botones ajustes y cerrar sesión */
 function nombreUsuarioPulsado(){
     console.log("pulso");
     let element = document.getElementById('desplegable');
@@ -17,39 +19,42 @@ function nombreUsuarioPulsado(){
     }
 }
 //$(header>".registro">".tarjetaPost").hidde();
-document.addEventListener("click", quitar,true);
+
 
 function quitar(){   
-    
     document.getElementById('desplegable').style.visibility = 'hidden';
-};
+}
 
 var nombreUsuario = document.getElementById("cerrarSesion").addEventListener("click",cerrarSesion,true);
 
+/* Al registrarse, si el nickname introducido existe
+aparece un texto rojo. */
 function registroExisteNick(){
-    console.log("script registro");
     document.getElementById("nick").style.borderColor = "red";
     document.getElementById("nickExiste").style.display = "block";
-    
 }
 
+/* Al registrarse, si el email introducido existe
+aparece un texto rojo. */
 function registroExisteEmail(){
     console.log("script registro mail");
     document.getElementById("email").style.borderColor = "red";
     document.getElementById("emailExiste").style.display = "block";
 }
 
+/* Al registrarse, si algún campo esta vacio.
+Aparece un texto rejo advirtiendo */
 function faltaDatos(){
-    /* document.getElementById("nick").style.borderColor = "red";
-    document.getElementById("email").style.borderColor = "red";
-    document.getElementById("contra").style.borderColor = "red";  */
-
     document.getElementById("faltaDato").style.display = "block";
 } 
 
+/* Al cambiar la contraseña, si la contraseña actual no es correcta.
+Aparece un texto rejo advirtiendo */
 function ajustesErrorPass(){
     document.getElementById("contrasenaActualError").style.display = "block";
 }
+/* Al cambiar la contraseña, si la contraseña nueva y la confirmación no coinciden
+Aparece un texto rejo advirtiendo */
 function ajustesPassNoCoincide(){
     document.getElementById("contrasenaNoCoincide").style.display = "block";
 }
@@ -74,54 +79,45 @@ function longContrasenia(){
     }else if(numCaracteres>10){
         campo.style.border = "thick solid green";
     }
-    contar()
-
-    }
-    function contar(){
+    contar();
+}
+function contar(){
     document.forms[2].contra.value.length  
-    }
+}
 
-    //Funcion para validar el formulario de registro
-    function validarForm(){
-        validarContra();
-        longContra();
-        
-    }
+//Funcion para validar el formulario de registro
+function validarForm(){
+    validarContra();
+    longContra();  
+}
 
-    //Funcion para validar las contraseñas en el registro
-    function validarContra(){
+//Funcion para validar las contraseñas en el registro
+function validarContra(){
     contenido = document.getElementById('contra').value;
     espacios = false;
     contador = 0;
     while(!espacios && (contador <contenido.length)){
-        if(contenido.charAt(contador) == " ")
+        if(contenido.charAt(contador) == " "){
             espacios = true;
             contador++;
+        }
     }
     if(espacios){
         alert("La contraseña no admite espacios");
-            cancelar();
+        cancelar();
     }
     if(contenido.length == 0){
         alert("Introduzca la contraseña");
-        document.getElementById('contra').style.border = "thick solid red"
+        document.getElementById('contra').style.border = "thick solid red";
         cancelar()
     }
-    }
-    //Funcion para controlar la longitud de caracteres de la contraseña
-    function longContra(){
-        numCar = document.getElementById('contra').value.length;
-        if(numCar<10){
-        alert("La contraseña debe tener 10 caracteres mínimo");
-        cancelar()
-        }
 }
 
-/* function logeado(){
-    console.log("logeado");
-    /* document.getElementById("nuevoPost").style.display= "block";  
-
-
-  
-} */
-
+//Funcion para controlar la longitud de caracteres de la contraseña
+function longContra(){
+    numCar = document.getElementById('contra').value.length;
+    if(numCar<10){
+        alert("La contraseña debe tener 10 caracteres mínimo");
+        cancelar();
+    }
+}

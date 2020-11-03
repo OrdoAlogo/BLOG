@@ -16,14 +16,15 @@ main{
     margin-top: 2%;
 }
 
+/* Para el formulario de cambio de foto */
 #actualizarFoto{
     padding: 1%;
     margin-left: 35%;
-    margin-top: -18%;
+    margin-top: -19%;
     border: 0.5em solid black;
     width: 20%;
     background: #886A08;
-}
+} 
 
 fieldset{
     margin: 0 auto; 
