@@ -426,6 +426,7 @@ function cargarTopPosts(){
 
 
 
+
 function insertarComentario(){
     $stmt = conexion()->prepare('INSERT INTO comentarios (id_post, nickname, comentario, fecha ) VALUES (:id_post, :nickname, :comentario, :fecha)');
     $_SESSION["postActual"]=$_GET["idPost"];
@@ -437,6 +438,7 @@ function insertarComentario(){
                     'fecha'=> date("Y-m-d")
                 )
             ); 
+            header("Location: paginaPost.php?idPost=".$_SESSION["postActual"]);
 }
 
 

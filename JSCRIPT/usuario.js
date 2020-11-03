@@ -5,7 +5,6 @@ class Usuario{
         this.foto_nick=foto_nick;
         this.tipo_de_usuario=tipo_de_usuario;
         this.estado=estado;
-
     }
 }
 
@@ -28,7 +27,6 @@ function nombreUsuarioPulsado(){
 /* document.addEventListener("click", quitar,true);
 
 function quitar(){   
-    
     document.getElementById('desplegable').style.visibility = 'hidden';
 }; */
 
@@ -48,12 +46,7 @@ function registroExisteEmail(){
 }
 
 function faltaDatos(){
-    /* document.getElementById("nick").style.borderColor = "red";
-    document.getElementById("email").style.borderColor = "red";
-    document.getElementById("contra").style.borderColor = "red";  */
-
     document.getElementById("faltaDato").style.display = "block";
-
 }
 
 

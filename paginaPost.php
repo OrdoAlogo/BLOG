@@ -23,8 +23,7 @@
         <div class="formC">
                 <h3>Escriba aqui su comentario</h3> <br>
                 <form method="GET">       
-                    <textarea id = "textoArea" cols="40" rows="1" name="comentario" placeholder="Limite carateres: 400" > </textarea> 
-                    <input class="caracteres" type="button" name="caracteres" >
+                    <textarea id = "textoArea" cols="40" rows="1" name="comentario" maxlength = "500" placeholder="Limite carateres: 400" > </textarea> 
                     <button  class="envio"><span class="icon-direction"></span></buton> 
                     <input type="hidden" name="idPost" value='<?php echo ($_GET["idPost"]) ?>'>
                     <input type="hidden" name="tipo" value="InsertarComentario">
@@ -35,32 +34,6 @@
             <?php cargarComentariosBlog();  ?>  
         </div>    
     </main>
-    <script>
-            texto = ""
-            maxCarateres = 400
-            
-function valida_longitud(){
-        //Contamos los caracteres de la caja de texto
-        NumCarateres = document.forms[1].comentario.value.length
-        //si alcanzamos el limite de caracteres, el programa deja de cojer texto
-        if (NumCarateres > maxCarateres){
-            document.forms[1].comentario.value = texto
-        }else{
-            texto = document.forms[1].comentario.value
-        }if (NumCarateres >= maxCarateres){
-            document.forms[1].caracteres.style.background="red";
-        }else{
-            document.forms[1].caracteres.style.background="green";
-            document.forms[1].caracteres.style.color="white";
-        }
-
-     cuenta()
-    }
-        function cuenta(){
-        //Mostramos el Nº de carateres introducidos en la caja de texto
-        document.forms[1].caracteres.value=document.forms[1].comentario.value.length
-        }
-        </script>
 
     <footer></footer>
 </body>
