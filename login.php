@@ -1,3 +1,6 @@
+
+<?php include 'PHP/conexion.php' ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,6 +22,7 @@
             <a href="index.php"><h1>BENCH<span>BLOG</span></h1> </a>
         </div>
 
+
         <div class="buscador">
             <form method="post" action="index.php">
                 <input type="text" name="palabra">
@@ -30,6 +34,7 @@
             <?php include ('PHP/conexion.php');logearRegistrarUsuario();?>
         </div>
                
+
 </header>
       <h2>EN ESTA PÁGINA TE PODRAS LOGUEAR O REGISTRAR EN NUESTRO BLOG PARA ENCONTRAR LOS MEJORES POSTS SOBRE BENCHMARKS</h2>  
    
@@ -37,7 +42,10 @@
         
         <div class="sesion">
             <h4>INICIAR SESIÓN</h4>
+
             <form id="Login" action="" method="$_GET">
+
+           
                 <label for="Nick">Nickname
                     </br>
                     <input type="text" name="Nick" id="Nick"><br>
@@ -49,6 +57,7 @@
                     <input type="hidden" name="tipo" value="Login">
                 </label><br>
                 
+
                 <input class="boton" type="submit" onclick="" value="Entrar">
                 <input class="boton" type="reset" value="Borrar"/>
 
@@ -56,6 +65,7 @@
         </div>
         <div class="registro">
         <h4>REGISTRARSE</h4>
+
            <!--  <form id="Registro" action="" method="post" enctype="multipart/form-data">
                 <label for="Nick">Nickname
                     </br>
@@ -101,6 +111,10 @@
                         <input type="hidden" name="tipo" id ="tipo" value="Registro"> 
                         <button id="btnRegistro" onclick="validarForm()" class="boton">REGISTRARSE</button>
                         <input class="boton" type="reset"  value="Borrar"/>
+
+
+            
+
                 </form>
         </aside>
         </div>
