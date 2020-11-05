@@ -1,15 +1,12 @@
- h2{
-     grid-area: h2;
-     font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
-     text-align: center;
-     font-size: 1em;
-     color: white;
- }
- 
+h2{
+    grid-area: h2;
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+    text-align: center;
+    font-size: 1em;
+    color: white;
+}
 
- main{ display: flex; flex-direction: row; justify-content: space-around; align-items: center; justify-items: center; height: 100%; width: 90%; margin: 0 auto; margin-top: 100px;}
-=======
-
+main{ display: flex; flex-direction: row; justify-content: space-around; /* align-items: center; */ justify-items: center; height: 100%; width: 90%; margin: 0 auto; margin-top: 100px;}
 .sesion form,.registro form{border:1px solid orange ; padding: 10px; background: #492f09;}
 .sesion,.registro h4{text-align: center; color: white;}
 
@@ -18,19 +15,20 @@ input[type=submit]:hover{background: green; color: white;}
 input[type=reset]:hover{background: orangered; color: white;}
 #btnRegistro:hover{background: green; color: white;}
 label{
-    
-    font-weight: bold;
-    text-align: center;
-    margin: 1em;
-    font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+   
+   font-weight: bold;
+   text-align: center;
+   margin: 1em;
+   font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
 }
 input{
-    margin: 1em;
+   margin: 1em;
+   
 }
 form{
-    text-align: center;
+   text-align: center;
 }
 .existe{
-    color: red;
-    display: none;
+   color: red;
+   display: none;
 }

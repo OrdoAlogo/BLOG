@@ -31,18 +31,11 @@
             </div> 
             <div class="registro">
 
-                <?php session_start(); include 'PHP/conexion.php'; logearRegistrarUsuario();?>
+                <?php session_start();   include 'PHP/conexion.php'; logearRegistrarUsuario();?>
 
             </div>   
         </header>
-        <div class="nuevoPost">
-            <a href="nuevoPost.php">NUEVO POST</a>
-        </div>
-
-            </div>
-   
-        </header>
-
+        
         <div>
                 <?php logearNuevoPost();?>
             </div>   
@@ -82,7 +75,7 @@
                 </div>
             </div>  
         </main> 
-        <script>
+        <!-- <script>
         $(document).ready(function(){
             $('.tituloPost').click( function () {
             header("Location: posts.php");
@@ -93,6 +86,6 @@
              alert(this.id);
             });
         });
-        </script>
+        </script> -->
     </body>
 </html>

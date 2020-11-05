@@ -13,7 +13,6 @@
  */
 
 if ($_SERVER["REQUEST_METHOD"]=='GET'){
-
    
     if(isset( $_GET["tipo"])){
         $tipo = $_GET["tipo"];
@@ -27,10 +26,8 @@ if ($_SERVER["REQUEST_METHOD"]=='GET'){
             echo '</script>';
             insertarComentario(); 
         } else if($tipo=="visita"){
-            incrementarvisitas();
-            
+             incrementarvisitas();  
         } 
-
    }
 }
 
@@ -49,13 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         else if($tipo=="nuevoPost"){
             crearPost(conexion());
-
-       }    
-    }
-}
-
-
-
         }  
        else if($tipo=="cambioContrasena"){
             actualizarContrasena(conexion());
@@ -95,12 +85,9 @@ function comprobarExistencia($nickname,$contraseña,$login){
                 session_start();
                 $_SESSION["usuarioLogeado"] = $valor['nickname'];
                 $_SESSION["fotoLogeado"] = $valor['foto_nick'];
-
-                $_SESSION['tipo'] = $valor['tipo_de_usuario'];
+                $_SESSION["tipo"] = $valor['tipo_de_usuario'];
                 header('Location: index.php');
                 
-
-                header('Location: index.php'); 
 
             }else{
                 echo("contraseña erronea");
@@ -216,25 +203,11 @@ function insertarUsuario($loginBD){
 
     }   
 }
-function CargarPost($id){
-    $contenido= $id;
-    $consulta = 'SELECT contenido FROM posts WHERE id_post = :id_post';
-    echo ($consulta);
-
-                        'estado'=>$estado )
-                    ); 
-            }
-    
-        }
-
-    }
-    
-}
 
 function CargarPost($id){
     $contenido= $id;
     $consulta = 'SELECT contenido FROM posts WHERE id_post = :id_post';
-s
+
     $sentencia = conexion()->prepare($consulta);
     //$sentencia->setFetchMode(PDO::FETCH_ASSOC);
     $sentencia->execute(['id_post' => $contenido]);
@@ -244,10 +217,6 @@ s
     
 }
 
-
-function crearPost($loginBD){
-
-    session_start();
 
 
 function cargarTituloPost($id){
@@ -271,10 +240,10 @@ function cargarFotoPost($id){
     return ($hola[0]);
     //Imprimo los resultados
 }
+
 function crearPost($loginBD){
   
     session_start();
-
     $titulo = isset($_REQUEST['titulo']) ? $_REQUEST['titulo'] : null;
     $contenido = isset($_REQUEST['contenido']) ? $_REQUEST['contenido'] : null;
     $foto = isset($_REQUEST['foto']) ? $_REQUEST['foto'] : null;
@@ -354,15 +323,6 @@ function crearPost($loginBD){
             ); 
 
             header('Location: index.php');
-
-
-          
-        }else{
-            $stmt = $loginBD->prepare('INSERT INTO posts (nickname, titulo, contenido, visitas, fecha ) VALUES (:nickname, :titulo, :contenido, :visitas, :fecha )');
-    }}
-    
-}
-   
 
             
         }else{
@@ -528,15 +488,16 @@ function recibirPosts(){
 
 //PAGINA INDEX en los pos principales
 function cargarPosts($posts){
+    
     foreach($posts as $posicion =>$columna){
 
         
-        $tipoUser = $_SESSION['tipo'];
+        $tipoUser = $_SESSION["tipo"];
         $propietario = $columna['nickname'];
         ?>
     <div id="tarjetaPost">
        <!--<img src="//<//?//php echo $columna['imagen_post'] ?>">-->
-        <a href="paginaPost.php?idPost=<?php echo $columna['id_post']; ?>"> <h2 class="tituloPost"><?php echo $columna['titulo'] ?> </h2> </a>
+       <a href="paginaPost.php?tipo=visita&idPost=<?php echo $columna['id_post']; ?>"> <h2 class="tituloPost"><?php echo $columna['titulo'] ?> </h2> </a>
         <?php
         //Comprobamos que tipo de usuario se ha logeado, para habilitar o no el boton para eliminar un post
             if($tipoUser=='admin'){
@@ -561,24 +522,6 @@ function cargarPosts($posts){
     </div>
     <?php
     echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
-    }
-}
-
-
-        ?>
-    <div id="tarjetaPost">
-       <!--<img src="//<//?//php echo $columna['imagen_post'] ?>">-->
-        <a href="paginaPost.php?tipo=visita&idPost=<?php echo $columna['id_post']; ?>"> <h2 class="tituloPost"><?php echo $columna['titulo'] ?> </h2> </a>
-        <p class="contenido"><?php $resultado = substr($columna['contenido'], 0, 400)."..."; echo $resultado?> </p>
-        <p class="visualizaciones"><span class="icon-eye"></span><?php echo (" ".$columna['visitas']) ?></p>
-        <p class="autor">Autor: <?php echo $columna['nickname'] ?> </p>
-        <span class="fecha"><?php echo ("Fecha: ".$columna['fecha'] )?></span>
-        
-    </div>
-    <?php
-          
-   // echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
-
     }
 }
 
@@ -636,42 +579,29 @@ function cargarTopPosts(){
     }
 } 
 
- function logearRegistrarUsuario(){
-    session_start(); 
-    if(isset($_SESSION["usuarioLogeado"])){ 
-        echo ("<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/></br><a id='nickUsu' >".$_SESSION["usuarioLogeado"]."</a>");
-        echo "<div id='desplegable'>";
-            echo "</br><a class='botonesUsuario' href='#'> Ajustes</a></br>";
-            echo "<a href='editarPost.php?usuario=".$_SESSION['usuarioLogeado']." '>Edita mis Posts</a></br>"; 
-            echo "<a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a>";
-        echo "</div>";
-
-        <?php
-    }
-}
 
 /* Función que muestra una de las dos:
 -Iniciar sesion/ Registrase  
 -La foto de perfil, el botón de ajustes y cerrar sesión */
  function logearRegistrarUsuario(){
-    /* session_start();  */
+    /* session_start();   */
     if(isset($_SESSION["usuarioLogeado"])){ 
         echo "<script type='text/javascript' src='JSCRIPT/usuario.js'></script>";
         echo "<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/><br>";
         echo "<a id='nickUsu' >".$_SESSION["usuarioLogeado"]."</a>";
-        echo "<div id='desplegable'></br><a class='botonesUsuario' href='ajustes.php'> Ajustes</a></br></br><a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a></div>";
+        echo "<div id='desplegable'></br><a class='botonesUsuario' href='ajustes.php'> Ajustes</a><a href='editarPost.php?usuario=".$_SESSION['usuarioLogeado']." '>Edita mis Posts</a></br></br></br><a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a></div>";
 
     }
     else{
         print ("<a id='nickUsu'href='login.php'>Entrar | Registrarse</a><span class=icon-user></span>");
     }
 
-    //echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
+    echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
 
  }
   //Funcion para cargar los post de un usuario especifico
   //para que su propietario pueda editarlos ------> editarPost.php
-  function postUsuario(){
+function postUsuario(){
     $usuario = $_GET['usuario'];
     try{
         $consulta3 = "SELECT * FROM posts WHERE nickname=:nickname";
@@ -699,13 +629,9 @@ function cargarTopPosts(){
                 </form> 
             </div>
         <?php
-    } 
-  }
-?>
+    } echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
+}
 
-    echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
-
- }
 
  /* Función que muetra el boton crear post si el usuario ha iniciado sesión */
  function logearNuevoPost(){
@@ -717,11 +643,11 @@ function cargarTopPosts(){
     }
 }
 
- function cargarComentariosBlog(){
+function cargarComentariosBlog(){
     echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
     $idP=$_GET["idPost"];
     try{
-       $comentarios = "SELECT nickname,comentario,fecha FROM comentarios WHERE id_post=$idP";
+        $comentarios = "SELECT nickname,comentario,fecha FROM comentarios WHERE id_post=$idP";
         $sentenciaC =conexion()->query($comentarios);
         $sentenciaC->setFetchMode(PDO::FETCH_ASSOC);
         }catch(PDOException $pe){
@@ -736,14 +662,12 @@ function cargarTopPosts(){
             <p class="contenido"><?php echo $filaC['comentario']?></p>
             <p>Fecha: <?php echo $filaC['fecha']?></p>
         </div> 
-           <?php
+            <?php
         }
-    }
+}
 
 function insertarComentario(){
-    echo '<script>';
-    echo "alert('hollaaaaaaa')";
-    echo '</script>';;
+    
     $stmt1 = conexion()->prepare('INSERT INTO comentarios (id_post, nickname, comentario, fecha ) VALUES (:id_post, :nickname, :comentario, :fecha)');
     $_SESSION["postActual"]=$_GET["idPost"];
             $stmt1->execute(
@@ -768,4 +692,3 @@ function incrementarvisitas(){
 }
 
 ?>  
-

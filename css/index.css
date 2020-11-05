@@ -7,7 +7,7 @@ body{background:#29220A;}
 /*h3{font-size: fuenteBlog;}*/
 *{margin: 0;}
 
-.nuevoPost{background:  #29220A; text-align: center; margin: 0 auto; height: 40px;}
+#nuevoPost1{background:  #29220A; text-align: center; margin: 0 auto; height: 40px;}
 main{display: flex; height: 100%; flex-direction: row; justify-content: space-between; justify-items: center; 
     width: 90%; margin: 0 auto;}
 .icon-eye{color: orange;}

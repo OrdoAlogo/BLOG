@@ -35,7 +35,7 @@
                 </form>
             </div>
             <div class="registro">
-                <?php include ('PHP/conexion.php');logearRegistrarUsuario();?>
+                <?php session_start(); include ('PHP/conexion.php');logearRegistrarUsuario();?>
             </div>   
         </header>
         <main>
@@ -48,7 +48,7 @@
                     
             </div>
         </main> 
-        <script>
+       <!--  <script>
         $(document).ready(function(){
             $('.tituloPost').click( function () {
             header("Location: posts.php");
@@ -59,6 +59,6 @@
              alert(this.id);
             });
         });
-        </script>
+        </script> -->
     </body>
 </html>

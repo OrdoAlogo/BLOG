@@ -1,4 +1,4 @@
-<?php include 'PHP/conexion.php';?>
+<?php session_start(); include 'PHP/conexion.php';?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
