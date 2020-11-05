@@ -8,8 +8,7 @@
     <link rel="stylesheet" type="text/css" href="css/fuentes-iconos/style.css">
     <link rel="stylesheet" type="text/css" href="css/encabezado.css">
     <!-- <link rel="stylesheet" type="text/css" href="css/index.css"> -->
-    <link rel="stylesheet" href="css/post.css"> 
-  
+    <link rel="stylesheet" href="css/post.css">  
 </head>
 <body>
     <header>
@@ -53,6 +52,7 @@
             <?php cargarComentariosBlog();  ?>  
         </div>    
     </main>
+
 
     <footer></footer>
 </body>
