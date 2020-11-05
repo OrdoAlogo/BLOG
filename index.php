@@ -6,10 +6,6 @@
         <link rel="stylesheet" type="text/css" href="css/encabezado.css">
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-
-
-        <script src="JSCRIPT/usuario.js" type="text/javascript"></script>
-
     </head>
     <body>
         <header>
@@ -27,8 +23,7 @@
                     <input type="submit" name="submit" id="btnBuscar" value="BUSCAR">
                     <input type="hidden" name="tipo" value="filtrado">
                 </form>
-
-            </div> 
+            </div>
             <div class="registro">
                 <?php include ('PHP/conexion.php');logearRegistrarUsuario();?>
             </div>   
@@ -36,21 +31,6 @@
         <div class="nuevoPost">
             <a href="nuevoPost.php">NUEVO POST</a>
         </div>
-
-            </div>
-   
-        </header>
-
-        <div>
-                <?php logearNuevoPost();?>
-            </div>   
-
-
-
-        <!-- <div id="nuevoPost1">
-            <a href="nuevoPost.php">NUEVO POST</a>
-        </div> -->
-
         <main>
             <div class="postPrincipales">
                 <h3 id="titulo_principal">POST PRINCIPALES</h3>

@@ -22,11 +22,6 @@
             <a href="index.php"><h1>BENCH<span>BLOG</span></h1> </a>
         </div>
 
-        <div class="registro">
-            <?php include 'PHP/conexion.php';logearRegistrarUsuario();?>
-        </div>
-
-
     </header>
     <h2>Nuevo post</h2>
     <main>
@@ -47,5 +42,4 @@
     </footer>
 </body>
 </html>
-
-
+<?php include 'PHP/conexion.php';?>

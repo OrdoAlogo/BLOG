@@ -6,7 +6,6 @@
 body{background:#29220A;}
 /*h3{font-size: fuenteBlog;}*/
 *{margin: 0;}
-
 .nuevoPost{background:  #29220A; text-align: center; margin: 0 auto; height: 40px;}
 main{display: flex; height: 100%; flex-direction: row; justify-content: space-between; justify-items: center; 
     width: 90%; margin: 0 auto;}
@@ -18,7 +17,6 @@ main{display: flex; height: 100%; flex-direction: row; justify-content: space-be
 .datosDB{border: none;}
 .postPrincipales{width: 100%; background: #5F4C0B; height: 100%; padding: 20px; }
 .postPrincipales div{border: 0.2em solid#29220A; border-radius: 0.3vw; margin-top:2vw; width: 100%; }
-
 .postPrincipales div a{text-decoration: none; }
 .postPrincipales div a:hover{text-decoration: underline; }
 .btnEliminar{float: right; color: orangered;}
@@ -26,8 +24,8 @@ main{display: flex; height: 100%; flex-direction: row; justify-content: space-be
 #titulo_principal{color: white; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: 3vw; text-align: center;}
 .topPost,.topUsuarios{height: 100%; margin-bottom: 10px; width: 100%;}
 .topPost div,.topUsuarios div{border: none; border-bottom: 1px solid white; padding: 5px;}
-.fecha{position: relative;  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;   float: right; margin-right: 20px; color: white;}
 
+.fecha{position: relative;  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;   float: right; margin-right: 20px; color: white;}
 .piePagina{background: white; padding: 5px;}
 .piePagina p{color: black;}
 .tituloPost{font-size: 1.6vw; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; color: white;}
@@ -35,5 +33,4 @@ main{display: flex; height: 100%; flex-direction: row; justify-content: space-be
 .contenido{font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-style: 'normal';font-size: 1vw; margin-left:2vw;}
 .autor{font-weight: bolder;font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;}
 #codigoPost{display: none;}
-
 
