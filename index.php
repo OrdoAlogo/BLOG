@@ -23,7 +23,7 @@
                     <input type="submit" name="submit" id="btnBuscar" value="BUSCAR">
                     <input type="hidden" name="tipo" value="filtrado">
                 </form>
-            </div>
+            </div> 
             <div class="registro">
                 <?php include ('PHP/conexion.php');logearRegistrarUsuario();?>
             </div>   
