@@ -8,12 +8,13 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
     </head>
     <style type="text/css">
-    .formEdicion{margin: 0 auto; width: 50%; text-align:center; padding:10px;}
-    .boton{margin: 0 auto; text-align:center; border-radius:10px;}
+    .formEdicion{margin: 0 auto; width: 50%; text-align:center; padding:10px; border-radius:6px;}
+    .boton{margin: 0 auto; text-align:center; border-radius:10px; margin-top:3px;}
     .boton:hover{background:green; color:white;}
-    .icon-trash{ color:orangered; text-decoration:none;}
+    .icon-trash{ color:orangered; text-decoration:none; margin-top:3px;}
     .icon-trash:hover{color:red;}
-    #campo{background:#F9C875; height:100%; width:100%;}
+    #campo{background:#F9C875; height:100%; width:100%; border-radius:6px;}
+    .formEdicion a:hover {text-decoration:none;}
     .postPrincipales h4{color:white; text-align:center;}
     .postPrincipales div{margin: 0 auto; width:80%; margin-top:10px;}
     </style>
