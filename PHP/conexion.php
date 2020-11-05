@@ -1,7 +1,9 @@
+
 <html>
 <head>
     <script src="JSCRIPT/usuario.js" type="text/javascript"></script>
 </head>
+
 </html> 
 
 <?php 
@@ -9,7 +11,9 @@
 /* Metodos GET de los formularios:
 -Login
  */
+
 if ($_SERVER["REQUEST_METHOD"]=='GET'){
+
    
     if(isset( $_GET["tipo"])){
         $tipo = $_GET["tipo"];
@@ -26,6 +30,7 @@ if ($_SERVER["REQUEST_METHOD"]=='GET'){
             incrementarvisitas();
             
         } 
+
    }
 }
 
@@ -35,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"]=='GET'){
 -Actualizar contraseña
 -Actualizar foto de perfil
 */
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if(isset( $_POST["tipo"])){
         $tipo = $_POST["tipo"];
@@ -43,6 +49,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         else if($tipo=="nuevoPost"){
             crearPost(conexion());
+
+       }    
+    }
+}
+
+
+
         }  
        else if($tipo=="cambioContrasena"){
             actualizarContrasena(conexion());
@@ -54,6 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 /* Conexion generica para las funciones */
+
 function conexion(){
     //Conexion
     $hostDB = '127.0.0.1';
@@ -65,7 +79,9 @@ function conexion(){
     return $miPDO;
 }
 
+
 /* Función para el login, comprueba que los datos sean correctos*/
+
 function comprobarExistencia($nickname,$contraseña,$login){
     $usuario = $login->prepare('SELECT * FROM usuarios WHERE nickname LIKE :nick;');
     $usuario->execute(
@@ -79,7 +95,13 @@ function comprobarExistencia($nickname,$contraseña,$login){
                 session_start();
                 $_SESSION["usuarioLogeado"] = $valor['nickname'];
                 $_SESSION["fotoLogeado"] = $valor['foto_nick'];
+
+                $_SESSION['tipo'] = $valor['tipo_de_usuario'];
+                header('Location: index.php');
+                
+
                 header('Location: index.php'); 
+
             }else{
                 echo("contraseña erronea");
             }
@@ -96,18 +118,35 @@ function insertarUsuario($loginBD){
     $email = isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
     $contra = isset($_REQUEST['contra']) ? $_REQUEST['contra'] : null;
     $arch = isset($_REQUEST['arch']) ? $_REQUEST['arch'] : null;
+
+    
+    $tipo_de_usuario="normal";
+    $estado=0;
+    
+    //echo "hola".$nick." ".$email." ".$contra." ".$dest;
+
     $tipo_de_usuario="normal";
     $estado=0;
     //echo "hola".$nick." ".$email." ".$contra." ".$dest;
    
+
     //Combrobamos si el nickname y email existen en la base de datos
     $stmt = $loginBD->prepare('SELECT nickname FROM usuarios WHERE nickname= :nick;');
     $stmt->execute(['nick' => $nick]);
     $nombre =$stmt->fetch();
+
+
+    $stmt = $loginBD->prepare('SELECT e_mail FROM usuarios WHERE e_mail= :email;');
+    $stmt->execute(['email' => $email]);
+    $correo =$stmt->fetch();
+    
+    //echo $nombre[0]." y " .$correo[0];
+
     $stmt = $loginBD->prepare('SELECT e_mail FROM usuarios WHERE e_mail= :email;');
     $stmt->execute(['email' => $email]);
     $correo =$stmt->fetch();
      //echo $nombre[0]." y " .$correo[0];
+
 
     if(empty($nick)||empty($email)||empty($contra)){
         //echo "Introduce todos los datos";
@@ -133,7 +172,11 @@ function insertarUsuario($loginBD){
                 }
             
                 //$upload_file_name = $_FILES['arch']['name'];
+
+                $upload_file_name = $email.".png";
+
                 $upload_file_name = $nick.".png";
+
                 if(strlen ($upload_file_name)>100)
                 {
                     //echo " nombre muy largo ";
@@ -165,6 +208,19 @@ function insertarUsuario($loginBD){
                         'foto_nick'=>$dest,
                         'email' => $email,
                         'tipo_de_usuario'=>$tipo_de_usuario,
+
+                        'estado'=>$estado )); 
+    
+            }
+        }
+
+    }   
+}
+function CargarPost($id){
+    $contenido= $id;
+    $consulta = 'SELECT contenido FROM posts WHERE id_post = :id_post';
+    echo ($consulta);
+
                         'estado'=>$estado )
                     ); 
             }
@@ -178,6 +234,7 @@ function insertarUsuario($loginBD){
 function CargarPost($id){
     $contenido= $id;
     $consulta = 'SELECT contenido FROM posts WHERE id_post = :id_post';
+s
     $sentencia = conexion()->prepare($consulta);
     //$sentencia->setFetchMode(PDO::FETCH_ASSOC);
     $sentencia->execute(['id_post' => $contenido]);
@@ -186,6 +243,12 @@ function CargarPost($id){
     //Imprimo los resultados
     
 }
+
+
+function crearPost($loginBD){
+
+    session_start();
+
 
 function cargarTituloPost($id){
     $contenido= $id;
@@ -211,6 +274,7 @@ function cargarFotoPost($id){
 function crearPost($loginBD){
   
     session_start();
+
     $titulo = isset($_REQUEST['titulo']) ? $_REQUEST['titulo'] : null;
     $contenido = isset($_REQUEST['contenido']) ? $_REQUEST['contenido'] : null;
     $foto = isset($_REQUEST['foto']) ? $_REQUEST['foto'] : null;
@@ -290,6 +354,15 @@ function crearPost($loginBD){
             ); 
 
             header('Location: index.php');
+
+
+          
+        }else{
+            $stmt = $loginBD->prepare('INSERT INTO posts (nickname, titulo, contenido, visitas, fecha ) VALUES (:nickname, :titulo, :contenido, :visitas, :fecha )');
+    }}
+    
+}
+   
 
             
         }else{
@@ -419,6 +492,7 @@ function ajustesCargarFoto(){
 }
    
 /* Función para cerrar sesión */
+
 function cerrarSesion(){
     session_start();
     unset($_SESSION["usuarioLogeado"]);
@@ -455,6 +529,42 @@ function recibirPosts(){
 //PAGINA INDEX en los pos principales
 function cargarPosts($posts){
     foreach($posts as $posicion =>$columna){
+
+        
+        $tipoUser = $_SESSION['tipo'];
+        $propietario = $columna['nickname'];
+        ?>
+    <div id="tarjetaPost">
+       <!--<img src="//<//?//php echo $columna['imagen_post'] ?>">-->
+        <a href="paginaPost.php?idPost=<?php echo $columna['id_post']; ?>"> <h2 class="tituloPost"><?php echo $columna['titulo'] ?> </h2> </a>
+        <?php
+        //Comprobamos que tipo de usuario se ha logeado, para habilitar o no el boton para eliminar un post
+            if($tipoUser=='admin'){
+                ?>
+                    <a href="PHP/eliminarPost.php?idPost=<?php echo $columna['id_post']; ?>" class="btnEliminar"><span class="icon-trash"></span></a>
+                <?php
+            
+            }
+            //Si nadie está logeado, que no se muestre el boton para eliminar 
+            if(!isset($_SESSION["usuarioLogeado"])){
+                ?>
+                  <style type="text/css">
+                    .btnEliminar{display: none;}    
+                  </style> 
+                <?php
+            }
+        ?>
+        <p class="contenido"><?php $resultado = substr($columna['contenido'], 0, 400)."..."; echo $resultado?> </p>
+        <p class="visualizaciones"><span class="icon-eye"></span><?php echo (" ".$columna['visitas']) ?></p>
+        <p class="autor">Autor: <?php echo $columna['nickname'] ?> </p> 
+        <span class="fecha"><?php echo ("Fecha: ".$columna['fecha'] )?></span>
+    </div>
+    <?php
+    echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
+    }
+}
+
+
         ?>
     <div id="tarjetaPost">
        <!--<img src="//<//?//php echo $columna['imagen_post'] ?>">-->
@@ -473,6 +583,7 @@ function cargarPosts($posts){
 }
 
 /* Carga los posts con mas visitas. Aparecen en el lateral derecho */
+
 function cargarTopPosts(){
     try{
         $procedimiento = 'SELECT id_post, titulo,imagen_post, visitas FROM posts HAVING(visitas>2) ORDER by visitas DESC';
@@ -496,7 +607,11 @@ function cargarTopPosts(){
         <?php
     }           
 }
+
+
+
 /* Carga los usuarios. Aparecen en el lateral derecho */
+
  function cargarTopUsuarios(){
     try{
         $topUser = "SELECT posts.nickname, e_mail, foto_nick, COUNT(id_post) as 'post' FROM posts,usuarios WHERE usuarios.nickname=posts.nickname GROUP BY posts.nickname HAVING COUNT(id_post>1) ORDER BY COUNT(id_post) DESC";
@@ -516,6 +631,21 @@ function cargarTopPosts(){
             <p>Nº post_: <?php echo $col['post'] ?></p>
             <p>Imagen: <?php echo $col['foto_nick'] ?></p>
         </div>
+
+    <?php
+    }
+} 
+
+ function logearRegistrarUsuario(){
+    session_start(); 
+    if(isset($_SESSION["usuarioLogeado"])){ 
+        echo ("<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/></br><a id='nickUsu' >".$_SESSION["usuarioLogeado"]."</a>");
+        echo "<div id='desplegable'>";
+            echo "</br><a class='botonesUsuario' href='#'> Ajustes</a></br>";
+            echo "<a href='editarPost.php?usuario=".$_SESSION['usuarioLogeado']." '>Edita mis Posts</a></br>"; 
+            echo "<a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a>";
+        echo "</div>";
+
         <?php
     }
 }
@@ -530,10 +660,49 @@ function cargarTopPosts(){
         echo "<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/><br>";
         echo "<a id='nickUsu' >".$_SESSION["usuarioLogeado"]."</a>";
         echo "<div id='desplegable'></br><a class='botonesUsuario' href='ajustes.php'> Ajustes</a></br></br><a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a></div>";
+
     }
     else{
         print ("<a id='nickUsu'href='login.php'>Entrar | Registrarse</a><span class=icon-user></span>");
     }
+
+    //echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
+
+ }
+  //Funcion para cargar los post de un usuario especifico
+  //para que su propietario pueda editarlos ------> editarPost.php
+  function postUsuario(){
+    $usuario = $_GET['usuario'];
+    try{
+        $consulta3 = "SELECT * FROM posts WHERE nickname=:nickname";
+        $sentencia3 = conexion()->prepare($consulta3);
+        $sentencia3->setFetchMode(PDO::FETCH_ASSOC);
+
+    }catch(PDOException $pe){
+        die("Error occurred:" . $pe->getMessage());
+    }
+    $sentencia3->execute( array( 'nickname' => $usuario) );
+    
+    $resultado3 = $sentencia3->fetchAll();
+
+    foreach($resultado3 as $pos3 => $fila3){
+        ?>
+            <div>
+                <h4>  <?php echo $fila3['titulo'] ?></h4> 
+                
+                <form class="formEdicion" action="PHP/codEditarPost.php" method="post">
+                    <input type="text" name="texto" id="campo" value="<?php echo $fila3['contenido']?>" >
+                    <input type="text" hidden name="idP" value="<?php echo $fila3['id_post']?>"  rows="4" cols="50">           
+    </br>
+                    <input type="submit" class="boton" value="EDITAR">
+                    <a href='PHP/eliminarPost.php?idPost=<?php echo $fila3['id_post'] ?>'><span class="icon-trash"><span> </a> 
+                </form> 
+            </div>
+        <?php
+    } 
+  }
+?>
+
     echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
 
  }
@@ -599,3 +768,4 @@ function incrementarvisitas(){
 }
 
 ?>  
+
