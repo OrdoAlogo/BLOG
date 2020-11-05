@@ -29,7 +29,7 @@
                 </form>
             </div>
             <div class="registro">
-                <?php include ('PHP/conexion.php'); logearRegistrarUsuario();  ?>
+                <?php session_start(); include ('PHP/conexion.php'); logearRegistrarUsuario();  ?>
             </div>   
     </header>
 
@@ -45,7 +45,7 @@
                         <textarea id = "textoArea" cols="40" rows="1" name="comentario" maxlength = "500" placeholder="Limite carateres: 400" > </textarea> 
                         <button  class="envio"><span class="icon-direction"></span></button> 
                         <input type="hidden" name="tipo" value="InsertarComentario">
-                         
+                        <input type="hidden" name="idPost" value="<?php echo ($_GET['idPost']) ?>">
                         
                     </form>
             </div>
