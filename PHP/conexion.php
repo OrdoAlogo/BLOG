@@ -15,10 +15,14 @@ if ($_SERVER["REQUEST_METHOD"]=='GET'){
     if($tipo=="Login"){
         comprobarExistencia($_GET["Nick"],$_GET["Contra"],conexion());
 
-    }elseif($tipo=="InsertarComentario"){
+    }else if($tipo=="InsertarComentario"){
+        echo '<script>';
+        echo "alert('hola')";
+        echo '</script>';
         insertarComentario();
-    }elseif($tipo="visita"){
+    }else if($tipo=="visita"){
         incrementarvisitas();
+        
     }
    }
 }
@@ -566,6 +570,7 @@ function cargarTopPosts(){
     }
 
 function insertarComentario(){
+    echo "holaaaaa";
     $stmt = conexion()->prepare('INSERT INTO comentarios (id_post, nickname, comentario, fecha ) VALUES (:id_post, :nickname, :comentario, :fecha)');
     $_SESSION["postActual"]=$_GET["idPost"];
             $stmt->execute(
