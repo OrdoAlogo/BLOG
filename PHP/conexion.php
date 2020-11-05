@@ -13,21 +13,24 @@
  */
 
 if ($_SERVER["REQUEST_METHOD"]=='GET'){
-   if(isset( $_GET["tipo"])){
-    $tipo = $_GET["tipo"];
-    if($tipo=="Login"){
-        comprobarExistencia($_GET["Nick"],$_GET["Contra"],conexion());
 
-    }
-   } 
-}
+   
+    if(isset( $_GET["tipo"])){
+        $tipo = $_GET["tipo"];
 
+        if($tipo=="Login"){
+            comprobarExistencia($_GET["Nick"],$_GET["Contra"],conexion());
 
-    }elseif($tipo=="InsertarComentario"){
-        insertarComentario();
-    }elseif($tipo="visita"){
-        incrementarvisitas();
-    }
+        }else if($tipo=="InsertarComentario"){
+            echo '<script>';
+            echo "alert('hola')";
+            echo '</script>';
+            insertarComentario(); 
+        } else if($tipo=="visita"){
+            incrementarvisitas();
+            
+        } 
+
    }
 }
 
@@ -651,7 +654,7 @@ function cargarTopPosts(){
 -Iniciar sesion/ Registrase  
 -La foto de perfil, el botón de ajustes y cerrar sesión */
  function logearRegistrarUsuario(){
-    session_start(); 
+    /* session_start();  */
     if(isset($_SESSION["usuarioLogeado"])){ 
         echo "<script type='text/javascript' src='JSCRIPT/usuario.js'></script>";
         echo "<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/><br>";
@@ -714,9 +717,6 @@ function cargarTopPosts(){
     }
 }
 
-?>
-
-
  function cargarComentariosBlog(){
     echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
     $idP=$_GET["idPost"];
@@ -741,9 +741,12 @@ function cargarTopPosts(){
     }
 
 function insertarComentario(){
-    $stmt = conexion()->prepare('INSERT INTO comentarios (id_post, nickname, comentario, fecha ) VALUES (:id_post, :nickname, :comentario, :fecha)');
+    echo '<script>';
+    echo "alert('hollaaaaaaa')";
+    echo '</script>';;
+    $stmt1 = conexion()->prepare('INSERT INTO comentarios (id_post, nickname, comentario, fecha ) VALUES (:id_post, :nickname, :comentario, :fecha)');
     $_SESSION["postActual"]=$_GET["idPost"];
-            $stmt->execute(
+            $stmt1->execute(
                 array(
                     'id_post' => $_GET["idPost"],
                     'nickname' => $_SESSION["usuarioLogeado"],
@@ -751,6 +754,9 @@ function insertarComentario(){
                     'fecha'=> date("Y-m-d")
                 )
             ); 
+            echo '<script>';
+            echo "alert('$_SESSION[postActual]')";
+            echo '</script>'; 
             header("Location: paginaPost.php?idPost=".$_SESSION["postActual"]);
 }
 
