@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
-        <title>BLOG | INICIO</title>
+        <title>BLOG | EDITAR  - POSTS</title>
         <link rel="stylesheet" type="text/css" href="css/fuentes-iconos/style.css">
         <link rel="stylesheet" type="text/css" href="css/encabezado.css">
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-
-
-        <script src="JSCRIPT/usuario.js" type="text/javascript"></script>
-
     </head>
+    <style type="text/css">
+    .formEdicion{margin: 0 auto; width: 50%; text-align:center; padding:10px;}
+    .boton{margin: 0 auto; text-align:center; border-radius:10px;}
+    .boton:hover{background:green; color:white;}
+    .icon-trash{ color:orangered; text-decoration:none;}
+    .icon-trash:hover{color:red;}
+    #campo{background:#F9C875; height:100%; width:100%;}
+    .postPrincipales h4{color:white; text-align:center;}
+    .postPrincipales div{margin: 0 auto; width:80%; margin-top:10px;}
+    </style>
     <body>
         <header>
             <div class="logo">
@@ -27,55 +33,22 @@
                     <input type="submit" name="submit" id="btnBuscar" value="BUSCAR">
                     <input type="hidden" name="tipo" value="filtrado">
                 </form>
-
-            </div> 
+            </div>
             <div class="registro">
-
-                <?php session_start();   include 'PHP/conexion.php'; logearRegistrarUsuario();?>
-
+                <?php session_start(); include ('PHP/conexion.php');logearRegistrarUsuario();?>
             </div>   
         </header>
-        
-        <div>
-                <?php logearNuevoPost();?>
-            </div>   
-
-
-
-        <!-- <div id="nuevoPost1">
-            <a href="nuevoPost.php">NUEVO POST</a>
-        </div> -->
-
         <main>
             <div class="postPrincipales">
-                <h3 id="titulo_principal">POST PRINCIPALES</h3>
+                <h3 id="titulo_principal">ADIMINISTRAR POST</h3>
                     <?php 
-                    cargarPosts(recibirPosts());
-                    
+                       postUsuario();
+
                     ?>
                     
             </div>
-            <div class="aside">
-                <div class="topPost">
-                    <h3>TOP POST</h3>
-                    <?php cargarTopPosts();
-                    ?>
-                </div>
-                <div class="topUsuarios">
-                    <h3>TOP USUARIOS</h3>
-                    <?php 
-                       cargarTopUsuarios();
-                    ?>
-                </div>
-                <div class="piePagina">
-                    <h3>INFO</h3>
-                    <p>2DW3 - GRUPO 2 Cast </p>
-                    <p>Tel: 444 444 444</p>
-                    <p>Email: coreo@gmail.com</p>
-                </div>
-            </div>  
         </main> 
-        <!-- <script>
+       <!--  <script>
         $(document).ready(function(){
             $('.tituloPost').click( function () {
             header("Location: posts.php");

@@ -20,19 +20,22 @@ header{height: 200px; background: #886A08; display: flex; flex-direction: row; j
 #nuevoPost1 a:hover, #nickUsu:hover,#btnBuscar:hover{background: orange; color: white;}
 
 
+
 #fotoPerfil{
     width: 3.5vw ;
     height: 3.5vw;
 }
 #desplegable{
-    position: absolute;
+
     visibility: hidden;
     background-color: aliceblue;
     border: 0.2vw solid black;
-    height: 5vw;
     text-align: center;
     border-radius: 0.3vw;
     font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+    padding: 5px;
+    margin-top: 5px;
+  
 }
 .botonesUsuario{
     background-color: orange;
@@ -44,7 +47,11 @@ header{height: 200px; background: #886A08; display: flex; flex-direction: row; j
     text-decoration: none;
     color: black;
 }
+
+
+
 #nuevoPost1 a, #nickUsu,#btnBuscar{
+
     border: 0.1vw solid black;
     background-color: white;
     font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;

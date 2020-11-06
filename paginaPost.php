@@ -8,8 +8,7 @@
     <link rel="stylesheet" type="text/css" href="css/fuentes-iconos/style.css">
     <link rel="stylesheet" type="text/css" href="css/encabezado.css">
     <!-- <link rel="stylesheet" type="text/css" href="css/index.css"> -->
-    <link rel="stylesheet" href="css/post.css"> 
-  
+    <link rel="stylesheet" href="css/post.css">  
 </head>
 <body>
     <header>
@@ -29,7 +28,7 @@
                 </form>
             </div>
             <div class="registro">
-                <?php include ('PHP/conexion.php');logearRegistrarUsuario();  ?>
+                <?php session_start(); include ('PHP/conexion.php'); logearRegistrarUsuario();  ?>
             </div>   
     </header>
 
@@ -38,21 +37,23 @@
         <img src='<?php echo (cargarFotoPost($_GET["idPost"]))?>' alt="" style="width:15vw; height:15vw; float: right;">
         <p><?php echo(CargarPost($_GET["idPost"]));?></p> 
         <div class="comentarios">
-        <?php if(isset($_SESSION["usuarioLogeado"])){ echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");?>
-        <div class="formC">
-                <h3>Escriba aqui su comentario</h3> <br>
-                <form method="GET">       
-                    <textarea id = "textoArea" cols="40" rows="1" name="comentario" maxlength = "500" placeholder="Limite carateres: 400" > </textarea> 
-                    <button  class="envio"><span class="icon-direction"></span></buton> 
-                    <input type="hidden" name="idPost" value='<?php echo ($_GET["idPost"]) ?>'>
-                    <input type="hidden" name="tipo" value="InsertarComentario">
-                </form>
+            <?php if(isset($_SESSION["usuarioLogeado"])){ echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");?>
+            <div class="formC">
+                    <h3>Escriba aqui su comentario</h3> <br>
+                    <form  id="comen" method="$_GET">       
+                        <textarea id = "textoArea" cols="40" rows="1" name="comentario" maxlength = "500" placeholder="Limite carateres: 400" > </textarea> 
+                        <button  class="envio"><span class="icon-direction"></span></button> 
+                        <input type="hidden" name="tipo" value="InsertarComentario">
+                        <input type="hidden" name="idPost" value="<?php echo ($_GET['idPost']) ?>">
+                        
+                    </form>
             </div>
             <?php };?>
             <h3>COMENTARIOS</h3>
             <?php cargarComentariosBlog();  ?>  
         </div>    
     </main>
+
 
     <footer></footer>
 </body>
