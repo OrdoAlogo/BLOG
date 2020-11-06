@@ -12,7 +12,7 @@
     <header>
     <?php include ('PHP/conexion.php');?>
             <div class="logo">
-                <div><img src="img/cpu.png" alt="Imagen no soportada"></div>
+                <div><img src="img/logo.png" alt="Imagen no soportada"></div>
             </div>
 
             <div class="titulo">
