@@ -146,7 +146,7 @@ function validarContra(){
 }
 
 //Funcion para controlar la longitud de caracteres de la contraseña
-function longContra(){
+function longContra(){}
     numCar = document.getElementById('contra').value.length;
     if(numCar<10){
         alert("La contraseña debe tener 10 caracteres mínimo");
@@ -154,7 +154,4 @@ function longContra(){
     }
 
 }
-
-
-
 
