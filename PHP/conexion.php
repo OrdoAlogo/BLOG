@@ -21,12 +21,11 @@ if ($_SERVER["REQUEST_METHOD"]=='GET'){
             comprobarExistencia($_GET["Nick"],$_GET["Contra"],conexion());
 
         }else if($tipo=="InsertarComentario"){
-            echo '<script>';
-            echo "alert('hola')";
-            echo '</script>';
             insertarComentario(); 
         } else if($tipo=="visita"){
              incrementarvisitas();  
+        }else if($tipo=="borrarPost"){
+            borrarPost();
         } 
    }
 }
@@ -463,9 +462,9 @@ function recibirPosts(){
     try{
         $consulta = 'SELECT * FROM posts,usuarios where posts.nickname=usuarios.nickname';
             $texto = null;
-        if(isset($_POST['palabra'])){
+        if(isset($_GET['palabra'])){
             //Si hay una busqueda, cambiamos la consulta
-            $texto = $_POST['palabra'];
+            $texto = $_GET['palabra'];
             $consulta = 'SELECT * FROM posts WHERE titulo LIKE :titulo or contenido LIKE :contenido or nickname LIKE :nickname';
         } 
         //Preparamos la sentencia e indicar que vamos a usar un cursor
@@ -502,7 +501,7 @@ function cargarPosts($posts){
         //Comprobamos que tipo de usuario se ha logeado, para habilitar o no el boton para eliminar un post
             if($tipoUser=='admin'){
                 ?>
-                    <a href="PHP/eliminarPost.php?idPost=<?php echo $columna['id_post']; ?>" class="btnEliminar"><span class="icon-trash"></span></a>
+                    <a href="index.php?tipo=borrarPost&idPost=<?php echo $columna['id_post']; ?>" class="btnEliminar"><span class="icon-trash"></span></a>
                 <?php
             
             }
@@ -542,9 +541,7 @@ function cargarTopPosts(){
     foreach($result as $p => $fila){
         ?>  
         <div class="datosDB">
-            <p>Id post: <?php echo $fila['id_post']; ?> </p>
-            <p onclick="recogerIdPost(<?php echo  $fila['id_post']?>)">Titulo: <?php  echo  $fila['titulo']; ?> </p>
-            <p>Img: <?php  echo $fila['imagen_post']; ?> </p>
+        <a href="paginaPost.php?tipo=visita&idPost=<?php echo $fila['id_post']; ?>"> <h2><?php echo $fila['titulo'] ?> </h2> </a>
             <p>Nº visitas: <?php echo $fila['visitas']; ?> </p>
         </div>     
         <?php
@@ -569,10 +566,8 @@ function cargarTopPosts(){
     foreach($resultUsuarios as $p => $col){
         ?>
         <div class="datosDB">
-            <p>Usuario:  <?php echo $col['nickname'] ?> </p>
-            <p>E-mail:<?php echo $col['e_mail'] ?></p>
+            <a href="index.php?palabra=<?php echo $col['nickname']?>"><?php echo $col['nickname'] ?> </a>
             <p>Nº post_: <?php echo $col['post'] ?></p>
-            <p>Imagen: <?php echo $col['foto_nick'] ?></p>
         </div>
 
     <?php
@@ -689,6 +684,24 @@ function incrementarvisitas(){
     $updateVisitas = "UPDATE posts SET posts.visitas = posts.visitas+1 where id_post LIKE $idP ";
     $update =conexion()->query($updateVisitas);
     //$update->execute();
+}
+
+function borrarPost(){
+    borrarTodosLosComentariosPost();
+    $idP = $_GET['idPost'];
+    $consulta = conexion()->prepare ('DELETE FROM posts WHERE id_post=:id_post');
+    $consulta->execute(
+        array(
+            'id_post' =>$idP
+        )
+        ); 
+    header("Location: index.php");      
+}
+
+function borrarTodosLosComentariosPost(){
+    $idP = $_GET['idPost'];
+    $borrarComentarios = "DELETE FROM comentarios WHERE id_post LIKE $idP";
+    $borrado =conexion()->query($borrarComentarios);
 }
 
 ?>  
