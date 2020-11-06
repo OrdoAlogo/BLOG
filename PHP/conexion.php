@@ -584,12 +584,14 @@ function cargarTopPosts(){
 -Iniciar sesion/ Registrase  
 -La foto de perfil, el botón de ajustes y cerrar sesión */
  function logearRegistrarUsuario(){
+    
+    
     /* session_start();   */
     if(isset($_SESSION["usuarioLogeado"])){ 
-        echo "<script type='text/javascript' src='JSCRIPT/usuario.js'></script>";
+        
         echo "<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/><br>";
         echo "<a id='nickUsu' >".$_SESSION["usuarioLogeado"]."</a>";
-        echo "<div id='desplegable'></br><a class='botonesUsuario' href='ajustes.php'> Ajustes</a><a href='editarPost.php?usuario=".$_SESSION['usuarioLogeado']." '>Edita mis Posts</a></br></br></br><a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a></div>";
+        echo "<div id='desplegable'><a class='botonesUsuario' href='ajustes.php'> Ajustes</a></br><a class='botonesUsuario' href='editarPost.php?usuario=".$_SESSION['usuarioLogeado']." '>Editar posts</a></br><a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a></div>";
 
     }
     else{

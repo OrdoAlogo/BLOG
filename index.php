@@ -37,14 +37,8 @@
         </header>
         
         <div>
-                <?php logearNuevoPost();?>
-            </div>   
-
-
-
-        <!-- <div id="nuevoPost1">
-            <a href="nuevoPost.php">NUEVO POST</a>
-        </div> -->
+            <?php logearNuevoPost();?>
+        </div>   
 
         <main>
             <div class="postPrincipales">
