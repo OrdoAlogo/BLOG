@@ -1,3 +1,9 @@
+<html>
+<head>
+    <script src="JSCRIPT/usuario.js" type="text/javascript"></script>
+</head>
+
+</html> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,7 +40,12 @@
 
     <main>
         <h1><?php echo(cargarTituloPost($_GET["idPost"]))?></h1>
-        <img src='<?php echo (cargarFotoPost($_GET["idPost"]))?>' alt="" style="width:15vw; height:15vw; float: right;">
+        <?php if(cargarFotoPost($_GET["idPost"])!=null){
+            ?>
+            <img src='<?php echo (cargarFotoPost($_GET["idPost"]))?>' alt="" style="width:15vw; height:15vw; float: right;">
+            <?php
+        }
+        ?>
         <p><?php echo(CargarPost($_GET["idPost"]));?></p> 
         <div class="comentarios">
             <?php if(isset($_SESSION["usuarioLogeado"])){ echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");?>

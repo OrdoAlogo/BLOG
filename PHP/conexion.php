@@ -583,8 +583,12 @@ function cargarTopPosts(){
     
     /* session_start();   */
     if(isset($_SESSION["usuarioLogeado"])){ 
+        if($_SESSION['fotoLogeado']==null){
+            echo "<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/><br>";
+        }else{
+            echo "<img id='fotoPerfil'src='img/calvo.jpg'/><br>";
+        }
         
-        echo "<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/><br>";
         echo "<a id='nickUsu' >".$_SESSION["usuarioLogeado"]."</a>";
         echo "<div id='desplegable'><a class='botonesUsuario' href='ajustes.php'> Ajustes</a></br><a class='botonesUsuario' href='editarPost.php?usuario=".$_SESSION['usuarioLogeado']." '>Editar posts</a></br><a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a></div>";
 
@@ -685,7 +689,24 @@ function incrementarvisitas(){
     $idP=$_GET["idPost"];
     $updateVisitas = "UPDATE posts SET posts.visitas = posts.visitas+1 where id_post LIKE $idP ";
     $update =conexion()->query($updateVisitas);
-    //$update->execute();
+    ?>
+    <script type="text/javascript">
+        miStorage = window.localStorage;
+        var miArray = new Array();
+        if(miStorage.getItem('myArray')){
+            miArray = miStorage.getItem('myArray');
+            for(var i=0; miArray.length>i;i++){
+                if (miArray[i]==<?php echo ($idP);?>){
+                    //delete(miArray[i]);
+                    //miArray.splice(0, 0,  <//?//php echo ($idP);?>);
+                    alert(miArray);
+                }
+            }
+        }
+        miArray.push(<?php echo ($idP); ?>) ; 
+        miStorage.setItem('myArray', JSON.stringify(miArray));
+    </script>
+   <?php
 }
 
 function borrarPost(){

@@ -67,6 +67,13 @@
                     <p>Tel: 444 444 444</p>
                     <p>Email: coreo@gmail.com</p>
                 </div>
+                <div>
+                    <h3>Ultimos posts que has visitado</h3>
+                    <script> 
+                        miStorage = window.localStorage;
+                        var cat = localStorage.getItem('miGato');
+                    </script>
+                </div>
             </div>  
         </main> 
         <!-- <script>
