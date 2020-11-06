@@ -17,7 +17,8 @@ header{height: 200px; background: #886A08; display: flex; flex-direction: row; j
 .icon-home{font-size: 25px; padding: 0;}
 .icon-home:hover{text-decoration: underline; background: white; color: #56777F;}
 .casa{text-decoration: none; color: white;}
-.nuevoPost a:hover, #nickUsu:hover,#btnBuscar:hover{background: orange; color: white;}
+#nuevoPost1 a:hover, #nickUsu:hover,#btnBuscar:hover{background: orange; color: white;}
+
 
 
 #fotoPerfil{
@@ -25,6 +26,7 @@ header{height: 200px; background: #886A08; display: flex; flex-direction: row; j
     height: 3.5vw;
 }
 #desplegable{
+
     visibility: hidden;
     background-color: aliceblue;
     border: 0.2vw solid black;
@@ -33,6 +35,7 @@ header{height: 200px; background: #886A08; display: flex; flex-direction: row; j
     font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
     padding: 5px;
     margin-top: 5px;
+  
 }
 .botonesUsuario{
     background-color: orange;
@@ -44,7 +47,11 @@ header{height: 200px; background: #886A08; display: flex; flex-direction: row; j
     text-decoration: none;
     color: black;
 }
-.nuevoPost a, #nickUsu,#btnBuscar{
+
+
+
+#nuevoPost1 a, #nickUsu,#btnBuscar{
+
     border: 0.1vw solid black;
     background-color: white;
     font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;

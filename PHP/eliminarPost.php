@@ -7,6 +7,8 @@
         array(
             'id_post' =>$idP
         )
-        ); 
-    header("Location: ../index.php");      
+        );
+session_start();
+$usuario = $_SESSION['usuario'];
+header("Location: ../editarPost.php?usuario=$usuario");        
 ?>
