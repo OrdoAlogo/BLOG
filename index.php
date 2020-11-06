@@ -22,7 +22,7 @@
             </div>
 
             <div class="buscador">
-                <form method="post">
+                <form method="get">
                     <input type="text" name="palabra">
                     <input type="submit" name="submit" id="btnBuscar" value="BUSCAR">
                     <input type="hidden" name="tipo" value="filtrado">
