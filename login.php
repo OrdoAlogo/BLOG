@@ -108,10 +108,6 @@
                         <input type="hidden" name="tipo" id ="tipo" value="Registro"> 
                         <button id="btnRegistro" onclick="validarForm()" class="boton">REGISTRARSE</button>
                         <input class="boton" type="reset"  value="Borrar"/>
-
-
-            
-
                 </form>
         </aside>
         </div>

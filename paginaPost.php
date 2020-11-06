@@ -10,6 +10,14 @@
     <!-- <link rel="stylesheet" type="text/css" href="css/index.css"> -->
     <link rel="stylesheet" href="css/post.css">  
 </head>
+<style type="text/css">
+    .btnElim{text-decoration: none;}
+    .btnElim span{color: orange;}
+    .btnElim span:hover{color:white;}
+    .comentarios div{margin: 0 auto; height:100%; position: relative;}
+
+
+</style>
 <body>
     <header>
     <div class="logo">

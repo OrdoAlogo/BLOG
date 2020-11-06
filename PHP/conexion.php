@@ -590,7 +590,7 @@ function cargarTopPosts(){
         echo "<script type='text/javascript' src='JSCRIPT/usuario.js'></script>";
         echo "<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/><br>";
         echo "<a id='nickUsu' >".$_SESSION["usuarioLogeado"]."</a>";
-        echo "<div id='desplegable'></br><a class='botonesUsuario' href='ajustes.php'> Ajustes</a><a href='editarPost.php?usuario=".$_SESSION['usuarioLogeado']." '>Edita mis Posts</a></br></br></br><a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a></div>";
+        echo "<div id='desplegable'></br><a class='botonesUsuario' href='ajustes.php'> Ajustes</a><a href='editarPost.php?usuario=".$_SESSION['usuarioLogeado']." ' class='botonesUsuario'>Editar mis Posts</a></br></br></br><a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a></div>";
 
     }
     else{
@@ -670,7 +670,6 @@ function cargarComentariosBlog(){
             <p>Fecha: <?php echo $filaC['fecha']?></p>
              <!-- ordoño (Eliminar comentarios) 6/11/2020 -->
         <?php
-            
             $tipoUser = $_SESSION["tipo"];
             $usuario = $_SESSION["usuarioLogeado"];
             $propietarioC = $filaC['nickname'];
@@ -683,11 +682,10 @@ function cargarComentariosBlog(){
             //El tipo  admin o moderador puede eliminar cualquier comentario
             }if( ($tipoUser=='admin') or ($tipoUser=='mod')){
                 ?>
-                     <a href="PHP/eliminarComentario.php?idC=<?php echo $filaC['id_comentario']?>" class="btnElim"><span class="icon-trash"></span></a>
+                     <a href="PHP/eliminarComentario.php?idC=<?php echo $filaC['id_comentario']?>" class="btnElim"> <span class="icon-trash"></span></a>
                 <?php
             //si no estas logeaado, no puedes eliminar ningun comentario
             }if(!isset($_SESSION["usuarioLogeado"])){
-                
                     ?>
                   <style type="text/css">
                     .btnElim{display: none;}    
