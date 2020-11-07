@@ -491,8 +491,8 @@ function cargarPosts($posts){
     foreach($posts as $posicion =>$columna){
 
         
-        $tipoUser = $_SESSION["tipo"];
-        $propietario = $columna['nickname'];
+        $tipoUser = isset($_SESSION["tipo"]);
+        $propietario = isset($columna['nickname']);
         ?>
     <div id="tarjetaPost">
        <!--<img src="//<//?//php echo $columna['imagen_post'] ?>">-->
