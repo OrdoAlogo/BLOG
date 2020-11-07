@@ -515,8 +515,8 @@ function cargarPosts($posts){
             }
         ?>
         <p class="contenido"><?php $resultado = substr($columna['contenido'], 0, 400)."..."; echo $resultado?> </p>
+        <p class="autor">Autor: <?php echo $columna['nickname'] ?> </p>
         <p class="visualizaciones"><span class="icon-eye"></span><?php echo (" ".$columna['visitas']) ?></p>
-        <p class="autor">Autor: <?php echo $columna['nickname'] ?> </p> 
         <span class="fecha"><?php echo ("Fecha: ".$columna['fecha'] )?></span>
     </div>
     <?php
@@ -579,16 +579,18 @@ function cargarTopPosts(){
 -Iniciar sesion/ Registrase  
 -La foto de perfil, el botón de ajustes y cerrar sesión */
  function logearRegistrarUsuario(){
+    
+    
     /* session_start();   */
     if(isset($_SESSION["usuarioLogeado"])){ 
-        echo "<script type='text/javascript' src='JSCRIPT/usuario.js'></script>";
+        
         echo "<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/><br>";
         echo "<a id='nickUsu' >".$_SESSION["usuarioLogeado"]."</a>";
-        echo "<div id='desplegable'></br><a class='botonesUsuario' href='ajustes.php'> Ajustes</a><a href='editarPost.php?usuario=".$_SESSION['usuarioLogeado']." '>Edita mis Posts</a></br></br></br><a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a></div>";
+        echo "<div id='desplegable'><a class='botonesUsuario' href='ajustes.php'> Ajustes</a></br><a class='botonesUsuario' href='editarPost.php?usuario=".$_SESSION['usuarioLogeado']." '>Editar posts</a></br><a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a></div>";
 
     }
     else{
-        print ("<a id='nickUsu'href='login.php'>Entrar | Registrarse</a><span class=icon-user></span>");
+        print ("<a id='nickUsuC'href='login.php'>Entrar | Registrarse</a><span class=icon-user></span>");
     }
 
     echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
@@ -631,7 +633,7 @@ function postUsuario(){
  /* Función que muetra el boton crear post si el usuario ha iniciado sesión */
  function logearNuevoPost(){
     if(isset($_SESSION["usuarioLogeado"])){ 
-        echo "<div id='nuevoPost1'><a href='nuevoPost.php'>NUEVO POST</a></div>";
+        echo "<div id='nuevoPost1'><a href='nuevoPost.php'>CREAR POST</a></div>";
     }
     else{
         

@@ -14,7 +14,7 @@
     <body>
         <header>
             <div class="logo">
-                <div><img src="img/cpu.png" alt="Imagen no soportada"></div>
+                <div><img src="img/logo.png" alt="Imagen no soportada"></div>
             </div>
 
             <div class="titulo">
@@ -29,22 +29,17 @@
                 </form>
 
             </div> 
+            <div class="crearPost">
+                <?php session_start();   include 'PHP/conexion.php'; logearNuevoPost();?>
+            </div> 
             <div class="registro">
 
-                <?php session_start();   include 'PHP/conexion.php'; logearRegistrarUsuario();?>
+                <?php  logearRegistrarUsuario();?>
 
             </div>   
         </header>
         
-        <div>
-                <?php logearNuevoPost();?>
-            </div>   
-
-
-
-        <!-- <div id="nuevoPost1">
-            <a href="nuevoPost.php">NUEVO POST</a>
-        </div> -->
+          
 
         <main>
             <div class="postPrincipales">
