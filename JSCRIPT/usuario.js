@@ -1,12 +1,30 @@
 
 
-var nombreUsuario = document.getElementById("nickUsu");
+/* var nombreUsuario = document.getElementById("nickUsu");
 nombreUsuario.addEventListener("click", nombreUsuarioPulsado, true);
-document.getElementById("nuevoPost1").style.display= "block"; 
+document.getElementById("nuevoPost1").style.display= "block";  */
 
 /* Al pulsar en el nombre de usuario
 aparece un menú con botones ajustes y cerrar sesión */
-function nombreUsuarioPulsado(){
+
+
+var nombreUsuario = document.getElementById("nickUsu");
+nombreUsuario.onclick = function(){
+    let element = document.getElementById('desplegable');
+    let elementStyle = window.getComputedStyle(element);
+    let elementColor = elementStyle.getPropertyValue('visibility');
+    
+    if(elementColor == 'hidden'){
+
+        element.style.visibility = 'visible'
+
+        element.style.visibility = 'visible';
+
+    }else{
+        element.style.visibility = 'hidden';
+    }
+}
+/* function nombreUsuarioPulsado(){
 
 
     let element = document.getElementById('desplegable');
@@ -22,15 +40,9 @@ function nombreUsuarioPulsado(){
     }else{
         element.style.visibility = 'hidden';
     }
-}
+} */
 //$(header>".registro">".tarjetaPost").hidde();
 
-/* document.addEventListener("click", quitar,true);
-
-function quitar(){   
-    
-    document.getElementById('desplegable').style.visibility = 'hidden';
-}; */
 
 var nombreUsuario = document.getElementById("cerrarSesion").addEventListener("click",cerrarSesion,true);
 

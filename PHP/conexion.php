@@ -186,7 +186,7 @@ function insertarUsuario($loginBD){
                             }
     
                 $stmt = $loginBD->prepare('INSERT INTO usuarios (nickname, contrasena, foto_nick, e_mail, tipo_de_usuario, estado ) VALUES (:nick, :contra, :foto_nick, :email, :tipo_de_usuario, :estado )');
-        
+                //$contra = encriptarTexto($contra);
                 $stmt->execute(
                     array(
                         'nick' => $nick,
@@ -242,7 +242,7 @@ function cargarFotoPost($id){
 
 function crearPost($loginBD){
   
-    session_start();
+    //session_start();
     $titulo = isset($_REQUEST['titulo']) ? $_REQUEST['titulo'] : null;
     $contenido = isset($_REQUEST['contenido']) ? $_REQUEST['contenido'] : null;
     $foto = isset($_REQUEST['foto']) ? $_REQUEST['foto'] : null;
@@ -271,11 +271,9 @@ function crearPost($loginBD){
             </style>
        <?php 
        }
-        
     }
     
     else{
-
         if (is_uploaded_file($_FILES['foto']['tmp_name'])) { 
             //Valida el nombre del archivo
             if(empty($_FILES['foto']['name']))
@@ -325,7 +323,6 @@ function crearPost($loginBD){
 
             
         }else{
-            echo "hola buenos dias";
             $stmt = $loginBD->prepare('INSERT INTO posts (nickname, titulo, contenido, visitas, fecha ) VALUES (:nickname, :titulo, :contenido, :visitas, :fecha )');
             
             $stmt->execute(
@@ -528,7 +525,7 @@ function cargarPosts($posts){
 
 function cargarTopPosts(){
     try{
-        $procedimiento = 'SELECT id_post, titulo,imagen_post, visitas FROM posts HAVING(visitas>2) ORDER by visitas DESC';
+        $procedimiento = 'SELECT id_post, titulo,imagen_post, visitas FROM posts HAVING(visitas>2) ORDER by visitas DESC LIMIT 5';
         $llamadaProc = conexion()->query($procedimiento);
         $llamadaProc->setFetchMode(PDO::FETCH_ASSOC);
         
@@ -629,7 +626,6 @@ function postUsuario(){
     } echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
 }
 
-
  /* Función que muetra el boton crear post si el usuario ha iniciado sesión */
  function logearNuevoPost(){
     if(isset($_SESSION["usuarioLogeado"])){ 
@@ -706,4 +702,22 @@ function borrarTodosLosComentariosPost(){
     $borrado =conexion()->query($borrarComentarios);
 }
 
-?>  
+function encriptarTexto($contraseña){
+    $ciphering = "AES-128-CTR";
+    $iv_length = openssl_cipher_iv_length($ciphering);
+    $options = 0;
+    $encryption_iv = '1234567891011121';
+    $encryption_key = "GeeksforGeeks"; 
+    $encryption = openssl_encrypt($simple_string, $ciphering, 
+            $encryption_key, $options, $encryption_iv); 
+    return($encryption);
+}
+function desencriptarTexto($contraseña){
+    $ciphering = "AES-128-CTR";
+    $decryption_iv = '1234567891011121';
+    $decryption_key = "GeeksforGeeks";
+    $options = 0;
+    $decryption=openssl_decrypt ($contraseña, $ciphering,  
+        $decryption_key, $options, $decryption_iv);
+    return($decryption);
+}
