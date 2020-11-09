@@ -15,7 +15,7 @@
     <header>
 
         <div class="logo">
-            <div><img src="img/cpu.png" alt="Imagen no soportada"></div>
+            <div><img src="img/logo.png" alt="Imagen no soportada"></div>
         </div>
 
         <div class="titulo">
@@ -39,7 +39,6 @@
             <input type="file" id="foto" name="foto"><br>
             <input type="hidden" name="tipo" id ="tipo" value="nuevoPost"> 
             <input class="boton" type="submit" value="Publicar"  />
-            
         </form>
     </main>
 

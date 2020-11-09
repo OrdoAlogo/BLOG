@@ -6,15 +6,13 @@
         <link rel="stylesheet" type="text/css" href="css/encabezado.css">
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-
-
         <script src="JSCRIPT/usuario.js" type="text/javascript"></script>
 
     </head>
     <body>
         <header>
             <div class="logo">
-                <div><img src="img/cpu.png" alt="Imagen no soportada"></div>
+                <div><img src="img/logo.png" alt="Imagen no soportada"></div>
             </div>
 
             <div class="titulo">
@@ -29,16 +27,17 @@
                 </form>
 
             </div> 
+            <div class="crearPost">
+                <?php session_start();   include 'PHP/conexion.php'; logearNuevoPost();?>
+            </div> 
             <div class="registro">
 
-                <?php session_start();   include 'PHP/conexion.php'; logearRegistrarUsuario();?>
+                <?php  logearRegistrarUsuario();?>
 
             </div>   
         </header>
         
-        <div>
-            <?php logearNuevoPost();?>
-        </div>   
+          
 
         <main>
             <div class="postPrincipales">
@@ -61,20 +60,38 @@
                        cargarTopUsuarios();
                     ?>
                 </div>
+                <div id="caja" class="topUsuarios">
+                <h3>ULTIMAS VISITAS</h3>
+                
+                <script>
+                
+                    var arrayUltimosvisitados = localStorage.getItem('arrayUltimosvisitados');
+                    var arrayUltimosTitulo = localStorage.getItem('arrayUltimosTitulo');
+                    arrayUltimosvisitados = JSON.parse(arrayUltimosvisitados);
+                    arrayUltimosvisitados = arrayUltimosvisitados.reverse();
+                    
+                    arrayUltimosTitulo = JSON.parse(arrayUltimosTitulo);
+                    arrayUltimosTitulo = arrayUltimosTitulo.reverse();
+
+                    for(var i=0;i<3;i++){
+                        var newDiv = document.createElement("a"); 
+                        linebreak = document.createElement("br");
+                        newDiv.setAttribute('href','paginaPost.php?idPost='+arrayUltimosvisitados[i]);
+                        var newContent = document.createTextNode(arrayUltimosTitulo[i]); 
+                        newDiv.appendChild(newContent); 
+                        newDiv.appendChild(linebreak);
+                        var currentDiv = document.getElementById("a1");
+                        document.getElementById("caja").insertBefore(newDiv,currentDiv) ;
+                    }
+                </script>
+            </div> 
                 <div class="piePagina">
                     <h3>INFO</h3>
                     <p>2DW3 - GRUPO 2 Cast </p>
                     <p>Tel: 444 444 444</p>
                     <p>Email: coreo@gmail.com</p>
                 </div>
-                <div>
-                    <h3>Ultimos posts que has visitado</h3>
-                    <script> 
-                        miStorage = window.localStorage;
-                        var cat = localStorage.getItem('miGato');
-                    </script>
-                </div>
-            </div>  
+                 
         </main> 
         <!-- <script>
         $(document).ready(function(){

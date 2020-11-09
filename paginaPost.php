@@ -19,34 +19,24 @@
 <body>
     <header>
     <div class="logo">
-                <div><img src="img/cpu.png" alt="Imagen no soportada"></div>
+                <div><img src="img/logo.png" alt="Imagen no soportada"></div>
             </div>
 
             <div class="titulo">
                 <a href="index.php"><h1>BENCH<span>BLOG</span></h1> </a>
             </div>
 
-            <div class="buscador">
-                <form method="post">
-                    <input type="text" name="palabra">
-                    <input type="submit" name="submit" id="btnBuscar" value="BUSCAR">
-                    <input type="hidden" name="tipo" value="filtrado">
-                </form>
-            </div>
             <div class="registro">
                 <?php session_start(); include ('PHP/conexion.php'); logearRegistrarUsuario();  ?>
             </div>   
     </header>
 
     <main>
-        <h1><?php echo(cargarTituloPost($_GET["idPost"]))?></h1>
-        <?php if(cargarFotoPost($_GET["idPost"])!=null){
-            ?>
-            <img src='<?php echo (cargarFotoPost($_GET["idPost"]))?>' alt="" style="width:15vw; height:15vw; float: right;">
-            <?php
-        }
-        ?>
-        <p><?php echo(CargarPost($_GET["idPost"]));?></p> 
+        <h1 id="tituloPost"><?php echo(cargarTituloPost($_GET["idPost"]))?></h1>
+        <?php if(cargarFotoPost($_GET["idPost"])!=null){ ?>
+        <img src='<?php echo (cargarFotoPost($_GET["idPost"]))?>' alt="" style="width:15vw; height:15vw; float: right;">
+        <?php }?>
+        <p id="contenido"><?php echo(CargarPost($_GET["idPost"]));?></p> 
         <div class="comentarios">
             <?php if(isset($_SESSION["usuarioLogeado"])){ echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");?>
             <div class="formC">
@@ -62,10 +52,59 @@
             <?php };?>
             <h3>COMENTARIOS</h3>
             <?php cargarComentariosBlog();  ?>  
-        </div>    
+        </div> 
+        <a id="descargar">Descarga el post Aqui</a>   
     </main>
-
+    <script>
+    var nombreUsuario = document.getElementById("descargar").addEventListener("click",descarga,true);
+    function descarga(){
+    var saveData = (function () {
+       var a = document.createElement("a");
+       document.body.appendChild(a);
+       a.style = "display: none";
+       return function (data, fileName) {
+           var json = JSON.stringify(data),
+               blob = new Blob([json], {type: "octet/stream"}),
+               url = window.URL.createObjectURL(blob);
+           a.href = url;
+           a.download = fileName;
+           a.click();
+           window.URL.revokeObjectURL(url);
+           };
+       }());
+        var titulo = document.getElementById("tituloPost").innerHTML;
+        var contenido = document.getElementById("contenido").innerHTML;
+        var data = "Titulo --> \n"+titulo+ "\n:Contenido -->\n"+contenido ;
+        fileName = "post"+<?php echo($_GET["idPost"]); ?>+".json";
+        saveData(data, fileName);
+    }
+      
+    </script>
 
     <footer></footer>
 </body>
+<script>
+     window.onload(hola());
+    function hola(){
+        var arrayUltimosvisitados = localStorage.getItem('arrayUltimosvisitados');
+        var arrayUltimosTitulo = localStorage.getItem('arrayUltimosTitulo');
+        arrayUltimosvisitados = JSON.parse(arrayUltimosvisitados);
+        arrayUltimosTitulo = JSON.parse(arrayUltimosTitulo);
+        if(arrayUltimosvisitados == null){
+            var arrayUltimosvisitados = new Array(5);
+            var arrayUltimosTitulo = new Array(5);
+        }
+        var indiceABorrar= arrayUltimosvisitados.indexOf(<?php echo ($_GET["idPost"]) ?>);
+        if (indiceABorrar!=-1){
+            arrayUltimosvisitados.splice(indiceABorrar,1);
+            arrayUltimosTitulo.splice(indiceABorrar,1);
+        }
+        arrayUltimosvisitados.push(<?php echo ($_GET["idPost"]) ?>);
+        arrayUltimosTitulo.push(document.getElementById("tituloPost").innerHTML);
+        localStorage.setItem('arrayUltimosvisitados',JSON.stringify(arrayUltimosvisitados));
+        localStorage.setItem('arrayUltimosTitulo',JSON.stringify(arrayUltimosTitulo));
+    }
+    </script>
+
+
 </html>
