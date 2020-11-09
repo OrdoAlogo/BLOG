@@ -39,7 +39,6 @@
             <input type="file" id="foto" name="foto"><br>
             <input type="hidden" name="tipo" id ="tipo" value="nuevoPost"> 
             <input class="boton" type="submit" value="Publicar"  />
-            
         </form>
     </main>
 

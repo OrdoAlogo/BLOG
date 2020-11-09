@@ -1,12 +1,30 @@
 
 
-var nombreUsuario = document.getElementById("nickUsu");
+/* var nombreUsuario = document.getElementById("nickUsu");
 nombreUsuario.addEventListener("click", nombreUsuarioPulsado, true);
-document.getElementById("nuevoPost1").style.display= "block"; 
+document.getElementById("nuevoPost1").style.display= "block";  */
 
 /* Al pulsar en el nombre de usuario
 aparece un menú con botones ajustes y cerrar sesión */
-function nombreUsuarioPulsado(){
+
+
+var nombreUsuario = document.getElementById("nickUsu");
+nombreUsuario.onclick = function(){
+    let element = document.getElementById('desplegable');
+    let elementStyle = window.getComputedStyle(element);
+    let elementColor = elementStyle.getPropertyValue('visibility');
+    
+    if(elementColor == 'hidden'){
+
+        element.style.visibility = 'visible'
+
+        element.style.visibility = 'visible';
+
+    }else{
+        element.style.visibility = 'hidden';
+    }
+}
+/* function nombreUsuarioPulsado(){
 
 
     let element = document.getElementById('desplegable');
@@ -22,24 +40,8 @@ function nombreUsuarioPulsado(){
     }else{
         element.style.visibility = 'hidden';
     }
-}
+} */
 //$(header>".registro">".tarjetaPost").hidde();
-
-/* document.addEventListener("click", quitar,true);
-
-function quitar(){   
-    
-    document.getElementById('desplegable').style.visibility = 'hidden';
-}; */
-
-var nombreUsuario = document.getElementById("cerrarSesion").addEventListener("click",cerrarSesion,true);
-
-function registroExisteNick(){
-    console.log("script registro");
-    document.getElementById("nick").style.borderColor = "red";
-    document.getElementById("nickExiste").style.display = "block";
-    
-}
 
 
 
@@ -88,7 +90,7 @@ function cancelar(){
 
 //Funcion para controlar los colores del campo contraseña
 //segun su longitud de caracteres
-function longContrasenia(){
+/* function longContrasenia(){
     numCaracteres = document.forms[2].contra.value.length;
     campo = document.forms[2].contra;
     if(numCaracteres<=5){
@@ -100,8 +102,7 @@ function longContrasenia(){
     }
 
     contar();
-
-}
+} */
 function contar(){
     document.forms[2].contra.value.length  
 }
@@ -115,24 +116,22 @@ function validarForm(){
 
 //Funcion para validar las contraseñas en el registro
 function validarContra(){
-
     contar();
 }
 
 
-//Funcion para validar las contraseñas en el registro
+ //Funcion para validar las contraseñas en el registro
 function validarContra(){
 
     contenido = document.getElementById('contra').value;
     espacios = false;
     contador = 0;
-    while(!espacios && (contador <contenido.length)){
-
+   /*  while(!espacios && (contador <contenido.length)){
         if(contenido.charAt(contador) == " "){
             espacios = true;
             contador++;
         }
-    }
+    } */
     if(espacios){
         alert("La contraseña no admite espacios");
         cancelar();
@@ -143,7 +142,7 @@ function validarContra(){
         cancelar();
     }
     
-}
+} 
 
 //Funcion para controlar la longitud de caracteres de la contraseña
 function longContra(){
@@ -153,8 +152,5 @@ function longContra(){
         cancelar();
     }
 
-}
-
-
-
+} 
 

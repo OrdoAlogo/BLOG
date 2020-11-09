@@ -19,7 +19,6 @@ if ($_SERVER["REQUEST_METHOD"]=='GET'){
 
         if($tipo=="Login"){
             comprobarExistencia($_GET["Nick"],$_GET["Contra"],conexion());
-
         }else if($tipo=="InsertarComentario"){
             insertarComentario(); 
         } else if($tipo=="visita"){
@@ -80,7 +79,8 @@ function comprobarExistencia($nickname,$contraseña,$login){
     $numero = $usuario->rowcount();
     if($numero>0){
         foreach ($usuario as $usu => $valor){
-            if($valor['contrasena'] == $contraseña){
+            $contraseñabase = desencriptarTexto($valor['contrasena']);
+            if($contraseñabase == $contraseña){
                 session_start();
                 $_SESSION["usuarioLogeado"] = $valor['nickname'];
                 $_SESSION["fotoLogeado"] = $valor['foto_nick'];
@@ -186,7 +186,7 @@ function insertarUsuario($loginBD){
                             }
     
                 $stmt = $loginBD->prepare('INSERT INTO usuarios (nickname, contrasena, foto_nick, e_mail, tipo_de_usuario, estado ) VALUES (:nick, :contra, :foto_nick, :email, :tipo_de_usuario, :estado )');
-        
+                $contra = encriptarTexto($contra);
                 $stmt->execute(
                     array(
                         'nick' => $nick,
@@ -242,7 +242,7 @@ function cargarFotoPost($id){
 
 function crearPost($loginBD){
   
-    session_start();
+    //session_start();
     $titulo = isset($_REQUEST['titulo']) ? $_REQUEST['titulo'] : null;
     $contenido = isset($_REQUEST['contenido']) ? $_REQUEST['contenido'] : null;
     $foto = isset($_REQUEST['foto']) ? $_REQUEST['foto'] : null;
@@ -271,11 +271,9 @@ function crearPost($loginBD){
             </style>
        <?php 
        }
-        
     }
     
     else{
-
         if (is_uploaded_file($_FILES['foto']['tmp_name'])) { 
             //Valida el nombre del archivo
             if(empty($_FILES['foto']['name']))
@@ -325,7 +323,6 @@ function crearPost($loginBD){
 
             
         }else{
-            echo "hola buenos dias";
             $stmt = $loginBD->prepare('INSERT INTO posts (nickname, titulo, contenido, visitas, fecha ) VALUES (:nickname, :titulo, :contenido, :visitas, :fecha )');
             
             $stmt->execute(
@@ -349,7 +346,7 @@ function crearPost($loginBD){
 /* Función que actualiza la contraseña de la cuenta */
 function actualizarContrasena($loginBD){
 
-    session_start();
+    //session_start();
     $passActual = isset($_REQUEST['passActual']) ? $_REQUEST['passActual'] : null;
     $passNueva = isset($_REQUEST['passNueva']) ? $_REQUEST['passNueva'] : null;
     $passRepetir = isset($_REQUEST['passRepetir']) ? $_REQUEST['passRepetir'] : null;
@@ -360,12 +357,14 @@ function actualizarContrasena($loginBD){
     $contrasena =$stmt->fetch();
     
     /* Si la contraseña actual es la de la base de datos */
-    if($passActual==$contrasena[0]){
+    $passwd = desencriptarTexto($contrasena[0]);
+    if($passActual==$passwd){
 
         /* Si la contraseña nueva y la confirmación coinciden actualiza la contraseña */
         if($passNueva==$passRepetir){
 
             $stmt = $loginBD->prepare('UPDATE usuarios set contrasena=:contrasena WHERE nickname=:nickname');
+            $passNueva=encriptarTexto($passNueva);
             $stmt->execute(
                 array(
                     'nickname' => $usuario,
@@ -491,8 +490,8 @@ function cargarPosts($posts){
     foreach($posts as $posicion =>$columna){
 
         
-        $tipoUser = $_SESSION["tipo"];
-        $propietario = $columna['nickname'];
+        $tipoUser = isset($_SESSION["tipo"]);
+        $propietario = isset($columna['nickname']);
         ?>
     <div id="tarjetaPost">
        <!--<img src="//<//?//php echo $columna['imagen_post'] ?>">-->
@@ -528,7 +527,7 @@ function cargarPosts($posts){
 
 function cargarTopPosts(){
     try{
-        $procedimiento = 'SELECT id_post, titulo,imagen_post, visitas FROM posts HAVING(visitas>2) ORDER by visitas DESC';
+        $procedimiento = 'SELECT id_post, titulo,imagen_post, visitas FROM posts HAVING(visitas>2) ORDER by visitas DESC LIMIT 5';
         $llamadaProc = conexion()->query($procedimiento);
         $llamadaProc->setFetchMode(PDO::FETCH_ASSOC);
         
@@ -583,8 +582,12 @@ function cargarTopPosts(){
     
     /* session_start();   */
     if(isset($_SESSION["usuarioLogeado"])){ 
+        if($_SESSION['fotoLogeado']!=null){
+            echo "<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/><br>";
+        }else{
+            echo "<img id='fotoPerfil'src='img/calvo.jpg'/><br>";
+        }
         
-        echo "<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/><br>";
         echo "<a id='nickUsu' >".$_SESSION["usuarioLogeado"]."</a>";
         echo "<div id='desplegable'><a class='botonesUsuario' href='ajustes.php'> Ajustes</a></br><a class='botonesUsuario' href='editarPost.php?usuario=".$_SESSION['usuarioLogeado']." '>Editar posts</a></br><a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a></div>";
 
@@ -593,7 +596,7 @@ function cargarTopPosts(){
         print ("<a id='nickUsuC'href='login.php'>Entrar | Registrarse</a><span class=icon-user></span>");
     }
 
-    echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
+    //echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
 
  }
   //Funcion para cargar los post de un usuario especifico
@@ -628,7 +631,6 @@ function postUsuario(){
         <?php
     } echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
 }
-
 
  /* Función que muetra el boton crear post si el usuario ha iniciado sesión */
  function logearNuevoPost(){
@@ -685,8 +687,7 @@ function incrementarvisitas(){
     $idP=$_GET["idPost"];
     $updateVisitas = "UPDATE posts SET posts.visitas = posts.visitas+1 where id_post LIKE $idP ";
     $update =conexion()->query($updateVisitas);
-    //$update->execute();
-}
+    }
 
 function borrarPost(){
     borrarTodosLosComentariosPost();
@@ -706,4 +707,24 @@ function borrarTodosLosComentariosPost(){
     $borrado =conexion()->query($borrarComentarios);
 }
 
-?>  
+function encriptarTexto($contraseña){
+    $ciphering = "AES-128-CTR";
+    $iv_length = openssl_cipher_iv_length($ciphering);
+    $options = 0;
+    $encryption_iv = '1234567891011121';
+    $encryption_key = "GeeksforGeeks"; 
+    $encryption = openssl_encrypt($contraseña, $ciphering, 
+            $encryption_key, $options, $encryption_iv); 
+    return($encryption);?>
+    <script>alert(<?php echo ($encryption)?>)</script>
+    <?php
+}
+function desencriptarTexto($contraseña){
+    $ciphering = "AES-128-CTR";
+    $decryption_iv = '1234567891011121';
+    $decryption_key = "GeeksforGeeks";
+    $options = 0;
+    $decryption=openssl_decrypt ($contraseña, $ciphering,  
+        $decryption_key, $options, $decryption_iv);
+    return($decryption);
+}
