@@ -19,7 +19,6 @@ if ($_SERVER["REQUEST_METHOD"]=='GET'){
 
         if($tipo=="Login"){
             comprobarExistencia($_GET["Nick"],$_GET["Contra"],conexion());
-
         }else if($tipo=="InsertarComentario"){
             insertarComentario(); 
         } else if($tipo=="visita"){
@@ -80,7 +79,8 @@ function comprobarExistencia($nickname,$contraseña,$login){
     $numero = $usuario->rowcount();
     if($numero>0){
         foreach ($usuario as $usu => $valor){
-            if($valor['contrasena'] == $contraseña){
+            $contraseñabase = desencriptarTexto($valor['contrasena']);
+            if($contraseñabase == $contraseña){
                 session_start();
                 $_SESSION["usuarioLogeado"] = $valor['nickname'];
                 $_SESSION["fotoLogeado"] = $valor['foto_nick'];
@@ -186,7 +186,7 @@ function insertarUsuario($loginBD){
                             }
     
                 $stmt = $loginBD->prepare('INSERT INTO usuarios (nickname, contrasena, foto_nick, e_mail, tipo_de_usuario, estado ) VALUES (:nick, :contra, :foto_nick, :email, :tipo_de_usuario, :estado )');
-                //$contra = encriptarTexto($contra);
+                $contra = encriptarTexto($contra);
                 $stmt->execute(
                     array(
                         'nick' => $nick,
@@ -346,7 +346,7 @@ function crearPost($loginBD){
 /* Función que actualiza la contraseña de la cuenta */
 function actualizarContrasena($loginBD){
 
-    session_start();
+    //session_start();
     $passActual = isset($_REQUEST['passActual']) ? $_REQUEST['passActual'] : null;
     $passNueva = isset($_REQUEST['passNueva']) ? $_REQUEST['passNueva'] : null;
     $passRepetir = isset($_REQUEST['passRepetir']) ? $_REQUEST['passRepetir'] : null;
@@ -357,12 +357,14 @@ function actualizarContrasena($loginBD){
     $contrasena =$stmt->fetch();
     
     /* Si la contraseña actual es la de la base de datos */
-    if($passActual==$contrasena[0]){
+    $passwd = desencriptarTexto($contrasena[0]);
+    if($passActual==$passwd){
 
         /* Si la contraseña nueva y la confirmación coinciden actualiza la contraseña */
         if($passNueva==$passRepetir){
 
             $stmt = $loginBD->prepare('UPDATE usuarios set contrasena=:contrasena WHERE nickname=:nickname');
+            $passNueva=encriptarTexto($passNueva);
             $stmt->execute(
                 array(
                     'nickname' => $usuario,
@@ -580,7 +582,7 @@ function cargarTopPosts(){
     
     /* session_start();   */
     if(isset($_SESSION["usuarioLogeado"])){ 
-        if($_SESSION['fotoLogeado']==null){
+        if($_SESSION['fotoLogeado']!=null){
             echo "<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/><br>";
         }else{
             echo "<img id='fotoPerfil'src='img/calvo.jpg'/><br>";
@@ -594,7 +596,7 @@ function cargarTopPosts(){
         print ("<a id='nickUsuC'href='login.php'>Entrar | Registrarse</a><span class=icon-user></span>");
     }
 
-    echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
+    //echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
 
  }
   //Funcion para cargar los post de un usuario especifico
@@ -685,25 +687,7 @@ function incrementarvisitas(){
     $idP=$_GET["idPost"];
     $updateVisitas = "UPDATE posts SET posts.visitas = posts.visitas+1 where id_post LIKE $idP ";
     $update =conexion()->query($updateVisitas);
-    ?>
-    <script type="text/javascript">
-        miStorage = window.localStorage;
-        var miArray = new Array();
-        if(miStorage.getItem('myArray')){
-            miArray = miStorage.getItem('myArray');
-            for(var i=0; miArray.length>i;i++){
-                if (miArray[i]==<?php echo ($idP);?>){
-                    //delete(miArray[i]);
-                    //miArray.splice(0, 0,  <//?//php echo ($idP);?>);
-                    alert(miArray);
-                }
-            }
-        }
-        miArray.push(<?php echo ($idP); ?>) ; 
-        miStorage.setItem('myArray', JSON.stringify(miArray));
-    </script>
-   <?php
-}
+    }
 
 function borrarPost(){
     borrarTodosLosComentariosPost();
@@ -729,9 +713,11 @@ function encriptarTexto($contraseña){
     $options = 0;
     $encryption_iv = '1234567891011121';
     $encryption_key = "GeeksforGeeks"; 
-    $encryption = openssl_encrypt($simple_string, $ciphering, 
+    $encryption = openssl_encrypt($contraseña, $ciphering, 
             $encryption_key, $options, $encryption_iv); 
-    return($encryption);
+    return($encryption);?>
+    <script>alert(<?php echo ($encryption)?>)</script>
+    <?php
 }
 function desencriptarTexto($contraseña){
     $ciphering = "AES-128-CTR";

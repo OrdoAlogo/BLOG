@@ -93,17 +93,5 @@
                 </div>
                  
         </main> 
-        <!-- <script>
-        $(document).ready(function(){
-            $('.tituloPost').click( function () {
-            header("Location: posts.php");
-            });
-        });
-        $(document).ready(function(){
-            $('.tituloTopPost').click( function () {
-             alert(this.id);
-            });
-        });
-        </script> -->
     </body>
 </html>

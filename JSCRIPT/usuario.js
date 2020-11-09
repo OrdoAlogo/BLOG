@@ -44,16 +44,6 @@ nombreUsuario.onclick = function(){
 //$(header>".registro">".tarjetaPost").hidde();
 
 
-var nombreUsuario = document.getElementById("cerrarSesion").addEventListener("click",cerrarSesion,true);
-
-function registroExisteNick(){
-    console.log("script registro");
-    document.getElementById("nick").style.borderColor = "red";
-    document.getElementById("nickExiste").style.display = "block";
-    
-}
-
-
 
 /* document.addEventListener("click", quitar,true);
 
@@ -100,7 +90,7 @@ function cancelar(){
 
 //Funcion para controlar los colores del campo contraseña
 //segun su longitud de caracteres
-function longContrasenia(){
+/* function longContrasenia(){
     numCaracteres = document.forms[2].contra.value.length;
     campo = document.forms[2].contra;
     if(numCaracteres<=5){
@@ -112,8 +102,7 @@ function longContrasenia(){
     }
 
     contar();
-
-}
+} */
 function contar(){
     document.forms[2].contra.value.length  
 }
@@ -127,24 +116,22 @@ function validarForm(){
 
 //Funcion para validar las contraseñas en el registro
 function validarContra(){
-
     contar();
 }
 
 
-//Funcion para validar las contraseñas en el registro
+ //Funcion para validar las contraseñas en el registro
 function validarContra(){
 
     contenido = document.getElementById('contra').value;
     espacios = false;
     contador = 0;
-    while(!espacios && (contador <contenido.length)){
-
+   /*  while(!espacios && (contador <contenido.length)){
         if(contenido.charAt(contador) == " "){
             espacios = true;
             contador++;
         }
-    }
+    } */
     if(espacios){
         alert("La contraseña no admite espacios");
         cancelar();
@@ -155,15 +142,15 @@ function validarContra(){
         cancelar();
     }
     
-}
+} 
 
 //Funcion para controlar la longitud de caracteres de la contraseña
-function longContra(){}
+function longContra(){
     numCar = document.getElementById('contra').value.length;
     if(numCar<10){
         alert("La contraseña debe tener 10 caracteres mínimo");
         cancelar();
     }
 
-}
+} 
 
