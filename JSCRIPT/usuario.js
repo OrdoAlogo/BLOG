@@ -58,6 +58,7 @@ var nombreUsuario = document.getElementById("cerrarSesion").addEventListener("cl
 /* Al registrarse, si el nickname introducido existe
 aparece un texto rojo. */
 function registroExisteNick(){
+    alert("holaaaa"); 
     document.getElementById("nick").style.borderColor = "red";
     document.getElementById("nickExiste").style.display = "block";
 }

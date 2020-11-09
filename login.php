@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="css/encabezado.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
    <link rel="stylesheet" href="css/login.css">
-   <script src="JSCRIPT/usuario.js" type="text/javascript"></script>
+   
 <body>
 <header>
         <div class="logo">
@@ -101,3 +101,4 @@
 </body>
 </html>
 
+<script src="JSCRIPT/usuario.js" type="text/javascript"></script>
