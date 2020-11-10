@@ -73,7 +73,7 @@
                     arrayUltimosTitulo = JSON.parse(arrayUltimosTitulo);
                     arrayUltimosTitulo = arrayUltimosTitulo.reverse();
 
-                    for(var i=0;i<3;i++){
+                    for(var i=0;i<3 && i<arrayUltimosvisitados.length;i++){
                         var newDiv = document.createElement("a"); 
                         linebreak = document.createElement("br");
                         newDiv.setAttribute('href','paginaPost.php?idPost='+arrayUltimosvisitados[i]);

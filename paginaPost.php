@@ -91,8 +91,8 @@
         arrayUltimosvisitados = JSON.parse(arrayUltimosvisitados);
         arrayUltimosTitulo = JSON.parse(arrayUltimosTitulo);
         if(arrayUltimosvisitados == null){
-            var arrayUltimosvisitados = new Array(5);
-            var arrayUltimosTitulo = new Array(5);
+            var arrayUltimosvisitados = new Array(0);
+            var arrayUltimosTitulo = new Array(0);
         }
         var indiceABorrar= arrayUltimosvisitados.indexOf(<?php echo ($_GET["idPost"]) ?>);
         if (indiceABorrar!=-1){

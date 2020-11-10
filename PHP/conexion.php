@@ -490,7 +490,7 @@ function cargarPosts($posts){
     foreach($posts as $posicion =>$columna){
 
         
-        $tipoUser = isset($_SESSION["tipo"]);
+        $tipoUser = $_SESSION['tipo'];
         $propietario = isset($columna['nickname']);
         ?>
     <div id="tarjetaPost">
