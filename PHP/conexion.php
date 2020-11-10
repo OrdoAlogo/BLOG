@@ -89,11 +89,11 @@ function comprobarExistencia($nickname,$contraseña,$login){
                 
 
             }else{
-                echo("contraseña erronea");
+                echo '<script type="text/javascript">loginError();</script>';
             }
         }
     }else{
-        echo("Usuario no  existe");
+        echo '<script type="text/javascript">loginError();</script>';
     }
 }
 

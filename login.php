@@ -56,6 +56,8 @@
                     <input type="password" name="Contra"><br>
                     <input type="hidden" name="tipo" value="Login">
                 </label><br>
+                <p id="loginError" class="existe"> Nick o contraseña erronea.</p>
+
                 
 
                 <input class="boton" type="submit" onclick="" value="Entrar">
