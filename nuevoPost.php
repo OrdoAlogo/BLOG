@@ -8,14 +8,14 @@
    <link rel="stylesheet" type="text/css" href="css/encabezado.css">
    <link rel="stylesheet" type="text/css" href="css/index.css">
    <link rel="stylesheet" type="text/css" href="css/nuevoPost.css">
-   <script src="JSCRIPT/usuario.js" type="text/javascript"></script>
+  
    
 
 <body>
     <header>
 
         <div class="logo">
-            <div><img src="img/cpu.png" alt="Imagen no soportada"></div>
+            <div><img src="img/logo.png" alt="Imagen no soportada"></div>
         </div>
 
         <div class="titulo">
@@ -23,7 +23,7 @@
         </div>
 
         <div class="registro">
-            <?php include 'PHP/conexion.php';logearRegistrarUsuario();?>
+            <?php session_start(); include 'PHP/conexion.php';logearRegistrarUsuario();?>
         </div>
 
 
@@ -39,7 +39,6 @@
             <input type="file" id="foto" name="foto"><br>
             <input type="hidden" name="tipo" id ="tipo" value="nuevoPost"> 
             <input class="boton" type="submit" value="Publicar"  />
-            
         </form>
     </main>
 
@@ -47,5 +46,6 @@
     </footer>
 </body>
 </html>
+<script src="JSCRIPT/usuario.js" type="text/javascript"></script>
 
 

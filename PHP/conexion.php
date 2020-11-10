@@ -19,14 +19,12 @@ if ($_SERVER["REQUEST_METHOD"]=='GET'){
 
         if($tipo=="Login"){
             comprobarExistencia($_GET["Nick"],$_GET["Contra"],conexion());
-
         }else if($tipo=="InsertarComentario"){
-            echo '<script>';
-            echo "alert('hola')";
-            echo '</script>';
             insertarComentario(); 
         } else if($tipo=="visita"){
              incrementarvisitas();  
+        }else if($tipo=="borrarPost"){
+            borrarPost();
         } 
    }
 }
@@ -81,7 +79,8 @@ function comprobarExistencia($nickname,$contraseña,$login){
     $numero = $usuario->rowcount();
     if($numero>0){
         foreach ($usuario as $usu => $valor){
-            if($valor['contrasena'] == $contraseña){
+            $contraseñabase = desencriptarTexto($valor['contrasena']);
+            if($contraseñabase == $contraseña){
                 session_start();
                 $_SESSION["usuarioLogeado"] = $valor['nickname'];
                 $_SESSION["fotoLogeado"] = $valor['foto_nick'];
@@ -90,12 +89,11 @@ function comprobarExistencia($nickname,$contraseña,$login){
                 
 
             }else{
-                echo("contraseña erronea");
+                echo '<script type="text/javascript">loginError();</script>';
             }
         }
     }else{
-        
-        echo("Usuario no  existe");
+        echo '<script type="text/javascript">loginError();</script>';
     }
 }
 
@@ -188,7 +186,7 @@ function insertarUsuario($loginBD){
                             }
     
                 $stmt = $loginBD->prepare('INSERT INTO usuarios (nickname, contrasena, foto_nick, e_mail, tipo_de_usuario, estado ) VALUES (:nick, :contra, :foto_nick, :email, :tipo_de_usuario, :estado )');
-        
+                $contra = encriptarTexto($contra);
                 $stmt->execute(
                     array(
                         'nick' => $nick,
@@ -244,7 +242,7 @@ function cargarFotoPost($id){
 
 function crearPost($loginBD){
   
-    session_start();
+    //session_start();
     $titulo = isset($_REQUEST['titulo']) ? $_REQUEST['titulo'] : null;
     $contenido = isset($_REQUEST['contenido']) ? $_REQUEST['contenido'] : null;
     $foto = isset($_REQUEST['foto']) ? $_REQUEST['foto'] : null;
@@ -273,11 +271,9 @@ function crearPost($loginBD){
             </style>
        <?php 
        }
-        
     }
     
     else{
-
         if (is_uploaded_file($_FILES['foto']['tmp_name'])) { 
             //Valida el nombre del archivo
             if(empty($_FILES['foto']['name']))
@@ -327,7 +323,6 @@ function crearPost($loginBD){
 
             
         }else{
-            echo "hola buenos dias";
             $stmt = $loginBD->prepare('INSERT INTO posts (nickname, titulo, contenido, visitas, fecha ) VALUES (:nickname, :titulo, :contenido, :visitas, :fecha )');
             
             $stmt->execute(
@@ -351,7 +346,7 @@ function crearPost($loginBD){
 /* Función que actualiza la contraseña de la cuenta */
 function actualizarContrasena($loginBD){
 
-    session_start();
+    //session_start();
     $passActual = isset($_REQUEST['passActual']) ? $_REQUEST['passActual'] : null;
     $passNueva = isset($_REQUEST['passNueva']) ? $_REQUEST['passNueva'] : null;
     $passRepetir = isset($_REQUEST['passRepetir']) ? $_REQUEST['passRepetir'] : null;
@@ -362,12 +357,14 @@ function actualizarContrasena($loginBD){
     $contrasena =$stmt->fetch();
     
     /* Si la contraseña actual es la de la base de datos */
-    if($passActual==$contrasena[0]){
+    $passwd = desencriptarTexto($contrasena[0]);
+    if($passActual==$passwd){
 
         /* Si la contraseña nueva y la confirmación coinciden actualiza la contraseña */
         if($passNueva==$passRepetir){
 
             $stmt = $loginBD->prepare('UPDATE usuarios set contrasena=:contrasena WHERE nickname=:nickname');
+            $passNueva=encriptarTexto($passNueva);
             $stmt->execute(
                 array(
                     'nickname' => $usuario,
@@ -463,10 +460,10 @@ function cerrarSesion(){
 function recibirPosts(){
     try{
         $consulta = 'SELECT * FROM posts,usuarios where posts.nickname=usuarios.nickname';
-            $texto = null;
-        if(isset($_POST['palabra'])){
+        $texto = null;
+        if(isset($_GET['palabra'])){
             //Si hay una busqueda, cambiamos la consulta
-            $texto = $_POST['palabra'];
+            $texto = $_GET['palabra'];
             $consulta = 'SELECT * FROM posts WHERE titulo LIKE :titulo or contenido LIKE :contenido or nickname LIKE :nickname';
         } 
         //Preparamos la sentencia e indicar que vamos a usar un cursor
@@ -493,8 +490,8 @@ function cargarPosts($posts){
     foreach($posts as $posicion =>$columna){
 
         
-        $tipoUser = $_SESSION["tipo"];
-        $propietario = $columna['nickname'];
+        $tipoUser = isset($_SESSION["tipo"]);
+        $propietario = isset($columna['nickname']);
         ?>
     <div id="tarjetaPost">
        <!--<img src="//<//?//php echo $columna['imagen_post'] ?>">-->
@@ -503,7 +500,7 @@ function cargarPosts($posts){
         //Comprobamos que tipo de usuario se ha logeado, para habilitar o no el boton para eliminar un post
             if($tipoUser=='admin'){
                 ?>
-                    <a href="PHP/eliminarPost.php?idPost=<?php echo $columna['id_post']; ?>" class="btnEliminar"><span class="icon-trash"></span></a>
+                    <a href="index.php?tipo=borrarPost&idPost=<?php echo $columna['id_post']; ?>" class="btnEliminar"><span class="icon-trash"></span></a>
                 <?php
             
             }
@@ -517,9 +514,9 @@ function cargarPosts($posts){
             }
         ?>
         <p class="contenido"><?php $resultado = substr($columna['contenido'], 0, 400)."..."; echo $resultado?> </p>
+        <p class="autor">Autor: <?php echo $columna['nickname'] ?> </p>
         <p class="visualizaciones"><span class="icon-eye"></span><?php echo (" ".$columna['visitas']) ?></p>
-        <p class="autor">Autor: <?php echo $columna['nickname'] ?> </p> 
-        <span class="fecha"><?php echo ("Fecha: ".$columna['fecha'] )?></span>
+        <span class="fecha"><?php echo (" ".$columna['fecha'] )?></span>
     </div>
     <?php
     echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
@@ -530,7 +527,7 @@ function cargarPosts($posts){
 
 function cargarTopPosts(){
     try{
-        $procedimiento = 'SELECT id_post, titulo,imagen_post, visitas FROM posts HAVING(visitas>2) ORDER by visitas DESC';
+        $procedimiento = 'SELECT id_post, titulo,imagen_post, visitas FROM posts HAVING(visitas>2) ORDER by visitas DESC LIMIT 5';
         $llamadaProc = conexion()->query($procedimiento);
         $llamadaProc->setFetchMode(PDO::FETCH_ASSOC);
         
@@ -543,9 +540,7 @@ function cargarTopPosts(){
     foreach($result as $p => $fila){
         ?>  
         <div class="datosDB">
-            <p>Id post: <?php echo $fila['id_post']; ?> </p>
-            <p onclick="recogerIdPost(<?php echo  $fila['id_post']?>)">Titulo: <?php  echo  $fila['titulo']; ?> </p>
-            <p>Img: <?php  echo $fila['imagen_post']; ?> </p>
+        <a href="paginaPost.php?tipo=visita&idPost=<?php echo $fila['id_post']; ?>"> <h2><?php echo $fila['titulo'] ?> </h2> </a>
             <p>Nº visitas: <?php echo $fila['visitas']; ?> </p>
         </div>     
         <?php
@@ -570,10 +565,8 @@ function cargarTopPosts(){
     foreach($resultUsuarios as $p => $col){
         ?>
         <div class="datosDB">
-            <p>Usuario:  <?php echo $col['nickname'] ?> </p>
-            <p>E-mail:<?php echo $col['e_mail'] ?></p>
+            <a href="index.php?palabra=<?php echo $col['nickname']?>"><?php echo $col['nickname'] ?> </a>
             <p>Nº post_: <?php echo $col['post'] ?></p>
-            <p>Imagen: <?php echo $col['foto_nick'] ?></p>
         </div>
 
     <?php
@@ -585,19 +578,25 @@ function cargarTopPosts(){
 -Iniciar sesion/ Registrase  
 -La foto de perfil, el botón de ajustes y cerrar sesión */
  function logearRegistrarUsuario(){
+    
+    
     /* session_start();   */
     if(isset($_SESSION["usuarioLogeado"])){ 
-        echo "<script type='text/javascript' src='JSCRIPT/usuario.js'></script>";
-        echo "<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/><br>";
+        if($_SESSION['fotoLogeado']!=null){
+            echo "<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/><br>";
+        }else{
+            echo "<img id='fotoPerfil'src='img/calvo.jpg'/><br>";
+        }
+        
         echo "<a id='nickUsu' >".$_SESSION["usuarioLogeado"]."</a>";
-        echo "<div id='desplegable'></br><a class='botonesUsuario' href='ajustes.php'> Ajustes</a><a href='editarPost.php?usuario=".$_SESSION['usuarioLogeado']." ' class='botonesUsuario'>Editar mis Posts</a></br></br></br><a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a></div>";
+        echo "<div id='desplegable'><a class='botonesUsuario' href='ajustes.php'> Ajustes</a></br><a class='botonesUsuario' href='editarPost.php?usuario=".$_SESSION['usuarioLogeado']." '>Editar posts</a></br><a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a></div>";
 
     }
     else{
-        print ("<a id='nickUsu'href='login.php'>Entrar | Registrarse</a><span class=icon-user></span>");
+        print ("<a id='nickUsuC'href='login.php'>Entrar | Registrarse</a><span class=icon-user></span>");
     }
 
-    echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
+    //echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
 
  }
   //Funcion para cargar los post de un usuario especifico
@@ -630,18 +629,13 @@ function postUsuario(){
                 </form> 
             </div>
         <?php
-        
-         $_SESSION['usuario'] = $fila3['nickname'];
-    } 
-       
-    echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
+    } echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
 }
-
 
  /* Función que muetra el boton crear post si el usuario ha iniciado sesión */
  function logearNuevoPost(){
     if(isset($_SESSION["usuarioLogeado"])){ 
-        echo "<div id='nuevoPost1'><a href='nuevoPost.php'>NUEVO POST</a></div>";
+        echo "<div id='nuevoPost1'><a href='nuevoPost.php'>CREAR POST</a></div>";
     }
     else{
         
@@ -651,10 +645,8 @@ function postUsuario(){
 function cargarComentariosBlog(){
     echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
     $idP=$_GET["idPost"];
-    
-    
     try{
-        $comentarios = "SELECT * FROM comentarios WHERE id_post=$idP";
+        $comentarios = "SELECT nickname,comentario,fecha FROM comentarios WHERE id_post=$idP";
         $sentenciaC =conexion()->query($comentarios);
         $sentenciaC->setFetchMode(PDO::FETCH_ASSOC);
         }catch(PDOException $pe){
@@ -665,36 +657,9 @@ function cargarComentariosBlog(){
         foreach($resultadoC as $posicionC => $filaC){
         ?>
         <div>
-            <p> <?php echo $filaC['nickname']?></p>
+            <p class="usuario"> <?php echo $filaC['nickname']?></p>
             <p class="contenido"><?php echo $filaC['comentario']?></p>
-            <p>Fecha: <?php echo $filaC['fecha']?></p>
-             <!-- ordoño (Eliminar comentarios) 6/11/2020 -->
-        <?php
-            $tipoUser = $_SESSION["tipo"];
-            $usuario = $_SESSION["usuarioLogeado"];
-            $propietarioC = $filaC['nickname'];
-            $_SESSION['post'] = $filaC['id_post'];
-            //Un usuario puede eliminar su comentario
-            if($usuario==$propietarioC){
-                ?>
-                    <a href="PHP/eliminarComentario.php?idC=<?php echo $filaC['id_comentario']?>"class="btnElim"><span class="icon-trash"></span></a>
-                <?php
-            //El tipo  admin o moderador puede eliminar cualquier comentario
-            }if( ($tipoUser=='admin') or ($tipoUser=='mod')){
-                ?>
-                     <a href="PHP/eliminarComentario.php?idC=<?php echo $filaC['id_comentario']?>" class="btnElim"> <span class="icon-trash"></span></a>
-                <?php
-            //si no estas logeaado, no puedes eliminar ningun comentario
-            }if(!isset($_SESSION["usuarioLogeado"])){
-                    ?>
-                  <style type="text/css">
-                    .btnElim{display: none;}    
-                  </style> 
-                <?php
-            }
-        ?>   
-           
-            
+            <p class="fecha"> <?php echo $filaC['fecha']?></p>
         </div> 
             <?php
         }
@@ -722,7 +687,44 @@ function incrementarvisitas(){
     $idP=$_GET["idPost"];
     $updateVisitas = "UPDATE posts SET posts.visitas = posts.visitas+1 where id_post LIKE $idP ";
     $update =conexion()->query($updateVisitas);
-    //$update->execute();
+    }
+
+function borrarPost(){
+    borrarTodosLosComentariosPost();
+    $idP = $_GET['idPost'];
+    $consulta = conexion()->prepare ('DELETE FROM posts WHERE id_post=:id_post');
+    $consulta->execute(
+        array(
+            'id_post' =>$idP
+        )
+        ); 
+    header("Location: index.php");      
 }
 
-?>  
+function borrarTodosLosComentariosPost(){
+    $idP = $_GET['idPost'];
+    $borrarComentarios = "DELETE FROM comentarios WHERE id_post LIKE $idP";
+    $borrado =conexion()->query($borrarComentarios);
+}
+
+function encriptarTexto($contraseña){
+    $ciphering = "AES-128-CTR";
+    $iv_length = openssl_cipher_iv_length($ciphering);
+    $options = 0;
+    $encryption_iv = '1234567891011121';
+    $encryption_key = "GeeksforGeeks"; 
+    $encryption = openssl_encrypt($contraseña, $ciphering, 
+            $encryption_key, $options, $encryption_iv); 
+    return($encryption);?>
+    <script>alert(<?php echo ($encryption)?>)</script>
+    <?php
+}
+function desencriptarTexto($contraseña){
+    $ciphering = "AES-128-CTR";
+    $decryption_iv = '1234567891011121';
+    $decryption_key = "GeeksforGeeks";
+    $options = 0;
+    $decryption=openssl_decrypt ($contraseña, $ciphering,  
+        $decryption_key, $options, $decryption_iv);
+    return($decryption);
+}

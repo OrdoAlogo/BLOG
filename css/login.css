@@ -4,14 +4,10 @@ h2{
     text-align: center;
     font-size: 1em;
     color: white;
-    margin-top: 20px;
 }
 
-main{ display: flex; flex-direction: column; justify-content: space-around; justify-items: center; height: 100%; 
-   width: 90%; margin: 0 auto; margin-top: 100px; margin-bottom: 10%;}
-main div{margin-top: 0 auto; margin-top: 15px;}
-.camposTx{width: 50%; border-radius: 10px;}
-.sesion form,.registro form{border:1px solid orange ; padding: 10px; background: #492f09; width: 50%; margin: 0 auto;}
+.mainLogin{ display: flex; flex-direction: column; justify-content: space-around; justify-items: center; height: 100%; width: 50%; margin: 0 auto; margin-top: 100px;}
+.sesion form,.registro form{border:1px solid orange ; padding: 10px; background: #492f09;}
 .sesion,.registro h4{text-align: center; color: white;}
 
 input[type=submit],input[type=reset],#btnRegistro {font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif; border-radius: 10px;}

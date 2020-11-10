@@ -2,22 +2,20 @@
 <html lang="es">
     <head>
         <title>BLOG | EDITAR  - POSTS</title>
+        <link class="logo" rel="icon" type="image/vnd.microsoft.icon" href="img/logo.png">
         <link rel="stylesheet" type="text/css" href="css/fuentes-iconos/style.css">
         <link rel="stylesheet" type="text/css" href="css/encabezado.css">
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
     </head>
     <style type="text/css">
-    main{display:block; margin: 0 auto;}
-    #titulo_principal{margin-top: 10px;}
     .formEdicion{margin: 0 auto; width: 50%; text-align:center; padding:10px;}
     .boton{margin: 0 auto; text-align:center; border-radius:10px;}
     .boton:hover{background:green; color:white;}
     .icon-trash{ color:orangered; text-decoration:none;}
     .icon-trash:hover{color:red;}
     #campo{background:#F9C875; height:100%; width:100%;}
-    .postPrincipales h4{color:white; text-align:center;margin-top:5px;}
-    .postPrincipales{margin: 0 auto; width: 80%; margin-top: 10%; }
+    .postPrincipales h4{color:white; text-align:center;}
     .postPrincipales div{margin: 0 auto; width:80%; margin-top:10px;}
     </style>
     <body>
@@ -42,9 +40,8 @@
             </div>   
         </header>
         <main>
-        <h3 id="titulo_principal">ADIMINISTRAR POST</h3>
             <div class="postPrincipales">
-                
+                <h3 id="titulo_principal">ADIMINISTRAR POST</h3>
                     <?php 
                        postUsuario();
 

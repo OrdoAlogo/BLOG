@@ -7,7 +7,33 @@ body{background:#29220A;}
 /*h3{font-size: fuenteBlog;}*/
 *{margin: 0;}
 
-#nuevoPost1{background:  #29220A; text-align: center; margin: 0 auto; height: 40px;}
+.crearPost{
+    margin-top: 1%;
+   /*  background-color: antiquewhite; */
+    /* margin-left: 20%; */
+}
+
+/* .buscador{
+    margin-left: 20%;
+    
+} */
+
+.titulo{
+    margin-left: 0%;
+}
+#nuevoPost1{
+    text-align: center; 
+    /* margin: 0 auto; */
+
+    height: 40px;
+}
+
+#tarjetaPost{
+    padding: 1%;
+    width: 90%;
+}
+
+
 main{display: flex; height: 100%; flex-direction: row; justify-content: space-between; justify-items: center; 
     width: 90%; margin: 0 auto;}
 .icon-eye{color: orange;}
@@ -16,24 +42,59 @@ main{display: flex; height: 100%; flex-direction: row; justify-content: space-be
 .aside div{border: 2px solid white; background: orange; }
 
 .datosDB{border: none;}
-.postPrincipales{width: 100%; background: #5F4C0B; height: 100%; padding: 20px; }
-.postPrincipales div{border: 0.2em solid#29220A; border-radius: 0.3vw; margin-top:2vw; width: 100%; }
 
-.postPrincipales div a{text-decoration: none; }
-.postPrincipales div a:hover{text-decoration: underline; }
+.postPrincipales{
+    width: 100%; 
+    background: #5F4C0B; 
+    height: 100%; 
+    padding: 1%;
+     
+     
+}
+
+.postPrincipales div{
+    border: 0.2em solid#29220A; 
+    border-radius: 0.3vw; 
+    margin: 0 auto;
+    margin-top:2vw;
+    /* width: 100%; */ 
+}
+
+.postPrincipales div a{text-decoration: none; color: white;}
+/* .postPrincipales div a:hover{text-decoration: underline; } */
 .btnEliminar{float: right; color: orangered;}
 .btnEliminar:hover{color: red;}
 #titulo_principal{color: white; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: 3vw; text-align: center;}
 .topPost,.topUsuarios{height: 100%; margin-bottom: 10px; width: 100%;}
 .topPost div,.topUsuarios div{border: none; border-bottom: 1px solid white; padding: 5px;}
-.fecha{position: relative;  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;   float: right; margin-right: 20px; color: white;}
+.fecha{
+    position: relative;  
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;   
+    float: right; 
+    margin-right: 0%; 
+    margin-top: -2%;
+    color: white;}
 
 .piePagina{background: white; padding: 5px;}
 .piePagina p{color: black;}
 .tituloPost{font-size: 1.6vw; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; color: white;}
-.visualizaciones{color: orange;font-size: 1.5vw; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;}
-.contenido{font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-style: 'normal';font-size: 1vw; margin-left:2vw;}
-.autor{font-weight: bolder;font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;}
+.visualizaciones{
+    position: relative;
+    float: right; 
+    margin-right: 15%;
+    margin-top: -2%;
+    color: orange; 
+    font-size: 1vw; 
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.contenido{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: 'normal';
+    font-size: 1vw;
+    margin-left:2vw;
+    margin: 1%;
+}
+.autor{font-weight: bolder;font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; color: burlywood;}
 #codigoPost{display: none;}
 
 

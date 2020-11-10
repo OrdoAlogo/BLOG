@@ -7,13 +7,12 @@
     <title>BLOG | Ajustes</title>
     <link rel="stylesheet" type="text/css" href="css/encabezado.css">
     <link rel="stylesheet" type="text/css" href="css/ajustes.css">
-    <script src="JSCRIPT/usuario.js" type="text/javascript"></script>
    
 <body>
     <header>
 
         <div class="logo">
-            <div><img src="img/cpu.png" alt="Imagen no soportada"></div>
+            <div><img src="img/logo.png" alt="Imagen no soportada"></div>
         </div>
         <div class="titulo">
             <a href="index.php"><h1>BENCH<span>BLOG</span></h1> </a>
@@ -66,3 +65,4 @@
 
 </body>
 </html>
+<script src="JSCRIPT/usuario.js" type="text/javascript"></script>
