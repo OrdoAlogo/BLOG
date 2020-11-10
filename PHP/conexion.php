@@ -516,7 +516,7 @@ function cargarPosts($posts){
         <p class="contenido"><?php $resultado = substr($columna['contenido'], 0, 400)."..."; echo $resultado?> </p>
         <p class="autor">Autor: <?php echo $columna['nickname'] ?> </p>
         <p class="visualizaciones"><span class="icon-eye"></span><?php echo (" ".$columna['visitas']) ?></p>
-        <span class="fecha"><?php echo ("Fecha: ".$columna['fecha'] )?></span>
+        <span class="fecha"><?php echo (" ".$columna['fecha'] )?></span>
     </div>
     <?php
     echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
@@ -657,9 +657,9 @@ function cargarComentariosBlog(){
         foreach($resultadoC as $posicionC => $filaC){
         ?>
         <div>
-            <p> <?php echo $filaC['nickname']?></p>
+            <p class="usuario"> <?php echo $filaC['nickname']?></p>
             <p class="contenido"><?php echo $filaC['comentario']?></p>
-            <p>Fecha: <?php echo $filaC['fecha']?></p>
+            <p class="fecha"> <?php echo $filaC['fecha']?></p>
         </div> 
             <?php
         }

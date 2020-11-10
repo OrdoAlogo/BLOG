@@ -9,7 +9,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>BLOG-POST</title>
+    <link class="logo" rel="icon" type="image/vnd.microsoft.icon" href="img/logo.png">
     <!-- <link rel="stylesheet" type="text/css" href="css/nuevoPost.css"> -->
     <link rel="stylesheet" type="text/css" href="css/fuentes-iconos/style.css">
     <link rel="stylesheet" type="text/css" href="css/encabezado.css">
@@ -31,12 +32,19 @@
             </div>   
     </header>
 
-    <main>
-        <h1 id="tituloPost"><?php echo(cargarTituloPost($_GET["idPost"]))?></h1>
-        <?php if(cargarFotoPost($_GET["idPost"])!=null){ ?>
-        <img src='<?php echo (cargarFotoPost($_GET["idPost"]))?>' alt="" style="width:15vw; height:15vw; float: right;">
-        <?php }?>
-        <p id="contenido"><?php echo(CargarPost($_GET["idPost"]));?></p> 
+    <main class="mainPost">
+        <div class="cajaPost">
+            <div>
+                <h1 id="tituloPost"><?php echo(cargarTituloPost($_GET["idPost"]))?></h1>
+                <p id="contenido"><?php echo(CargarPost($_GET["idPost"]));?></p>
+            </div>
+            <div class="divImagen">
+                <?php if(cargarFotoPost($_GET["idPost"])!=null){ ?>
+                <img src='<?php echo (cargarFotoPost($_GET["idPost"]))?>' alt="" >
+                <?php }?>
+            </div>
+            
+        </div>
         <div class="comentarios">
             <?php if(isset($_SESSION["usuarioLogeado"])){ echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");?>
             <div class="formC">

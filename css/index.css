@@ -94,7 +94,7 @@ main{display: flex; height: 100%; flex-direction: row; justify-content: space-be
     margin-left:2vw;
     margin: 1%;
 }
-.autor{font-weight: bolder;font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;}
+.autor{font-weight: bolder;font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; color: burlywood;}
 #codigoPost{display: none;}
 
 #postLateral{

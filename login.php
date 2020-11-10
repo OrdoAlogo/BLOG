@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BLOG | Login</title>
+    <link class="logo" rel="icon" type="image/vnd.microsoft.icon" href="img/logo.png">
     <link rel="stylesheet" type="text/css" href="css/fuentes-iconos/style.css">
     <link rel="stylesheet" type="text/css" href="css/encabezado.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
@@ -38,7 +39,7 @@
 </header>
       <h2>EN ESTA PÁGINA TE PODRAS LOGUEAR O REGISTRAR EN NUESTRO BLOG PARA ENCONTRAR LOS MEJORES POSTS SOBRE BENCHMARKS</h2>  
    
-        <main>
+        <main class="mainLogin">
         
         <div class="sesion">
             <h4>INICIAR SESIÓN</h4>

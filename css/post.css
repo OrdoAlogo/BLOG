@@ -4,8 +4,10 @@
      height: 100%;
      font-family:Verdana, Geneva, sans-serif;
      font-weight:bold;
+     background:#29220A;
     
  }
+ .mainPost{background:#5F4C0B; width:70%;  margin:0 auto; height:auto; margin-top: 50;}
 
 section{
     position:relative;
@@ -30,7 +32,7 @@ aside{
     float:left;
 }
 
-main{background-image: url(img/portatil.jpg); background-size: cover;background-attachment:scroll; width:70%; border:1px solid white; margin:0 auto; height:100%; }
+
 h2{text-align: center; margin: 0 auto; color:white;}
 form{margin: 0 auto; width: 100%; }
 table{margin: 0 auto; width: 100%; } 
@@ -38,10 +40,22 @@ legend{text-align: center;}
 tr,td{text-align: center; margin: 0 auto;}
 .envio{text-align:center; margin:0 auto; position:relative; bottom:6px;}
 .caracteres{text-align:center; margin:0 auto; position:relative; bottom:2px;}
-.comentarios{margin-top: 30px; width: 60%; background:#613808; margin-bottom:10px;}
-.comentarios div{padding:5px; border-bottom:2px solid #886A08;}
+.comentarios{ border: 2px solid #29220A; margin:0 auto;margin-top: 100px; width: 80%; background:#4e4012; margin-bottom:10px; }
+.comentarios div{padding:15px; border-bottom:2px solid #886A08;}
 .comentarios h3{margin: 0 auto;  text-align:center;  color:white;}
-.contenido{color:white;}
+
+.cajaPost{display: flex; flex-direction: row; justify-content:space-between; justify-items: center; align-items: start; margin-top: 20px; padding: 20px;
+            margin: 0 auto; width: 80%; }
+
+#tituloPost{text-align: left; color: orange;}
+#contenido{color:white; text-align: justify;}
+.contenido{color: burlywood;}
+.usuario{color: orange;}
+.fecha{display: flex; flex-direction: row; justify-content: right; align-items: center; color: white;}
+.divImagen{padding: 10px; width: 100%; margin: 0 auto; height: 200px; display: flex; justify-content: center; align-items: center; }
+.divImagen img{ display: block; height: 150px;}
+#descargar{ cursor: pointer; color: orange; display: flex; flex-direction: row; align-items: center; justify-content: center;}
+#descargar:hover{color: white;}
 .posts{padding:20px; background:#886A08; margin-top:20px; width:90%; }
 .posts h4{color:orangered;}
 .formC{margin-top:10px;}

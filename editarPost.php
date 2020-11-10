@@ -2,6 +2,7 @@
 <html lang="es">
     <head>
         <title>BLOG | EDITAR  - POSTS</title>
+        <link class="logo" rel="icon" type="image/vnd.microsoft.icon" href="img/logo.png">
         <link rel="stylesheet" type="text/css" href="css/fuentes-iconos/style.css">
         <link rel="stylesheet" type="text/css" href="css/encabezado.css">
         <link rel="stylesheet" type="text/css" href="css/index.css">
