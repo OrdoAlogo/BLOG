@@ -540,7 +540,7 @@ function cargarTopPosts(){
     foreach($result as $p => $fila){
         ?>  
         <div class="datosDB">
-        <a href="paginaPost.php?tipo=visita&idPost=<?php echo $fila['id_post']; ?>"> <h2><?php echo $fila['titulo'] ?> </h2> </a>
+        <a id="postLateral" href="paginaPost.php?tipo=visita&idPost=<?php echo $fila['id_post']; ?>"> <h2><?php echo $fila['titulo'] ?> </h2> </a>
             <p>Nº visitas: <?php echo $fila['visitas']; ?> </p>
         </div>     
         <?php
@@ -565,7 +565,7 @@ function cargarTopPosts(){
     foreach($resultUsuarios as $p => $col){
         ?>
         <div class="datosDB">
-            <a href="index.php?palabra=<?php echo $col['nickname']?>"><?php echo $col['nickname'] ?> </a>
+            <a id="postLateral" href="index.php?palabra=<?php echo $col['nickname']?>"><?php echo $col['nickname'] ?> </a>
             <p>Nº post_: <?php echo $col['post'] ?></p>
         </div>
 
