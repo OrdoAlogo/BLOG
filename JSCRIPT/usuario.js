@@ -58,26 +58,56 @@ var nombreUsuario = document.getElementById("cerrarSesion").addEventListener("cl
 /* Al registrarse, si el nickname introducido existe
 aparece un texto rojo. */
 function registroExisteNick(){
-    document.getElementById("nick").style.borderColor = "red";
-    document.getElementById("nickExiste").style.display = "block";
+   
+    document.addEventListener("DOMContentLoaded", function () { 
+        document.getElementById("nick").style.borderColor = "red";
+        document.getElementById("nickExiste").style.display = "block";
+    });
+    
+}
+
+function registroExisteEmail(){
+   
+    document.addEventListener("DOMContentLoaded", function () { 
+        document.getElementById("email").style.borderColor = "red";
+        document.getElementById("emailExiste").style.display = "block";
+    });
+    
+}
+
+function loginError(){
+   
+    document.addEventListener("DOMContentLoaded", function () { 
+        document.getElementById("loginError").style.display = "block";
+    });
+    
 }
 
 /* Al registrarse, si algún campo esta vacio.
 Aparece un texto rejo advirtiendo */
 function faltaDatos(){
-    document.getElementById("faltaDato").style.display = "block";
+    document.addEventListener("DOMContentLoaded", function () { 
+        document.getElementById("faltaDato").style.display = "block";
+    });
+    
 
 } 
 
 /* Al cambiar la contraseña, si la contraseña actual no es correcta.
 Aparece un texto rejo advirtiendo */
 function ajustesErrorPass(){
-    document.getElementById("contrasenaActualError").style.display = "block";
+    document.addEventListener("DOMContentLoaded", function () { 
+        document.getElementById("contrasenaActualError").style.display = "block";
+    });
+    
 }
 /* Al cambiar la contraseña, si la contraseña nueva y la confirmación no coinciden
 Aparece un texto rejo advirtiendo */
 function ajustesPassNoCoincide(){
-    document.getElementById("contrasenaNoCoincide").style.display = "block";
+    document.addEventListener("DOMContentLoaded", function () { 
+        document.getElementById("contrasenaNoCoincide").style.display = "block";
+    });
+    
 }
 
 

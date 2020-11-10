@@ -7,7 +7,6 @@
     <title>BLOG | Ajustes</title>
     <link rel="stylesheet" type="text/css" href="css/encabezado.css">
     <link rel="stylesheet" type="text/css" href="css/ajustes.css">
-    <script src="JSCRIPT/usuario.js" type="text/javascript"></script>
    
 <body>
     <header>
@@ -66,3 +65,4 @@
 
 </body>
 </html>
+<script src="JSCRIPT/usuario.js" type="text/javascript"></script>

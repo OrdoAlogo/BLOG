@@ -89,11 +89,11 @@ function comprobarExistencia($nickname,$contraseña,$login){
                 
 
             }else{
-                echo("contraseña erronea");
+                echo '<script type="text/javascript">loginError();</script>';
             }
         }
     }else{
-        echo("Usuario no  existe");
+        echo '<script type="text/javascript">loginError();</script>';
     }
 }
 
@@ -460,7 +460,7 @@ function cerrarSesion(){
 function recibirPosts(){
     try{
         $consulta = 'SELECT * FROM posts,usuarios where posts.nickname=usuarios.nickname';
-            $texto = null;
+        $texto = null;
         if(isset($_GET['palabra'])){
             //Si hay una busqueda, cambiamos la consulta
             $texto = $_GET['palabra'];
