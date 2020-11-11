@@ -1,5 +1,3 @@
-
-
 /* var nombreUsuario = document.getElementById("nickUsu");
 nombreUsuario.addEventListener("click", nombreUsuarioPulsado, true);
 document.getElementById("nuevoPost1").style.display= "block";  */
