@@ -75,7 +75,8 @@
                     arrayUltimosTitulo = arrayUltimosTitulo.reverse();
 
                     for(var i=0;i<3 && i<arrayUltimosvisitados.length;i++){
-                        var newDiv = document.createElement("a"); 
+                        var newDiv = document.createElement("a");
+                        newDiv.setAttribute('id','postLateral');
                         linebreak = document.createElement("br");
                         newDiv.setAttribute('href','paginaPost.php?idPost='+arrayUltimosvisitados[i]);
                         var newContent = document.createTextNode(arrayUltimosTitulo[i]); 

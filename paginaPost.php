@@ -33,6 +33,7 @@
     </header>
 
     <main class="mainPost">
+       
         <div class="cajaPost">
             <div class="postCompleto">
                 <h1 id="tituloPost"><?php echo(cargarTituloPost($_GET["idPost"]))?></h1>
@@ -43,6 +44,7 @@
                 <img src='<?php echo (cargarFotoPost($_GET["idPost"]))?>' alt="" >
                 <?php }?>
             </div>
+          
             
         </div>
         <div class="comentarios">
@@ -82,7 +84,7 @@
 
         // All units are in the set measurement for the document
         // This can be changed to "pt" (points), "mm" (Default), "cm", "in"
-        doc.fromHTML($('.vivaespana').get(0), 15, 15, {
+        doc.fromHTML($('.postCompleto').get(0), 15, 15, {
             'width': 170, 
             'elementHandlers': specialElementHandlers,
             'color':'#00000'
