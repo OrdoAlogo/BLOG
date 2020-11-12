@@ -66,6 +66,7 @@
 
             </form>
         </div>
+        </main>
         <div class="registro">
         <aside>
     <h4>REGISTRARSE</h4>
