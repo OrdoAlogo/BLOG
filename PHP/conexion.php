@@ -89,11 +89,11 @@ function comprobarExistencia($nickname,$contraseña,$login){
                 
 
             }else{
-                echo("contraseña erronea");
+                echo '<script type="text/javascript">loginError();</script>';
             }
         }
     }else{
-        echo("Usuario no  existe");
+        echo '<script type="text/javascript">loginError();</script>';
     }
 }
 
@@ -460,7 +460,7 @@ function cerrarSesion(){
 function recibirPosts(){
     try{
         $consulta = 'SELECT * FROM posts,usuarios where posts.nickname=usuarios.nickname';
-            $texto = null;
+        $texto = null;
         if(isset($_GET['palabra'])){
             //Si hay una busqueda, cambiamos la consulta
             $texto = $_GET['palabra'];
@@ -516,7 +516,7 @@ function cargarPosts($posts){
         <p class="contenido"><?php $resultado = substr($columna['contenido'], 0, 400)."..."; echo $resultado?> </p>
         <p class="autor">Autor: <?php echo $columna['nickname'] ?> </p>
         <p class="visualizaciones"><span class="icon-eye"></span><?php echo (" ".$columna['visitas']) ?></p>
-        <span class="fecha"><?php echo ("Fecha: ".$columna['fecha'] )?></span>
+        <span class="fecha"><?php echo (" ".$columna['fecha'] )?></span>
     </div>
     <?php
     echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
@@ -540,7 +540,7 @@ function cargarTopPosts(){
     foreach($result as $p => $fila){
         ?>  
         <div class="datosDB">
-        <a href="paginaPost.php?tipo=visita&idPost=<?php echo $fila['id_post']; ?>"> <h2><?php echo $fila['titulo'] ?> </h2> </a>
+        <a id="postLateral" href="paginaPost.php?tipo=visita&idPost=<?php echo $fila['id_post']; ?>"> <h2><?php echo $fila['titulo'] ?> </h2> </a>
             <p>Nº visitas: <?php echo $fila['visitas']; ?> </p>
         </div>     
         <?php
@@ -565,7 +565,7 @@ function cargarTopPosts(){
     foreach($resultUsuarios as $p => $col){
         ?>
         <div class="datosDB">
-            <a href="index.php?palabra=<?php echo $col['nickname']?>"><?php echo $col['nickname'] ?> </a>
+            <a id="postLateral" href="index.php?palabra=<?php echo $col['nickname']?>"><?php echo $col['nickname'] ?> </a>
             <p>Nº post_: <?php echo $col['post'] ?></p>
         </div>
 
@@ -657,9 +657,9 @@ function cargarComentariosBlog(){
         foreach($resultadoC as $posicionC => $filaC){
         ?>
         <div>
-            <p> <?php echo $filaC['nickname']?></p>
+            <p class="usuario"> <?php echo $filaC['nickname']?></p>
             <p class="contenido"><?php echo $filaC['comentario']?></p>
-            <p>Fecha: <?php echo $filaC['fecha']?></p>
+            <p class="fecha"> <?php echo $filaC['fecha']?></p>
         </div> 
             <?php
         }

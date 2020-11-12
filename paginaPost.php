@@ -9,7 +9,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>BLOG-POST</title>
+    <link class="logo" rel="icon" type="image/vnd.microsoft.icon" href="img/logo.png">
     <!-- <link rel="stylesheet" type="text/css" href="css/nuevoPost.css"> -->
     <link rel="stylesheet" type="text/css" href="css/fuentes-iconos/style.css">
     <link rel="stylesheet" type="text/css" href="css/encabezado.css">
@@ -31,12 +32,19 @@
             </div>   
     </header>
 
-    <main>
-        <h1 id="tituloPost"><?php echo(cargarTituloPost($_GET["idPost"]))?></h1>
-        <?php if(cargarFotoPost($_GET["idPost"])!=null){ ?>
-        <img src='<?php echo (cargarFotoPost($_GET["idPost"]))?>' alt="" style="width:15vw; height:15vw; float: right;">
-        <?php }?>
-        <p id="contenido"><?php echo(CargarPost($_GET["idPost"]));?></p> 
+    <main class="mainPost">
+        <div class="cajaPost">
+            <div class="postCompleto">
+                <h1 id="tituloPost"><?php echo(cargarTituloPost($_GET["idPost"]))?></h1>
+                <p id="contenido"><?php echo(CargarPost($_GET["idPost"]));?></p>
+            </div>
+            <div class="divImagen">
+                <?php if(cargarFotoPost($_GET["idPost"])!=null){ ?>
+                <img src='<?php echo (cargarFotoPost($_GET["idPost"]))?>' alt="" >
+                <?php }?>
+            </div>
+            
+        </div>
         <div class="comentarios">
             <?php if(isset($_SESSION["usuarioLogeado"])){ echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");?>
             <div class="formC">
@@ -56,28 +64,33 @@
         <a id="descargar">Descarga el post Aqui</a>   
     </main>
     <script>
-    var nombreUsuario = document.getElementById("descargar").addEventListener("click",descarga,true);
-    function descarga(){
-    var saveData = (function () {
-       var a = document.createElement("a");
-       document.body.appendChild(a);
-       a.style = "display: none";
-       return function (data, fileName) {
-           var json = JSON.stringify(data),
-               blob = new Blob([json], {type: "octet/stream"}),
-               url = window.URL.createObjectURL(blob);
-           a.href = url;
-           a.download = fileName;
-           a.click();
-           window.URL.revokeObjectURL(url);
-           };
-       }());
-        var titulo = document.getElementById("tituloPost").innerHTML;
-        var contenido = document.getElementById("contenido").innerHTML;
-        var data = "Titulo --> \n"+titulo+ "\n:Contenido -->\n"+contenido ;
-        fileName = "post"+<?php echo($_GET["idPost"]); ?>+".json";
-        saveData(data, fileName);
-    }
+    var nombreUsuario = document.getElementById("descargar").addEventListener("click",getPDF,true);
+
+       function getPDF() {
+        var doc = new jsPDF();
+        var contenido = document.getElementById("contenido");
+        contenido.style.color = "black";
+        // We'll make our own renderer to skip this editor
+        var specialElementHandlers = {
+            '#getPDF': function(element, renderer){
+            return true;
+            },
+            '.controls': function(element, renderer){
+            return true;
+            }
+        };
+
+        // All units are in the set measurement for the document
+        // This can be changed to "pt" (points), "mm" (Default), "cm", "in"
+        doc.fromHTML($('.vivaespana').get(0), 15, 15, {
+            'width': 170, 
+            'elementHandlers': specialElementHandlers,
+            'color':'#00000'
+        });
+        contenido.style.color = "white";
+        doc.save('Generated.pdf');
+        }
+            
       
     </script>
 
@@ -105,6 +118,8 @@
         localStorage.setItem('arrayUltimosTitulo',JSON.stringify(arrayUltimosTitulo));
     }
     </script>
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.4/jspdf.plugin.autotable.min.js"></script>
 </html>

@@ -6,7 +6,7 @@ h2{
     color: white;
 }
 
-main{ display: flex; flex-direction: row; justify-content: space-around; /* align-items: center; */ justify-items: center; height: 100%; width: 90%; margin: 0 auto; margin-top: 100px;}
+.mainLogin{ display: flex; flex-direction: column; justify-content: space-around; justify-items: center; height: 100%; width: 50%; margin: 0 auto; margin-top: 100px;}
 .sesion form,.registro form{border:1px solid orange ; padding: 10px; background: #492f09;}
 .sesion,.registro h4{text-align: center; color: white;}
 

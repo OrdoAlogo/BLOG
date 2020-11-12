@@ -23,8 +23,8 @@ header{height: 200px; background: #886A08; display: flex; flex-direction: row; j
 .icon-home{font-size: 25px; padding: 0;}
 .icon-home:hover{text-decoration: underline; background: white; color: #56777F;}
 .casa{text-decoration: none; color: white;}
-#nuevoPost1 a:hover, #nickUsu:hover,#btnBuscar:hover{background: orange; color: white;}
-
+#nuevoPost1 a:hover, #nickUsuC:hover,#btnBuscar:hover{background: orange; color: white;}
+#nickUsuC{background: white;}
 
 .registro{
     text-align: center;

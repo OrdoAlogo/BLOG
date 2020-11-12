@@ -8,7 +8,7 @@
    <link rel="stylesheet" type="text/css" href="css/encabezado.css">
    <link rel="stylesheet" type="text/css" href="css/index.css">
    <link rel="stylesheet" type="text/css" href="css/nuevoPost.css">
-   <script src="JSCRIPT/usuario.js" type="text/javascript"></script>
+  
    
 
 <body>
@@ -46,5 +46,6 @@
     </footer>
 </body>
 </html>
+<script src="JSCRIPT/usuario.js" type="text/javascript"></script>
 
 
