@@ -25,7 +25,9 @@ if ($_SERVER["REQUEST_METHOD"]=='GET'){
              incrementarvisitas();  
         }else if($tipo=="borrarPost"){
             borrarPost();
-        } 
+        }else if($tipo=="eliminarComentario"){
+            eliminarComentario();
+        }
    }
 }
 
@@ -35,7 +37,11 @@ if ($_SERVER["REQUEST_METHOD"]=='GET'){
 -Actualizar contraseña
 -Actualizar foto de perfil
 */
-
+function eliminarComentario(){
+    $idC = $_GET['idC'];
+    $eliminar = conexion()->prepare('DELETE FROM comentarios WHERE id_comentario=:idC');
+    $eliminar->execute( array( 'idC' => $idC ));
+}
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if(isset( $_POST["tipo"])){
         $tipo = $_POST["tipo"];
@@ -683,7 +689,7 @@ function cargarComentariosBlog(){
                if($_SESSION["usuarioLogeado"]==$user){
 
                 ?>
-                <a class="btnElimCom" href="PHP/eliminarPost.php?idC=<?php echo $filaC['id_comentario'] ?>"><span class="icon-trash"></span></a>
+                <a class="btnElimCom" href="paginaPost.php?idPost=<?php echo $_GET['idPost'];?>&idC=<?php echo $filaC['id_comentario'] ?>&tipo=eliminarComentario"><span class="icon-trash"></span></a>
                 <?php
                }else{
 
@@ -717,18 +723,19 @@ function incrementarvisitas(){
     $idP=$_GET["idPost"];
     $updateVisitas = "UPDATE posts SET posts.visitas = posts.visitas+1 where id_post LIKE $idP ";
     $update =conexion()->query($updateVisitas);
-    }
+}
+
 
 function borrarPost(){
-    borrarTodosLosComentariosPost();
-    $idP = $_GET['idPost'];
-    $consulta = conexion()->prepare ('DELETE FROM posts WHERE id_post=:id_post');
-    $consulta->execute(
-        array(
-            'id_post' =>$idP
-        )
-        ); 
-    header("Location: index.php");      
+borrarTodosLosComentariosPost();
+$idP = $_GET['idPost'];
+$consulta = conexion()->prepare ('DELETE FROM posts WHERE id_post=:id_post');
+$consulta->execute(
+    array(
+        'id_post' =>$idP
+    )
+    ); 
+header("Location: index.php");      
 }
 
 function borrarTodosLosComentariosPost(){
