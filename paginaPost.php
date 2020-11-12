@@ -28,7 +28,7 @@
             </div>
 
             <div class="registro">
-                <?php session_start(); include ('PHP/conexion.php'); logearRegistrarUsuario();  ?>
+                <?php session_start(); $idP = $_GET['idPost']; $_SESSION['idP'] = $idP; include ('PHP/conexion.php'); logearRegistrarUsuario();  ?>
             </div>   
     </header>
 
@@ -39,7 +39,7 @@
                 <p id="contenido"><?php echo(CargarPost($_GET["idPost"]));?></p>
             </div>
             <div class="divImagen">
-                <?php if(cargarFotoPost($_GET["idPost"])!=null){ ?>
+                <?php if(cargarFotoPost($_GET["idPost"])!=null){; ?>
                 <img src='<?php echo (cargarFotoPost($_GET["idPost"]))?>' alt="" >
                 <?php }?>
             </div>

@@ -489,13 +489,18 @@ function cargarPosts($posts){
     
     foreach($posts as $posicion =>$columna){
 
-        
-        $tipoUser = $_SESSION['tipo'];
-        $propietario = isset($columna['nickname']);
+        //si hay un usuario logeado, almacenamos el tipo de usuario que es
+        //no será de mucha utilidad
+        if(isset($_SESSION["usuarioLogeado"])){
+            $tipoUser = $_SESSION["tipo"];
+        }else{
+            $tipoUser = 'normal';
+        }
+        $propietario = $columna['nickname'];
         ?>
     <div id="tarjetaPost">
        <!--<img src="//<//?//php echo $columna['imagen_post'] ?>">-->
-       <a href="paginaPost.php?tipo=visita&idPost=<?php echo $columna['id_post']; ?>"> <h2 class="tituloPost"><?php echo $columna['titulo'] ?> </h2> </a>
+       <a href="paginaPost.php?tipo=visita&idPost=<?php echo $columna['id_post']; ?>"> <h2 class="tituloPost"><?php echo $columna['titulo']; ?> </h2> </a>
         <?php
         //Comprobamos que tipo de usuario se ha logeado, para habilitar o no el boton para eliminar un post
             if($tipoUser=='admin'){
@@ -503,6 +508,17 @@ function cargarPosts($posts){
                     <a href="index.php?tipo=borrarPost&idPost=<?php echo $columna['id_post']; ?>" class="btnEliminar"><span class="icon-trash"></span></a>
                 <?php
             
+            }elseif($tipoUser=='normal'){
+                ?>
+                   <style type="text/css">
+                    .btnEliminar{display: none;}    
+                  </style>
+                <?php
+            
+            }elseif($tipoUser=='mod'){
+                ?>
+                    <a href="index.php?tipo=borrarPost&idPost=<?php echo $columna['id_post']; ?>" class="btnEliminar"><span class="icon-trash"></span></a>
+                <?php
             }
             //Si nadie está logeado, que no se muestre el boton para eliminar 
             if(!isset($_SESSION["usuarioLogeado"])){
@@ -646,7 +662,7 @@ function cargarComentariosBlog(){
     echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
     $idP=$_GET["idPost"];
     try{
-        $comentarios = "SELECT nickname,comentario,fecha FROM comentarios WHERE id_post=$idP";
+        $comentarios = "SELECT id_comentario,nickname,comentario,fecha FROM comentarios WHERE id_post=$idP";
         $sentenciaC =conexion()->query($comentarios);
         $sentenciaC->setFetchMode(PDO::FETCH_ASSOC);
         }catch(PDOException $pe){
@@ -660,6 +676,20 @@ function cargarComentariosBlog(){
             <p class="usuario"> <?php echo $filaC['nickname']?></p>
             <p class="contenido"><?php echo $filaC['comentario']?></p>
             <p class="fecha"> <?php echo $filaC['fecha']?></p>
+            <?php
+            $user = $filaC['nickname'];
+            //Un usuario solo puede eliminar sus comentarios
+            if(isset($_SESSION["usuarioLogeado"])){
+               if($_SESSION["usuarioLogeado"]==$user){
+
+                ?>
+                <a class="btnElimCom" href="PHP/eliminarPost.php?idC=<?php echo $filaC['id_comentario'] ?>"><span class="icon-trash"></span></a>
+                <?php
+               }else{
+
+               }
+            }
+            ?>
         </div> 
             <?php
         }

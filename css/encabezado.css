@@ -32,9 +32,6 @@ header{height: 200px; background: #886A08; display: flex; flex-direction: row; j
 
 }
 
-
-
-
 #fotoPerfil{
     width: 3.5vw ;
     height: 3.5vw;
@@ -43,8 +40,10 @@ header{height: 200px; background: #886A08; display: flex; flex-direction: row; j
 #nickUsu{
     display: block;
     width: 3.5vw ;
+    width: 100%;
 
 }
+#nickUsu:hover{background: orange; color: white;}
 
 #nuevoPost1 a, #nickUsu, #nickUsuC ,#btnBuscar{
 
@@ -56,6 +55,7 @@ header{height: 200px; background: #886A08; display: flex; flex-direction: row; j
     cursor: pointer;
     text-decoration: none;
     color: black;
+    
 }
 
 #desplegable{
@@ -79,8 +79,9 @@ header{height: 200px; background: #886A08; display: flex; flex-direction: row; j
     border-radius: 0.3vw;
     text-decoration: none;
     color: black;
-    width: 70%;
+     width: 70%; 
 }
+.botonesUsuario:hover{background:#886A08 ; color: white;}
 
 @media screen and(max-width:500px){
     header{display: grid; grid-template-areas: " logo titulo"
@@ -88,6 +89,5 @@ header{height: 200px; background: #886A08; display: flex; flex-direction: row; j
     .logo{grid-area: logo;}
     .titulo{grid-area: titulo;}
     .buscador{grid-area: buscador;}
-    /* .registro{grid-area: registro;} */
 }
 

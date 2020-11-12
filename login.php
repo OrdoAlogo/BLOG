@@ -9,9 +9,10 @@
     <title>BLOG | Login</title>
     <link class="logo" rel="icon" type="image/vnd.microsoft.icon" href="img/logo.png">
     <link rel="stylesheet" type="text/css" href="css/fuentes-iconos/style.css">
+    <link rel="stylesheet" type="text/css" href="css/login.css">
     <link rel="stylesheet" type="text/css" href="css/encabezado.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
-   <link rel="stylesheet" href="css/login.css">
+    
    
 <body>
 <header>
@@ -39,14 +40,11 @@
 </header>
       <h2>EN ESTA PÁGINA TE PODRAS LOGUEAR O REGISTRAR EN NUESTRO BLOG PARA ENCONTRAR LOS MEJORES POSTS SOBRE BENCHMARKS</h2>  
    
-        <main class="mainLogin">
+    <main class="mainLogin">
         
         <div class="sesion">
             <h4>INICIAR SESIÓN</h4>
-
             <form id="Login" action="" method="$_GET">
-
-           
                 <label for="Nick">Nickname
                     </br>
                     <input type="text" name="Nick" id="Nick"><br>
@@ -58,48 +56,40 @@
                     <input type="hidden" name="tipo" value="Login">
                 </label><br>
                 <p id="loginError" class="existe"> Nick o contraseña erronea.</p>
-
-                
-
                 <input class="boton" type="submit" onclick="" value="Entrar">
                 <input class="boton" type="reset" value="Borrar"/>
-
             </form>
         </div>
-        </main>
-        <div class="registro">
-        <aside>
-    <h4>REGISTRARSE</h4>
-        <form id="Registro" action="" method="post" enctype="multipart/form-data">
-        <label for="Nick">Nickname
-                </br>
-                <input type="text" id="nick" name="nick"><br>
-                <p id="nickExiste" class="existe"> El nick ya existe</p>
-            </label></br>
-            <label for="mail">Email
-                </br>
-                <input type="text"  id="email" name="email"><br>
-                <p id="emailExiste"class="existe"> El email ya existe</p>
-            </label></br>
-        
-            <label for="Contra"> Contraseña
-                </br>
-                <input type="password" id="contra" name="contra" onkeydown="longContrasenia()" onkeyup="longContrasenia()"><br>
-            </label><br>
-            <label for="Arch"> Archivo</label><br>
-            <input type="file" id="arch" name="arch"><br>
-            <p id="faltaDato" class="existe">Faltan Datos</p>
-            <input type="hidden" name="tipo" id ="tipo" value="Registro"> 
-            <button id="btnRegistro" onclick="validarForm()" class="boton">REGISTRARSE</button>
-            <input class="boton" type="reset"  value="Borrar"/>
-        </form>
-        </aside>
-         
+
+        <div class="nuevosUser">
+            <h4>REGISTRARSE</h4>
+                <form id="Registro" action="" method="post" enctype="multipart/form-data">
+                <label for="Nick">Nickname
+                            </br>
+                            <input type="text" id="nick" name="nick"><br>
+                            <p id="nickExiste" class="existe"> El nick ya existe</p>
+                        </label></br>
+                        <label for="mail">Email
+                            </br>
+                            <input type="text"  id="email" name="email"><br>
+                            <p id="emailExiste"class="existe"> El email ya existe</p>
+                        </label></br>
+                    
+                        <label for="Contra"> Contraseña
+                            </br>
+                            <input type="password" id="contra" name="contra" onkeydown="longContrasenia()" onkeyup="longContrasenia()"><br>
+                        </label><br>
+                        <label for="Arch"> Archivo</label><br>
+                        <input type="file" id="arch" name="arch"><br>
+                        <p id="faltaDato" class="existe">Faltan Datos</p>
+                        <input type="hidden" name="tipo" id ="tipo" value="Registro"> 
+                        <button id="btnRegistro" onclick="validarForm()" class="boton">REGISTRARSE</button>
+                        <input class="boton" type="reset"  value="Borrar"/>
+                </form>
         </div>
        
     </main>
 
- 
     <footer>
     </footer>
 
