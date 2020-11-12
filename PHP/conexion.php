@@ -641,7 +641,7 @@ function postUsuario(){
                     <input type="text" hidden name="idP" value="<?php echo $fila3['id_post']?>"  rows="4" cols="50">           
     </br>
                     <input type="submit" class="boton" value="EDITAR">
-                    <a href='PHP/eliminarPost.php?idPost=<?php echo $fila3['id_post'] ?>'><span class="icon-trash"><span> </a> 
+                    <a href='index.php?idPost=<?php echo $fila3['id_post'] ?>&tipo=borrarPost'><span class="icon-trash"><span> </a> 
                 </form> 
             </div>
         <?php
