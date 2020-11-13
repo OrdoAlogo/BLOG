@@ -1,6 +1,7 @@
 
 <html>
 <head>
+    <link rel="stylesheet" href="css/index.css?v=<?php  ?>">
     <script src="JSCRIPT/usuario.js" type="text/javascript"></script>
 </head>
 
@@ -13,6 +14,36 @@
  */
 
 if ($_SERVER["REQUEST_METHOD"]=='GET'){
+
+
+    if (isset($_GET['checkbox'])) {
+
+        if($_GET['checkbox']=="activar"){
+            $gestion="mod";
+            $nombre=$_GET['nickname'];
+            gestionMod($nombre,$gestion);
+            header('Location: ../ajustes.php');
+        }else if ($_GET['checkbox']=="desactivar"){
+            $gestion="normal";
+            $nombre=$_GET['nickname'];
+            gestionMod($nombre,$gestion);
+            header('Location: ../ajustes.php');
+        }else if($_GET['checkbox']=="vetarSi"){
+            $veto=1;
+            $nombre=$_GET['nickname'];
+            gestionVetado($nombre,$veto);
+            header('Location: ../ajustes.php');
+
+        }else if($_GET['checkbox']=="vetarNo"){
+            $veto=0;
+            $nombre=$_GET['nickname'];
+            gestionVetado($nombre,$veto);
+            header('Location: ../ajustes.php');
+
+        }
+
+        
+    }
    
     if(isset( $_GET["tipo"])){
         $tipo = $_GET["tipo"];
@@ -590,6 +621,96 @@ function cargarTopPosts(){
 } 
 
 
+
+/* Función de ajustes.php, carga los usuarios para administrarlos */
+function cargarUsuarios(){
+
+    if($_SESSION["tipo"]=="admin"){
+        ?> 
+            <h4>Administración de usuarios</h4>
+            <table>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Moderador</th>
+                    <th>Vetado</th>
+                </tr>
+            <?php
+
+            try{
+                $usuarios = "SELECT nickname, tipo_de_usuario, estado FROM usuarios";
+                $cargaUsu = conexion()->query($usuarios);
+                $cargaUsu->setFetchMode(PDO::FETCH_ASSOC);
+
+            }catch(PDOException $pe){
+                die("Error occurred:" . $pe->getMessage());
+            }
+            $cargaUsu->execute();
+            $resultUsuarios = $cargaUsu->fetchAll();
+            foreach($resultUsuarios as $p => $col){
+            
+
+                if($col['tipo_de_usuario'] !="admin"){
+                
+                    ?>
+                        <tr class="usuarios">
+                        <td> <a id="nombreUsuario"><?php echo $col['nickname'] ?></a> </td>
+                        <?php
+                        if($col['tipo_de_usuario']=="mod"){
+                        ?> <td><input type="checkbox" name="mod"  value="<?php echo $col['nickname'] ?>" checked onchange="window.location.href='PHP/conexion.php?checkbox=desactivar&nickname=<?php echo $col['nickname'] ?>'"> </td> <?php
+                        }else{
+                            ?> <td><input type="checkbox" name="mod"  value="<?php echo $col['nickname'] ?>" onchange="window.location.href='PHP/conexion.php?checkbox=activar&nickname=<?php echo $col['nickname'] ?>'"> </td> <?php
+                        }
+
+                        if($col['estado']==0){
+                            ?><td><input type="checkbox" name="vetado"  value="<?php  echo $col['nickname'] ?>" onchange="window.location.href='PHP/conexion.php?checkbox=vetarSi&nickname=<?php echo $col['nickname'] ?>'"></td><?php
+                        }else{
+                            ?><td><input type="checkbox" name="vetado"  value="<?php echo $col['nickname'] ?>" checked onchange="window.location.href='PHP/conexion.php?checkbox=vetarNo&nickname=<?php echo $col['nickname'] ?>'"></td><?php
+                        }
+                        ?>
+                        </tr>
+                    <?php
+                }
+            
+            }   ?>
+
+            </table>
+            <?php
+    }if (!isset($_SESSION["usuarioLogeado"])){
+        header('Location: index.php');
+
+    }
+
+
+
+    
+
+}
+
+//Función para añadir  o eliminar el rol de moderador
+function gestionMod($nickname,$gestion){
+
+    $stmt = conexion()->prepare('UPDATE usuarios set tipo_de_usuario=:tipo_de_usuario WHERE nickname=:nickname');   
+    $stmt->execute(     
+        array(      
+            'nickname' => $nickname,     
+            'tipo_de_usuario' => $gestion    
+        )   
+    );
+}
+
+//Función para expulsar o quitar la expulsión de un usuario
+function gestionVetado($nickname,$veto){
+
+    $stmt = conexion()->prepare('UPDATE usuarios set estado=:estado WHERE nickname=:nickname');   
+    $stmt->execute(     
+        array(      
+            'nickname' => $nickname,     
+            'estado' => $veto    
+        )   
+    );
+}
+
+
 /* Función que muestra una de las dos:
 -Iniciar sesion/ Registrase  
 -La foto de perfil, el botón de ajustes y cerrar sesión */
@@ -605,7 +726,7 @@ function cargarTopPosts(){
         }
         
         echo "<a id='nickUsu' >".$_SESSION["usuarioLogeado"]."</a>";
-        echo "<div id='desplegable'><a class='botonesUsuario' href='ajustes.php'> Ajustes</a></br><a class='botonesUsuario' href='editarPost.php?usuario=".$_SESSION['usuarioLogeado']." '>Editar posts</a></br><a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a></div>";
+        echo "<div id='desplegable'><a class='botonesUsuario' href='ajustes.php'> Administración</a></br><a class='botonesUsuario' href='editarPost.php?usuario=".$_SESSION['usuarioLogeado']." '>Editar posts</a></br><a class='botonesUsuario' href='PHP/cerrarSesion.php'> Cerrar Sesion</a></div>";
 
     }
     else{

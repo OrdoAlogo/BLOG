@@ -24,6 +24,11 @@
 
     <h2>Datos de la cuenta</h2>
     <main>
+
+
+        <div class="adminUsuarios">
+            <?php cargarUsuarios();?>
+        </div>
         <div>
             <!-- Formulario para cambiar la contraseña -->
             <form id="cambioContrasena" action="" method="post" >
@@ -60,9 +65,7 @@
                 </fieldset>
             </form> 
         </div>
-        
 
-       
 
     </main>
 

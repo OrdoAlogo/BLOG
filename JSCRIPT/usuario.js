@@ -120,19 +120,19 @@ function cancelar(){
 
 //Funcion para controlar los colores del campo contraseña
 //segun su longitud de caracteres
-/* function longContrasenia(){
+ function longContrasenia(){
     numCaracteres = document.forms[2].contra.value.length;
     campo = document.forms[2].contra;
     if(numCaracteres<=5){
         campo.style.border = "thick solid orangered";
-    }else if(numCaracteres<=10){
+    }else if(numCaracteres<=8){
         campo.style.border = "thick solid yellow";
-    }else if(numCaracteres>10){
+    }else if(numCaracteres>8){
         campo.style.border = "thick solid green";
     }
 
     contar();
-} */
+}
 function contar(){
     document.forms[2].contra.value.length  
 }
@@ -177,10 +177,17 @@ function validarContra(){
 //Funcion para controlar la longitud de caracteres de la contraseña
 function longContra(){
     numCar = document.getElementById('contra').value.length;
-    if(numCar<10){
-        alert("La contraseña debe tener 10 caracteres mínimo");
+    if(numCar<8){
+        /* QUITAR ALERT */
+        alert("La contraseña debe tener 8 caracteres mínimo");
         cancelar();
     }
 
 } 
+
+
+function activarEstado(e){
+    
+    alert("estado "+ document.getElementsByClassName("mod")[3].value);
+}
 
