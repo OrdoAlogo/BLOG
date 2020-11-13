@@ -1,8 +1,3 @@
-<html>
-<head>
-    <script src="JSCRIPT/usuario.js" type="text/javascript"></script>
-</head>
-
 </html> 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,8 +28,9 @@
     </header>
 
     <main class="mainPost">
+       
         <div class="cajaPost">
-            <div>
+            <div class="postCompleto">
                 <h1 id="tituloPost"><?php echo(cargarTituloPost($_GET["idPost"]))?></h1>
                 <p id="contenido"><?php echo(CargarPost($_GET["idPost"]));?></p>
             </div>
@@ -43,6 +39,7 @@
                 <img src='<?php echo (cargarFotoPost($_GET["idPost"]))?>' alt="" >
                 <?php }?>
             </div>
+          
             
         </div>
         <div class="comentarios">
@@ -64,43 +61,68 @@
         <a id="descargar">Descarga el post Aqui</a>   
     </main>
     <script>
-    var nombreUsuario = document.getElementById("descargar").addEventListener("click",descarga,true);
-    function descarga(){
-    var saveData = (function () {
-       var a = document.createElement("a");
-       document.body.appendChild(a);
-       a.style = "display: none";
-       return function (data, fileName) {
-           var json = JSON.stringify(data),
-               blob = new Blob([json], {type: "octet/stream"}),
-               url = window.URL.createObjectURL(blob);
-           a.href = url;
-           a.download = fileName;
-           a.click();
-           window.URL.revokeObjectURL(url);
-           };
-       }());
-        var titulo = document.getElementById("tituloPost").innerHTML;
-        var contenido = document.getElementById("contenido").innerHTML;
-        var data = "Titulo --> \n"+titulo+ "\n:Contenido -->\n"+contenido ;
-        fileName = "post"+<?php echo($_GET["idPost"]); ?>+".json";
-        saveData(data, fileName);
-    }
+    var nombreUsuario = document.getElementById("descargar").addEventListener("click",getPDF,true);
+
+       function getPDF() {
+        var doc = new jsPDF();
+       
+        var contenido = document.getElementById("contenido");
+        contenido.style.color = "black";
+        // We'll make our own renderer to skip this editor
+        var specialElementHandlers = {
+            '#getPDF': function(element, renderer){
+            return true;
+            },
+            '.controls': function(element, renderer){
+            return true;
+            }
+        };
+
+        // All units are in the set measurement for the document
+        // This can be changed to "pt" (points), "mm" (Default), "cm", "in"
+        tituloPost = document.getElementById("tituloPost").innerHTML;
+        contenidoPost = document.getElementById("contenido").innerHTML;
+        
+      
+      /*   doc.text(20, 20, post.titulo);
+        doc.text(20, 30, post.contenido); */
+        
+         doc.fromHTML($('.postCompleto').get(0), 15, 15, {
+            'width': 170, 
+            'elementHandlers': specialElementHandlers,
+            'color':'#00000'
+        }); 
+        try{
+            var img = new Image();
+            img.src = '<?php echo (cargarFotoPost($_GET["idPost"]))?>';
+            post = new documentoFoto(tituloPost, contenidoPost,img);
+            if (contenidoPost.length>400){
+                doc.addPage();
+            }
+            doc.addImage(post.foto, 'png', 10, 150, 180, 120);
+        }catch(excepcion){
+            post = new documento(tituloPost, contenidoPost);
+        }
+        contenido.style.color = "white";
+        doc.save('Generated.pdf');
+        }
+            
       
     </script>
 
     <footer></footer>
 </body>
+<!-- //Una vez que la pagina del post este cargada inserta en un array de localStorage
+//para despues cojerlo en el index -->
 <script>
-     window.onload(hola());
-    function hola(){
+    function paginaCargada(){
         var arrayUltimosvisitados = localStorage.getItem('arrayUltimosvisitados');
         var arrayUltimosTitulo = localStorage.getItem('arrayUltimosTitulo');
         arrayUltimosvisitados = JSON.parse(arrayUltimosvisitados);
         arrayUltimosTitulo = JSON.parse(arrayUltimosTitulo);
         if(arrayUltimosvisitados == null){
-            var arrayUltimosvisitados = new Array(5);
-            var arrayUltimosTitulo = new Array(5);
+            var arrayUltimosvisitados = new Array(0);
+            var arrayUltimosTitulo = new Array(0);
         }
         var indiceABorrar= arrayUltimosvisitados.indexOf(<?php echo ($_GET["idPost"]) ?>);
         if (indiceABorrar!=-1){
@@ -113,6 +135,9 @@
         localStorage.setItem('arrayUltimosTitulo',JSON.stringify(arrayUltimosTitulo));
     }
     </script>
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.4/jspdf.plugin.autotable.min.js"></script>
+<script src="JSCRIPT/usuario.js" type="text/javascript"></script>
 </html>
