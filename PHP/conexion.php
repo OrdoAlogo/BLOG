@@ -517,7 +517,9 @@ function cargarPosts($posts){
             
             }elseif($tipoUser=='mod'){
                 ?>
-                    <a href="index.php?tipo=borrarPost&idPost=<?php echo $columna['id_post']; ?>" class="btnEliminar"><span class="icon-trash"></span></a>
+                   <style type="text/css">
+                    .btnEliminar{display: none;}    
+                  </style>
                 <?php
             }
             //Si nadie está logeado, que no se muestre el boton para eliminar 
@@ -685,9 +687,14 @@ function cargarComentariosBlog(){
                 ?>
                 <a class="btnElimCom" href="PHP/eliminarPost.php?idC=<?php echo $filaC['id_comentario'] ?>"><span class="icon-trash"></span></a>
                 <?php
-               }else{
-
                }
+               //El usuario moderador puede eliminar cualquier comentario
+                $tipoUser = $_SESSION["tipo"];
+                if($tipoUser=='mod'){
+                    ?>
+                    <a class="btnElimCom" href="PHP/eliminarPost.php?idC=<?php echo $filaC['id_comentario'] ?>"><span class="icon-trash"></span></a>
+                    <?php 
+                }
             }
             ?>
         </div> 
