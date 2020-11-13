@@ -87,7 +87,25 @@ function cancelar(){
     document.getElementById('Registro').reset();
     return false;
 }
+
+//Funcion para controlar los colores del campo contraseña
+//segun su longitud de caracteres
+ function longContrasenia(){
+    numCaracteres = document.forms[2].contra.value.length;
+    campo = document.forms[2].contra;
+    if(numCaracteres<=5){
+        campo.style.border = "thick solid orangered";
+    }else if(numCaracteres<=8){
+        campo.style.border = "thick solid yellow";
+    }else if(numCaracteres>8){
+        campo.style.border = "thick solid green";
+    }
+
+    contar();
+}
+
 //cuenta la longitud de la contraseña
+
 function contar(){
     document.forms[2].contra.value.length  
 }
@@ -148,5 +166,11 @@ function montarUltimosVisitados(){
         var currentDiv = document.getElementById("a1");
         document.getElementById("caja").insertBefore(newDiv,currentDiv) ;
     }
+}
+
+
+function activarEstado(e){
+    
+    alert("estado "+ document.getElementsByClassName("mod")[3].value);
 }
 

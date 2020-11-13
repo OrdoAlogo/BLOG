@@ -94,5 +94,13 @@ main{display: flex; height: 100%; flex-direction: row; justify-content: space-be
     text-decoration: none;
 }
 
-
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+table td {
+    border: 2px solid black;
+    text-align: center;
+    padding: 1.3rem;
+}
 
