@@ -7,7 +7,7 @@
         <link rel="stylesheet" type="text/css" href="css/encabezado.css">
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-        <script src="JSCRIPT/usuario.js" type="text/javascript"></script>
+        
 
     </head>
     <body>
@@ -62,31 +62,9 @@
                     ?>
                 </div>
                 <div id="caja" class="topUsuarios">
-                <h3>ULTIMAS VISITAS</h3>
-                
-                <script>
-                
-                    var arrayUltimosvisitados = localStorage.getItem('arrayUltimosvisitados');
-                    var arrayUltimosTitulo = localStorage.getItem('arrayUltimosTitulo');
-                    arrayUltimosvisitados = JSON.parse(arrayUltimosvisitados);
-                    arrayUltimosvisitados = arrayUltimosvisitados.reverse();
-                    
-                    arrayUltimosTitulo = JSON.parse(arrayUltimosTitulo);
-                    arrayUltimosTitulo = arrayUltimosTitulo.reverse();
-
-                    for(var i=0;i<3 && i<arrayUltimosvisitados.length;i++){
-                        var newDiv = document.createElement("a");
-                        newDiv.setAttribute('id','postLateral');
-                        linebreak = document.createElement("br");
-                        newDiv.setAttribute('href','paginaPost.php?idPost='+arrayUltimosvisitados[i]);
-                        var newContent = document.createTextNode(arrayUltimosTitulo[i]); 
-                        newDiv.appendChild(newContent); 
-                        newDiv.appendChild(linebreak);
-                        var currentDiv = document.getElementById("a1");
-                        document.getElementById("caja").insertBefore(newDiv,currentDiv) ;
-                    }
-                </script>
-            </div> 
+                    <h3>ULTIMAS VISITAS</h3>
+                    <script>montarUltimosVisitados(); </script>
+                </div> 
                 <div class="piePagina">
                     <h3>INFO</h3>
                     <p>2DW3 - GRUPO 2 Cast </p>
@@ -96,4 +74,6 @@
                  
         </main> 
     </body>
+    <script src="JSCRIPT/usuario.js" type="text/javascript"></script>
+    
 </html>

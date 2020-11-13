@@ -1,8 +1,3 @@
-<html>
-<head>
-    <script src="JSCRIPT/usuario.js" type="text/javascript"></script>
-</head>
-
 </html> 
 <!DOCTYPE html>
 <html lang="en">
@@ -70,6 +65,7 @@
 
        function getPDF() {
         var doc = new jsPDF();
+       
         var contenido = document.getElementById("contenido");
         contenido.style.color = "black";
         // We'll make our own renderer to skip this editor
@@ -84,11 +80,29 @@
 
         // All units are in the set measurement for the document
         // This can be changed to "pt" (points), "mm" (Default), "cm", "in"
-        doc.fromHTML($('.postCompleto').get(0), 15, 15, {
+        tituloPost = document.getElementById("tituloPost").innerHTML;
+        contenidoPost = document.getElementById("contenido").innerHTML;
+        
+      
+      /*   doc.text(20, 20, post.titulo);
+        doc.text(20, 30, post.contenido); */
+        
+         doc.fromHTML($('.postCompleto').get(0), 15, 15, {
             'width': 170, 
             'elementHandlers': specialElementHandlers,
             'color':'#00000'
-        });
+        }); 
+        try{
+            var img = new Image();
+            img.src = '<?php echo (cargarFotoPost($_GET["idPost"]))?>';
+            post = new documentoFoto(tituloPost, contenidoPost,img);
+            if (contenidoPost.length>400){
+                doc.addPage();
+            }
+            doc.addImage(post.foto, 'png', 10, 150, 180, 120);
+        }catch(excepcion){
+            post = new documento(tituloPost, contenidoPost);
+        }
         contenido.style.color = "white";
         doc.save('Generated.pdf');
         }
@@ -98,9 +112,9 @@
 
     <footer></footer>
 </body>
+<!-- //Una vez que la pagina del post este cargada inserta en un array de localStorage
+//para despues cojerlo en el index -->
 <script>
-
-    window.onload(paginaCargada());
     function paginaCargada(){
         var arrayUltimosvisitados = localStorage.getItem('arrayUltimosvisitados');
         var arrayUltimosTitulo = localStorage.getItem('arrayUltimosTitulo');
@@ -121,8 +135,9 @@
         localStorage.setItem('arrayUltimosTitulo',JSON.stringify(arrayUltimosTitulo));
     }
     </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.4/jspdf.plugin.autotable.min.js"></script>
+<script src="JSCRIPT/usuario.js" type="text/javascript"></script>
 </html>

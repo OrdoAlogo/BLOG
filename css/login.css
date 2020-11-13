@@ -32,5 +32,5 @@ form{
 }
 .existe{
    color: red;
-   visibility: hidden;
+   display: none;
 }
