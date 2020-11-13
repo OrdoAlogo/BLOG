@@ -1,4 +1,4 @@
-
+<!-- Aqui incluiremos el javascript que necesitaremos en las proximas funciones de javascript-->
 <html>
 <head>
     <link rel="stylesheet" href="css/index.css?v=<?php  ?>">
@@ -8,13 +8,9 @@
 </html> 
 
 <?php 
-
-/* Metodos GET de los formularios:
--Login
- */
-
+/* En este trozo de codigo lo que haremos sera recibir los gets de la pagina web y comprobar si en esos get tenemos que ejecutar alguna funcion*/
+/*En caso de necesitar ejecurtar una funcion se ejecutara*/
 if ($_SERVER["REQUEST_METHOD"]=='GET'){
-
 
     if (isset($_GET['checkbox'])) {
 
@@ -44,10 +40,9 @@ if ($_SERVER["REQUEST_METHOD"]=='GET'){
 
         
     }
-   
+
     if(isset( $_GET["tipo"])){
         $tipo = $_GET["tipo"];
-
         if($tipo=="Login"){
             comprobarExistencia($_GET["Nick"],$_GET["Contra"],conexion());
         }else if($tipo=="InsertarComentario"){
@@ -56,17 +51,13 @@ if ($_SERVER["REQUEST_METHOD"]=='GET'){
              incrementarvisitas();  
         }else if($tipo=="borrarPost"){
             borrarPost();
-        } 
+        }else if($tipo=="eliminarComentario"){
+            eliminarComentario();
+        }
    }
 }
-
-/* Metodos POST de los formularios:
--Registro
--Crear post
--Actualizar contraseña
--Actualizar foto de perfil
-*/
-
+/* En este trozo de codigo lo que haremos sera recibir los posts de la pagina web y comprobar si en esos post tenemos que ejecutar alguna funcion*/
+/*En caso de necesitar ejecurtar una funcion se ejecutara*/
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if(isset( $_POST["tipo"])){
         $tipo = $_POST["tipo"];
@@ -84,9 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 }
-
-/* Conexion generica para las funciones */
-
+/* En esta funcion de conexion lo que haremos sera conectarnos a la base de datos y la iremos usando cada vez que necesitemos realizar aluna operacion con la BD */
 function conexion(){
     //Conexion
     $hostDB = '127.0.0.1';
@@ -99,8 +88,7 @@ function conexion(){
 }
 
 
-/* Función para el login, comprueba que los datos sean correctos*/
-
+/* Función para el login, comprueba que los datos sean correctos, en caso de serlos nos enviara al index logeados y en caso de no serlos ejecutara una funcion JavaScript*/
 function comprobarExistencia($nickname,$contraseña,$login){
     $usuario = $login->prepare('SELECT * FROM usuarios WHERE nickname LIKE :nick;');
     $usuario->execute(
@@ -128,81 +116,55 @@ function comprobarExistencia($nickname,$contraseña,$login){
     }
 }
 
-/* Función que crea una cuenta (formulario de registro) */
+/* Función que crea una cuenta para poder escribir posts en el blog */
 function insertarUsuario($loginBD){
-
     $nick = isset($_REQUEST['nick']) ? $_REQUEST['nick'] : null;
     $email = isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
     $contra = isset($_REQUEST['contra']) ? $_REQUEST['contra'] : null;
     $arch = isset($_REQUEST['arch']) ? $_REQUEST['arch'] : null;
-
-    
+    //Aqui definiremos el tipo de usuario y su estado 
     $tipo_de_usuario="normal";
     $estado=0;
-    
-    //echo "hola".$nick." ".$email." ".$contra." ".$dest;
-
-    $tipo_de_usuario="normal";
-    $estado=0;
-    //echo "hola".$nick." ".$email." ".$contra." ".$dest;
-   
-
-    //Combrobamos si el nickname y email existen en la base de datos
+    //Combrobamos si el nickname existe en la base de datos
     $stmt = $loginBD->prepare('SELECT nickname FROM usuarios WHERE nickname= :nick;');
     $stmt->execute(['nick' => $nick]);
     $nombre =$stmt->fetch();
 
-
+    //Comprobamos si el email existe en la base de datos 
     $stmt = $loginBD->prepare('SELECT e_mail FROM usuarios WHERE e_mail= :email;');
     $stmt->execute(['email' => $email]);
     $correo =$stmt->fetch();
-    
-    //echo $nombre[0]." y " .$correo[0];
-
-    $stmt = $loginBD->prepare('SELECT e_mail FROM usuarios WHERE e_mail= :email;');
-    $stmt->execute(['email' => $email]);
-    $correo =$stmt->fetch();
-     //echo $nombre[0]." y " .$correo[0];
-
-
+    //Aqui comprobaremos que todos los datos se han subido 
     if(empty($nick)||empty($email)||empty($contra)){
-        //echo "Introduce todos los datos";
+        //Aqui llamamos a una funcion JavaScript para que lance un mensaje
         echo '<script type="text/javascript">faltaDatos();</script>';
     }else{
         if(isset($correo[0])==$email){
-        //echo "El correo ya existe";
+        //Aqui llamamos a una funcion JavaScript para que lance un mensaje
         echo '<script type="text/javascript">registroExisteEmail();</script>';
         }
         if(isset($nombre[0])==$nick){
-            //echo "El nick ya existe";
+           //Aqui llamamos a una funcion JavaScript para que lance un mensaje
             echo '<script type="text/javascript">registroExisteNick();</script>';
         }
-
         else{
-
             if (is_uploaded_file($_FILES['arch']['tmp_name'])) { 
                 //Valida el nombre del archivo
                 if(empty($_FILES['arch']['name']))
                 {
-                    //echo " no tiene nombre ";
+                    //No tiene nombre 
                     exit;
                 }
-            
-                //$upload_file_name = $_FILES['arch']['name'];
-
                 $upload_file_name = $email.".png";
 
                 $upload_file_name = $nick.".png";
-
                 if(strlen ($upload_file_name)>100)
                 {
-                    //echo " nombre muy largo ";
+                     //nombre muy largo 
                     exit;
                 }
-            
                 //quita los caracteres no alfanumericos
                 $upload_file_name = preg_replace("/[^A-Za-z0-9 \.\-_]/", '', $upload_file_name);
-            
                 //limite de tamañp
                 if ($_FILES['arch']['size'] > 1000000) 
                 {
@@ -215,7 +177,7 @@ function insertarUsuario($loginBD){
                             {
                                 //echo 'Imagen subida !';
                             }
-    
+                //Insertamos al usuario en la BD encriptando su contraseña
                 $stmt = $loginBD->prepare('INSERT INTO usuarios (nickname, contrasena, foto_nick, e_mail, tipo_de_usuario, estado ) VALUES (:nick, :contra, :foto_nick, :email, :tipo_de_usuario, :estado )');
                 $contra = encriptarTexto($contra);
                 $stmt->execute(
@@ -233,7 +195,7 @@ function insertarUsuario($loginBD){
 
     }   
 }
-
+//Esta funcion devuelve el contenido del post
 function CargarPost($id){
     $contenido= $id;
     $consulta = 'SELECT contenido FROM posts WHERE id_post = :id_post';
@@ -248,7 +210,7 @@ function CargarPost($id){
 }
 
 
-
+//Esta funcion devuelve el contenido del post
 function cargarTituloPost($id){
     $contenido= $id;
     $consulta = 'SELECT titulo FROM posts WHERE id_post = :id_post';
@@ -259,7 +221,7 @@ function cargarTituloPost($id){
     return ($hola[0]);
     //Imprimo los resultados
 }
-
+//Esta funcion devuelve la foto del post
 function cargarFotoPost($id){
     $contenido= $id;
     $consulta = 'SELECT imagen_post FROM posts WHERE id_post = :id_post';
@@ -270,17 +232,16 @@ function cargarFotoPost($id){
     return ($hola[0]);
     //Imprimo los resultados
 }
-
+//Con esta funcion crearemos un Posts
 function crearPost($loginBD){
-  
-    //session_start();
+    
     $titulo = isset($_REQUEST['titulo']) ? $_REQUEST['titulo'] : null;
     $contenido = isset($_REQUEST['contenido']) ? $_REQUEST['contenido'] : null;
     $foto = isset($_REQUEST['foto']) ? $_REQUEST['foto'] : null;
     $autor=$_SESSION["usuarioLogeado"];
     $visitas=0;
     $fecha=date("Y-m-d");
-
+    //Si el titulo o el contenido estan vacios lanza un mensaje de advertencia
     if(empty($titulo)||empty($contenido)){ 
         //echo "Introduce todos los datos";
         //echo "<script type='text/javascript'>prueba();</script>"
@@ -303,41 +264,40 @@ function crearPost($loginBD){
        <?php 
        }
     }
-    
+    //En caso de que tenga imagen subiremos el post con la imagen
     else{
         if (is_uploaded_file($_FILES['foto']['tmp_name'])) { 
             //Valida el nombre del archivo
             if(empty($_FILES['foto']['name']))
             {
-                //echo " no tiene nombre ";
+                //No tiene nombre
                 exit;
             }
         
-            $upload_file_name = $titulo.".png";
+            $upload_file_name = $titulo.".jpeg";
             if(strlen ($upload_file_name)>100)
             {
-                //echo " nombre muy largo ";
+                //Nombre muy largo
                 exit;
             }
         
-            //quita los caracteres no alfanumericos
+            //Quita los caracteres no alfanumericos
             $upload_file_name = preg_replace("/[^A-Za-z0-9 \.\-_]/", '', $upload_file_name);
         
-            //limite de tamañp
+            //limite de tamaño
             if ($_FILES['foto']['size'] > 1000000) 
             {
-                //echo " archivo demasiado pesado ";
+                //archivo demasiado pesado
                 exit;        
             }
             //Guarda la imagen
             $dest='img/posts/'.$upload_file_name;
             if (move_uploaded_file($_FILES['foto']['tmp_name'], $dest)) 
             {
-                //echo 'Imagen subida !';
+                //Imagen subida
             }
-
+            //Insertamos el post
             $stmt = $loginBD->prepare('INSERT INTO posts (nickname, titulo, contenido, imagen_post, visitas, fecha ) VALUES (:nickname, :titulo, :contenido, :imagen_post, :visitas, :fecha )');
-
             $stmt->execute(
                 array(
                     'nickname' => $autor,
@@ -349,11 +309,11 @@ function crearPost($loginBD){
         
                 )
             ); 
-
             header('Location: index.php');
 
             
         }else{
+            //Insertamos el post
             $stmt = $loginBD->prepare('INSERT INTO posts (nickname, titulo, contenido, visitas, fecha ) VALUES (:nickname, :titulo, :contenido, :visitas, :fecha )');
             
             $stmt->execute(
@@ -376,24 +336,22 @@ function crearPost($loginBD){
 
 /* Función que actualiza la contraseña de la cuenta */
 function actualizarContrasena($loginBD){
-
-    //session_start();
     $passActual = isset($_REQUEST['passActual']) ? $_REQUEST['passActual'] : null;
     $passNueva = isset($_REQUEST['passNueva']) ? $_REQUEST['passNueva'] : null;
     $passRepetir = isset($_REQUEST['passRepetir']) ? $_REQUEST['passRepetir'] : null;
     $usuario=$_SESSION["usuarioLogeado"];
-
+    //Recojemos la contraseña del usuario que la va a cambiar 
     $stmt = $loginBD->prepare('SELECT contrasena FROM usuarios WHERE nickname= :nick;');
     $stmt->execute(['nick' => $usuario]);
     $contrasena =$stmt->fetch();
     
-    /* Si la contraseña actual es la de la base de datos */
+    //Desencriptamos la contraseña
     $passwd = desencriptarTexto($contrasena[0]);
+    /* Si la contraseña actual es la de la base de datos */
     if($passActual==$passwd){
 
         /* Si la contraseña nueva y la confirmación coinciden actualiza la contraseña */
         if($passNueva==$passRepetir){
-
             $stmt = $loginBD->prepare('UPDATE usuarios set contrasena=:contrasena WHERE nickname=:nickname');
             $passNueva=encriptarTexto($passNueva);
             $stmt->execute(
@@ -427,14 +385,14 @@ function actualizarFotoPerfil($loginBD){
         //Valida el nombre del archivo
         if(empty($_FILES['foto']['name']))
         {
-            //echo " no tiene nombre ";
+            //no tiene nombre 
             exit;
         }
     
         $upload_file_name = $usuario.".png";
         if(strlen ($upload_file_name)>100)
         {
-            //echo " nombre muy largo ";
+            //nombre muy largo 
             exit;
         }
     
@@ -444,14 +402,14 @@ function actualizarFotoPerfil($loginBD){
         //limite de tamañp
         if ($_FILES['foto']['size'] > 1000000) 
         {
-            //echo " archivo demasiado pesado ";
+            // archivo demasiado pesado 
             exit;        
         }
         //Guarda la imagen
         $dest='img/usuarios/'.$upload_file_name;
         if (move_uploaded_file($_FILES['foto']['tmp_name'], $dest)) 
         {
-            //echo 'Imagen subida !';
+            //Imagen subida
         }
 
         $stmt = $loginBD->prepare('UPDATE usuarios SET foto_nick=:foto_nick WHERE nickname=:nickname');
@@ -473,21 +431,18 @@ function actualizarFotoPerfil($loginBD){
 }
 
 /* Función que carga la foto de perfil en ajustes */
-function ajustesCargarFoto(){
-   /*  session_start(); */  
+function ajustesCargarFoto(){ 
     if(isset($_SESSION["usuarioLogeado"])){ 
         echo "<img id='fotoPerfil'src='".$_SESSION['fotoLogeado']."'/><br>";
     }
 }
-   
 /* Función para cerrar sesión */
-
 function cerrarSesion(){
     session_start();
     unset($_SESSION["usuarioLogeado"]);
     print "Sesion borrada";
 }
-
+//Aqui cojemos todos los posts con los nombres de usuarios que los crearon
 function recibirPosts(){
     try{
         $consulta = 'SELECT * FROM posts,usuarios where posts.nickname=usuarios.nickname';
@@ -548,7 +503,9 @@ function cargarPosts($posts){
             
             }elseif($tipoUser=='mod'){
                 ?>
-                    <a href="index.php?tipo=borrarPost&idPost=<?php echo $columna['id_post']; ?>" class="btnEliminar"><span class="icon-trash"></span></a>
+                   <style type="text/css">
+                    .btnEliminar{display: none;}    
+                  </style>
                 <?php
             }
             //Si nadie está logeado, que no se muestre el boton para eliminar 
@@ -571,7 +528,6 @@ function cargarPosts($posts){
 }
 
 /* Carga los posts con mas visitas. Aparecen en el lateral derecho */
-
 function cargarTopPosts(){
     try{
         $procedimiento = 'SELECT id_post, titulo,imagen_post, visitas FROM posts HAVING(visitas>2) ORDER by visitas DESC LIMIT 5';
@@ -591,14 +547,11 @@ function cargarTopPosts(){
             <p>Nº visitas: <?php echo $fila['visitas']; ?> </p>
         </div>     
         <?php
-    }           
-}
-
-
+    }
+}           
 
 /* Carga los usuarios. Aparecen en el lateral derecho */
-
- function cargarTopUsuarios(){
+function cargarTopUsuarios(){
     try{
         $topUser = "SELECT posts.nickname, e_mail, foto_nick, COUNT(id_post) as 'post' FROM posts,usuarios WHERE usuarios.nickname=posts.nickname GROUP BY posts.nickname HAVING COUNT(id_post>1) ORDER BY COUNT(id_post) DESC";
         $topUsuarios = conexion()->query($topUser);
@@ -762,7 +715,7 @@ function postUsuario(){
                     <input type="text" hidden name="idP" value="<?php echo $fila3['id_post']?>"  rows="4" cols="50">           
     </br>
                     <input type="submit" class="boton" value="EDITAR">
-                    <a href='PHP/eliminarPost.php?idPost=<?php echo $fila3['id_post'] ?>'><span class="icon-trash"><span> </a> 
+                    <a href='index.php?idPost=<?php echo $fila3['id_post'] ?>&tipo=borrarPost'><span class="icon-trash"><span> </a> 
                 </form> 
             </div>
         <?php
@@ -770,7 +723,7 @@ function postUsuario(){
 }
 
  /* Función que muetra el boton crear post si el usuario ha iniciado sesión */
- function logearNuevoPost(){
+function logearNuevoPost(){
     if(isset($_SESSION["usuarioLogeado"])){ 
         echo "<div id='nuevoPost1'><a href='nuevoPost.php'>CREAR POST</a></div>";
     }
@@ -778,7 +731,7 @@ function postUsuario(){
         
     }
 }
-
+//Esta funcion carga los comentarios del Blog
 function cargarComentariosBlog(){
     echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");
     $idP=$_GET["idPost"];
@@ -804,18 +757,23 @@ function cargarComentariosBlog(){
                if($_SESSION["usuarioLogeado"]==$user){
 
                 ?>
-                <a class="btnElimCom" href="PHP/eliminarPost.php?idC=<?php echo $filaC['id_comentario'] ?>"><span class="icon-trash"></span></a>
+                <a class="btnElimCom" href="paginaPost.php?idPost=<?php echo $_GET['idPost'];?>&idC=<?php echo $filaC['id_comentario'] ?>&tipo=eliminarComentario"><span class="icon-trash"></span></a>
                 <?php
-               }else{
-
                }
+               //El usuario moderador puede eliminar cualquier comentario
+                $tipoUser = $_SESSION["tipo"];
+                if($tipoUser=='mod'){
+                    ?>
+                    <a class="btnElimCom" href="PHP/eliminarPost.php?idC=<?php echo $filaC['id_comentario'] ?>"><span class="icon-trash"></span></a>
+                    <?php 
+                }
             }
             ?>
         </div> 
             <?php
         }
 }
-
+//En esta funcion se insertaran comentarios
 function insertarComentario(){
     
     $stmt1 = conexion()->prepare('INSERT INTO comentarios (id_post, nickname, comentario, fecha ) VALUES (:id_post, :nickname, :comentario, :fecha)');
@@ -833,49 +791,56 @@ function insertarComentario(){
             echo '</script>'; 
             header("Location: paginaPost.php?idPost=".$_SESSION["postActual"]);
 }
-
+//Esta funcion ejecuta un codigo que actualizara la base de datos con una visita mas cada ves que se acceda desde el index
 function incrementarvisitas(){
     $idP=$_GET["idPost"];
     $updateVisitas = "UPDATE posts SET posts.visitas = posts.visitas+1 where id_post LIKE $idP ";
     $update =conexion()->query($updateVisitas);
-    }
+}
 
+//Esta funcion llama primero a otra que se encarga de borrar todos los comentarios para despues borrar el post
 function borrarPost(){
     borrarTodosLosComentariosPost();
     $idP = $_GET['idPost'];
     $consulta = conexion()->prepare ('DELETE FROM posts WHERE id_post=:id_post');
     $consulta->execute(
         array(
-            'id_post' =>$idP
-        )
+            'id_post' =>$idP)
         ); 
     header("Location: index.php");      
 }
-
+//Esta funcion borra todos los comentarios del post
 function borrarTodosLosComentariosPost(){
     $idP = $_GET['idPost'];
     $borrarComentarios = "DELETE FROM comentarios WHERE id_post LIKE $idP";
     $borrado =conexion()->query($borrarComentarios);
 }
-
+//Esta funcion encripta las contraseñas 
 function encriptarTexto($contraseña){
     $ciphering = "AES-128-CTR";
     $iv_length = openssl_cipher_iv_length($ciphering);
     $options = 0;
     $encryption_iv = '1234567891011121';
-    $encryption_key = "GeeksforGeeks"; 
+    $encryption_key = "benchblog"; 
     $encryption = openssl_encrypt($contraseña, $ciphering, 
             $encryption_key, $options, $encryption_iv); 
     return($encryption);?>
     <script>alert(<?php echo ($encryption)?>)</script>
     <?php
 }
+//Esta funcion desencripta las contraseñas 
 function desencriptarTexto($contraseña){
     $ciphering = "AES-128-CTR";
     $decryption_iv = '1234567891011121';
-    $decryption_key = "GeeksforGeeks";
+    $decryption_key = "benchblog";
     $options = 0;
     $decryption=openssl_decrypt ($contraseña, $ciphering,  
         $decryption_key, $options, $decryption_iv);
     return($decryption);
+}
+//Esta funcion elimina 1 solo comentario
+function eliminarComentario(){
+    $idC = $_GET['idC'];
+    $eliminar = conexion()->prepare('DELETE FROM comentarios WHERE id_comentario=:idC');
+    $eliminar->execute( array( 'idC' => $idC ));
 }
