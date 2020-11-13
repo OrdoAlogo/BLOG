@@ -94,6 +94,7 @@
     </footer>
 
 </body>
+<script src="JSCRIPT/usuario.js" type="text/javascript"></script>
 </html>
 
-<script src="JSCRIPT/usuario.js" type="text/javascript"></script>
+

@@ -99,8 +99,9 @@
     <footer></footer>
 </body>
 <script>
-     window.onload(hola());
-    function hola(){
+
+    window.onload(paginaCargada());
+    function paginaCargada(){
         var arrayUltimosvisitados = localStorage.getItem('arrayUltimosvisitados');
         var arrayUltimosTitulo = localStorage.getItem('arrayUltimosTitulo');
         arrayUltimosvisitados = JSON.parse(arrayUltimosvisitados);
