@@ -752,21 +752,14 @@ function cargarComentariosBlog(){
             <p class="fecha"> <?php echo $filaC['fecha']?></p>
             <?php
             $user = $filaC['nickname'];
-            //Un usuario solo puede eliminar sus comentarios
+            //Un usuario solo puede eliminar sus comentarios en cambio el moderador podra eliminar todos
             if(isset($_SESSION["usuarioLogeado"])){
-               if($_SESSION["usuarioLogeado"]==$user){
+               if($_SESSION["usuarioLogeado"]==$user || $tipoUser=='mod'){
 
                 ?>
                 <a class="btnElimCom" href="paginaPost.php?idPost=<?php echo $_GET['idPost'];?>&idC=<?php echo $filaC['id_comentario'] ?>&tipo=eliminarComentario"><span class="icon-trash"></span></a>
                 <?php
                }
-               //El usuario moderador puede eliminar cualquier comentario
-                $tipoUser = $_SESSION["tipo"];
-                if($tipoUser=='mod'){
-                    ?>
-                    <a class="btnElimCom" href="PHP/eliminarPost.php?idC=<?php echo $filaC['id_comentario'] ?>"><span class="icon-trash"></span></a>
-                    <?php 
-                }
             }
             ?>
         </div> 
@@ -817,26 +810,24 @@ function borrarTodosLosComentariosPost(){
 }
 //Esta funcion encripta las contraseñas 
 function encriptarTexto($contraseña){
-    $ciphering = "AES-128-CTR";
-    $iv_length = openssl_cipher_iv_length($ciphering);
-    $options = 0;
-    $encryption_iv = '1234567891011121';
-    $encryption_key = "benchblog"; 
-    $encryption = openssl_encrypt($contraseña, $ciphering, 
-            $encryption_key, $options, $encryption_iv); 
-    return($encryption);?>
-    <script>alert(<?php echo ($encryption)?>)</script>
+    $cifrado = "AES-128-CTR";
+    $opciones = 0;
+    $iv = '1234567891011121';
+    $claveEncriptar = "benchblog"; 
+    $resultado = openssl_encrypt($contraseña, $cifrado, 
+            $claveEncriptar, $opciones, $iv); 
+    return($resultado);?>
     <?php
 }
 //Esta funcion desencripta las contraseñas 
 function desencriptarTexto($contraseña){
-    $ciphering = "AES-128-CTR";
-    $decryption_iv = '1234567891011121';
-    $decryption_key = "benchblog";
-    $options = 0;
-    $decryption=openssl_decrypt ($contraseña, $ciphering,  
-        $decryption_key, $options, $decryption_iv);
-    return($decryption);
+    $cifrado = "AES-128-CTR";
+    $iv = '1234567891011121';
+    $claveDesencriptar = "benchblog";
+    $opciones = 0;
+    $resultado=openssl_decrypt ($contraseña, $cifrado,  
+        $claveDesencriptar, $opciones, $iv);
+    return($resultado);
 }
 //Esta funcion elimina 1 solo comentario
 function eliminarComentario(){
