@@ -1,22 +1,24 @@
 
-body{
-    background:#29220A;
-}
+
 
 h2{
     margin: 1%;
     font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
     text-align: center;
     font-size: 1.3rem;
-    background:#5F4C0B ;
     color: white;
 }
  
 main{  
     width: 50%;
+    height: auto;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
+    background: #5A79C7;
+    padding: 1%;
+    border-radius: 1em;
+    margin-bottom: 1%;
 }
 
 /* Para el formulario de cambio de foto */
@@ -48,8 +50,6 @@ input[type=password]{
     
     font-size: 1.3rem;
     width: 90%;
-   
-    
 }
 form{margin: 0 auto;}
 input[type=submit] {

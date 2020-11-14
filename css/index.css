@@ -3,7 +3,10 @@
     font-family: fuenteBlog;
     src: url(../css/ethnocentric\ rg\ it.ttf);
 }
-body{background:#29220A;}
+body{
+    /* COLOR FONDO GLOBAL */
+    background:#5A6278;
+}
 
 *{margin: 0;}
 
@@ -38,15 +41,32 @@ main{
     margin: 0 auto;
 }
 .icon-eye{color: orange;}
-.aside{display: flex; flex-direction: column; justify-content: space-between; justify-items: center; align-items: center; 
-    background: #29220A; border: 2px solid black; height: 100%; width: 30%;  padding: 15px;}
-.aside div{border: 2px solid white; background: orange; }
+.aside{
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+    justify-items: center; 
+    align-items: center; 
+
+    /* background: #29220A; 
+     border: 2px solid black; */
+     height: 100%;
+      width: 30%;  
+      padding: 15px;
+    }
+.aside div{
+    border: 2px solid white;
+    /* COLOR FONDO ASIDE */
+    background: #364978; 
+    padding: 1%;
+}
 
 .datosDB{border: none;}
 
 .postPrincipales{
     width: 100%; 
-    background: #5F4C0B; 
+    /* COLOR CAJA POSTS */
+    background: #5A79C7; 
     height: 100%; 
     padding: 1%;    
 }

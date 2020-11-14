@@ -1,18 +1,30 @@
 
  html, body {
-     width: auto;
-     height: 100%;
-     font-family:Verdana, Geneva, sans-serif;
-     font-weight:bold;
-     background:#29220A;
+    width: auto;
+    height: 100%;
+    font-family:Verdana, Geneva, sans-serif;
+    font-weight:bold;
     
  }
- .mainPost{background:#5F4C0B; width:70%;  margin:0 auto; height:auto; margin-top: 50;display:contents;}
+
+ .mainPost{ 
+    /* background:#5F4C0B; */ 
+    width:70%;  
+    margin:0 auto; 
+    height:auto; 
+    margin-top: 50;
+    display:contents;
+    background: #5A79C7;
+}
+
+main{
+    background: #5A79C7;
+}
 
 section{
     position:relative;
     float:left;
-    background-color:#777;
+    
     width:78%;
     height:55%;
     color:#FFF;
@@ -40,12 +52,29 @@ legend{text-align: center;}
 tr,td{text-align: center; margin: 0 auto;}
 .envio{text-align:center; margin:0 auto; position:relative; bottom:6px;}
 .caracteres{text-align:center; margin:0 auto; position:relative; bottom:2px;}
-.comentarios{ border: 2px solid #29220A; margin:0 auto;margin-top: 100px; width: 80%; background:#4e4012; margin-bottom:10px; }
-.comentarios div{padding:15px; border-bottom:2px solid #886A08;}
+
+.comentarios{ 
+    border: 2px solid #29220A;
+    
+    margin:0 auto;
+    margin-top: 100px; 
+    width: 80%; 
+    /* COLOR COMENTARIOS */
+    background-color: rgba(22, 25, 219, 0.11);
+    /* box-shadow: 4px 4px 5px rgba(0,0,0,1); */
+    border-radius: 1em;
+    margin-bottom:10px; 
+    padding: 1%;
+    }
+.comentarios div{
+    padding:15px; 
+    border-bottom:2px solid #886A08;
+}
 .comentarios h3{margin: 0 auto;  text-align:center;  color:white;}
 
 .cajaPost{display: flex; flex-direction: row; justify-content:space-between; justify-items: center; align-items: start; margin-top: 20px; padding: 20px;
-            margin: 0 auto; width: 80%; }
+            margin: 0 auto; width: 80%
+            ;  background: red;}
 
 #tituloPost{text-align: left; color: orange;}
 #contenido{color:white; text-align: justify;}
@@ -54,7 +83,16 @@ tr,td{text-align: center; margin: 0 auto;}
 .fecha{display: flex; flex-direction: row; justify-content: right; align-items: center; color: white;}
 .divImagen{padding: 10px; width: 100%; margin: 0 auto; height: 200px; display: flex; justify-content: center; align-items: center; }
 .divImagen img{ display: block; height: 150px;}
-#descargar{ cursor: pointer; color: orange; display: flex; flex-direction: row; align-items: center; justify-content: center;}
+#descargar{ 
+    cursor: pointer; 
+    color: orange; 
+    display: flex; 
+    flex-direction: row; 
+    align-items: center; 
+    justify-content: center;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
 #descargar:hover{color: white;}
 .posts{padding:20px; background:#886A08; margin-top:20px; width:90%; }
 .posts h4{color:orangered;}

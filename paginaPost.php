@@ -42,7 +42,7 @@
         <div class="comentarios">
             <?php if(isset($_SESSION["usuarioLogeado"])){ echo ("<script type='text/javascript' src='JSCRIPT/usuario.js'></script>");?>
             <div class="formC">
-                    <h3>Escriba aqui su comentario</h3> <br>
+                    <h3>Escriba aquí su comentario</h3> <br>
                     <form  id="comen" method="$_GET">       
                         <textarea id = "textoArea" cols="40" rows="1" name="comentario" maxlength = "500" placeholder="Limite carateres: 400" > </textarea> 
                         <button  class="envio"><span class="icon-direction"></span></button> 
@@ -55,7 +55,7 @@
             <h3>COMENTARIOS</h3>
             <?php cargarComentariosBlog();  ?>  
         </div> 
-        <a id="descargar">Descarga el post Aqui</a>   
+        <a id="descargar">Descarga el post Aquí</a>   
     </main>
     <script>
         var nombreUsuario = document.getElementById("descargar").addEventListener("click",getPDF,true);

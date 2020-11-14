@@ -4,7 +4,6 @@ h2{
     font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
     text-align: center;
     font-size: 1.3rem;
-    background:#5F4C0B ;
 }
  
 main{  margin: 1%;  margin-top: 2%;}
@@ -13,7 +12,8 @@ form{
     margin: 0 auto; 
     border: 0.5em solid black;
     width: 85%;
-    background: #886A08;
+    /* COLOR CREAR POST */
+    background: #5A79C7; 
 }
 
 label{

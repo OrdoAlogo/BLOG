@@ -148,7 +148,7 @@ function insertarUsuario($loginBD){
             }
             $upload_file_name = $email.".png";
             $upload_file_name = $nick.".png";
-            if(strlen ($upload_file_name)>100){
+            if(strlen ($upload_file_name)>1000){
                     //nombre muy largo 
                 exit;
             }
@@ -290,7 +290,7 @@ function crearPost($loginBD){
             }
         
             $upload_file_name = $titulo.".jpeg";
-            if(strlen ($upload_file_name)>100)
+            if(strlen ($upload_file_name)>1000)
             {
                 //Nombre muy largo
                 exit;
@@ -765,7 +765,7 @@ function cargarComentariosBlog(){
             $user = $filaC['nickname'];
             //Un usuario solo puede eliminar sus comentarios en cambio el moderador podra eliminar todos
             if(isset($_SESSION["usuarioLogeado"])){
-               if($_SESSION["usuarioLogeado"]==$user || $tipoUser=='mod'){
+               if($_SESSION["usuarioLogeado"]==$user || $_SESSION["tipo"]=='mod'){
 
                 ?>
                 <a class="btnElimCom" href="paginaPost.php?idPost=<?php echo $_GET['idPost'];?>&idC=<?php echo $filaC['id_comentario'] ?>&tipo=eliminarComentario"><span class="icon-trash"></span></a>
