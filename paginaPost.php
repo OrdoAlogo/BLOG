@@ -6,10 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BLOG-POST</title>
     <link class="logo" rel="icon" type="image/vnd.microsoft.icon" href="img/logo.png">
-    <!-- <link rel="stylesheet" type="text/css" href="css/nuevoPost.css"> -->
     <link rel="stylesheet" type="text/css" href="css/fuentes-iconos/style.css">
     <link rel="stylesheet" type="text/css" href="css/encabezado.css">
-    <!-- <link rel="stylesheet" type="text/css" href="css/index.css"> -->
     <link rel="stylesheet" href="css/post.css">  
 </head>
 <body>
@@ -27,8 +25,7 @@
             </div>   
     </header>
 
-    <main class="mainPost">
-       
+    <main class="mainPost">   
         <div class="cajaPost">
             <div class="postCompleto">
                 <h1 id="tituloPost"><?php echo(cargarTituloPost($_GET["idPost"]))?></h1>
@@ -61,7 +58,7 @@
         <a id="descargar">Descarga el post Aqui</a>   
     </main>
     <script>
-    var nombreUsuario = document.getElementById("descargar").addEventListener("click",getPDF,true);
+        var nombreUsuario = document.getElementById("descargar").addEventListener("click",getPDF,true);
 
        function getPDF() {
         var doc = new jsPDF();
@@ -115,6 +112,7 @@
 <!-- //Una vez que la pagina del post este cargada inserta en un array de localStorage
 //para despues cojerlo en el index -->
 <script>
+    window.onload(paginaCargada());
     function paginaCargada(){
         var arrayUltimosvisitados = localStorage.getItem('arrayUltimosvisitados');
         var arrayUltimosTitulo = localStorage.getItem('arrayUltimosTitulo');

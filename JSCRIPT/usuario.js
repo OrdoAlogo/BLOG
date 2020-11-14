@@ -170,7 +170,6 @@ function montarUltimosVisitados(){
 
 
 function activarEstado(e){
-    
     alert("estado "+ document.getElementsByClassName("mod")[3].value);
 }
 
