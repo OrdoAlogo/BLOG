@@ -28,8 +28,15 @@ body{background:#29220A;}
 }
 
 
-main{display: flex; height: 100%; flex-direction: row; justify-content: space-between; justify-items: center; 
-    width: 90%; margin: 0 auto;}
+main{
+    display: flex; 
+    height: 100%; 
+    flex-direction: row; 
+    /* justify-content: space-between;  */
+    justify-items: center; 
+    width: 90%; 
+    margin: 0 auto;
+}
 .icon-eye{color: orange;}
 .aside{display: flex; flex-direction: column; justify-content: space-between; justify-items: center; align-items: center; 
     background: #29220A; border: 2px solid black; height: 100%; width: 30%;  padding: 15px;}
@@ -103,13 +110,38 @@ main{display: flex; height: 100%; flex-direction: row; justify-content: space-be
     text-decoration: none;
 }
 
+h4{
+    font-size: 20px;
+    margin-bottom: 2%;
+    color:orange
+}
 table {
+   
+    color: white;
     border-collapse: collapse;
     width: 100%;
+    margin-bottom: 2%;
+    
 }
+table tr{
+    /* background-color: red; */
+    border-right: 2px solid white;
+    border-left: 2px solid white ;
+    border-top: 2px solid white;
+    border-bottom: 2px solid white;
+}
+
 table td {
-    border: 2px solid black;
+   
+
+    
+    /* border: 2px solid white; */
     text-align: center;
-    padding: 1.3rem;
+    padding: 1.3rem; 
+    
+}
+
+fieldset{
+    border-color: white;
 }
 

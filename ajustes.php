@@ -22,9 +22,8 @@
         </div>
     </header>
 
-    <h2>Datos de la cuenta</h2>
+    <h2>Administración</h2>
     <main>
-
 
         <div class="adminUsuarios">
             <?php cargarUsuarios();?>

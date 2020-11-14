@@ -648,10 +648,6 @@ function cargarUsuarios(){
 
     }
 
-
-
-    
-
 }
 
 //Función para añadir  o eliminar el rol de moderador

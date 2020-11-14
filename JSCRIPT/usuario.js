@@ -72,7 +72,7 @@ function faltaDatos(){
     });
 } 
 
-/* Al registrarse, si algún campo esta vacio.
+/* Al registrarse, si falta la foto.
 Aparece un texto rojo advirtiendo */
 function faltaFoto(){
     document.addEventListener("DOMContentLoaded", function () { 
