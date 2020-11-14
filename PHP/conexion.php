@@ -766,7 +766,7 @@ function cargarComentariosBlog(){
             $user = $filaC['nickname'];
             //Un usuario solo puede eliminar sus comentarios en cambio el moderador podra eliminar todos
             if(isset($_SESSION["usuarioLogeado"])){
-               if($_SESSION["usuarioLogeado"]==$user || $tipoUser=='mod'){
+               if($_SESSION["usuarioLogeado"]==$user || $_SESSION["tipo"]=='mod'){
 
                 ?>
                 <a class="btnElimCom" href="paginaPost.php?idPost=<?php echo $_GET['idPost'];?>&idC=<?php echo $filaC['id_comentario'] ?>&tipo=eliminarComentario"><span class="icon-trash"></span></a>
