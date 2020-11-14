@@ -34,7 +34,7 @@
             <label for="titulo">Titulo</label>
             <input type="text" id="titulo" name="titulo" maxlength="100"><br>
             <label for="contenido">Contenido</label></br>
-            <textarea name="contenido" id="contenido" cols="30" rows="10" maxlength="10000"></textarea><br>
+            <textarea name="contenido" id="contenido" cols="30" rows="10" maxlength="3000"></textarea><br>
             <label for="foto"> Imagen (opcional)</label><br>
             <input type="file" id="foto" name="foto"><br>
             <input type="hidden" name="tipo" id ="tipo" value="nuevoPost"> 

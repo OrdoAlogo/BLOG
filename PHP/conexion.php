@@ -155,8 +155,9 @@ function insertarUsuario($loginBD){
             //quita los caracteres no alfanumericos
             $upload_file_name = preg_replace("/[^A-Za-z0-9 \.\-_]/", '', $upload_file_name);
             //limite de tamañp
-            if ($_FILES['arch']['size'] > 1000000) {
+            if ($_FILES['arch']['size'] > 100000000) {
                 //echo " archivo demasiado pesado ";
+                header('Location: login.php');
                 exit;        
             }
             //Guarda la imagen
@@ -300,7 +301,7 @@ function crearPost($loginBD){
             $upload_file_name = preg_replace("/[^A-Za-z0-9 \.\-_]/", '', $upload_file_name);
         
             //limite de tamaño
-            if ($_FILES['foto']['size'] > 1000000) 
+            if ($_FILES['foto']['size'] > 100000000) 
             {
                 //archivo demasiado pesado
                 exit;        
@@ -415,7 +416,7 @@ function actualizarFotoPerfil($loginBD){
         $upload_file_name = preg_replace("/[^A-Za-z0-9 \.\-_]/", '', $upload_file_name);
     
         //limite de tamañp
-        if ($_FILES['foto']['size'] > 1000000) 
+        if ($_FILES['foto']['size'] > 100000000) 
         {
             // archivo demasiado pesado 
             exit;        

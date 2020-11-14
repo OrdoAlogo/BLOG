@@ -28,14 +28,13 @@
     <main class="mainPost">   
         <div class="cajaPost">
             <div class="postCompleto">
+            <?php if(cargarFotoPost($_GET["idPost"])!=null){; ?>
+                <img id="imagenPost"src='<?php echo (cargarFotoPost($_GET["idPost"]))?>' style="float:right;" >
+            <?php }?>
                 <h1 id="tituloPost"><?php echo(cargarTituloPost($_GET["idPost"]))?></h1>
                 <p id="contenido"><?php echo(CargarPost($_GET["idPost"]));?></p>
             </div>
-            <div class="divImagen">
-                <?php if(cargarFotoPost($_GET["idPost"])!=null){; ?>
-                <img src='<?php echo (cargarFotoPost($_GET["idPost"]))?>' alt="" >
-                <?php }?>
-            </div>
+          
           
             
         </div>
