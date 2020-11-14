@@ -47,19 +47,21 @@ main{
     justify-content: space-between; 
     justify-items: center; 
     align-items: center; 
-
     /* background: #29220A; 
      border: 2px solid black; */
      height: 100%;
       width: 30%;  
       padding: 15px;
-    }
+}
 .aside div{
     border: 2px solid white;
     /* COLOR FONDO ASIDE */
     background: #364978; 
     padding: 1%;
 }
+/* .datosDB a{
+    color: white;
+} */
 
 .datosDB{border: none;}
 
@@ -84,7 +86,10 @@ main{
 .btnElimCom:hover{color: red;}
 #titulo_principal{color: white; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: 3vw; text-align: center;}
 .topPost,.topUsuarios{height: 100%; margin-bottom: 10px; width: 100%;}
-.topPost h3,.topUsuarios h3{color: white;}
+.topPost h3,.topUsuarios h3{
+    color: orange;
+    font-size: 25px;
+}
 .topPost div,.topUsuarios div{border: none; border-bottom: 1px solid white; padding: 5px;}
 .fecha{
     position: relative;  
@@ -102,9 +107,12 @@ main{
     margin-top: -2%;
     color: white;
 }
-.piePagina h3{color:white;}
+.piePagina h3{
+    color:orange;
+    font-size: 25px;
+}
 .piePagina{ width: 100%;}
-.piePagina p{color: black;}
+.piePagina p{color: white;}
 .tituloPost{font-size: 1.6vw; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; color: white;}
 .visualizaciones{
     position: relative;
@@ -126,8 +134,11 @@ main{
 #codigoPost{display: none;}
 
 #postLateral{
-    color: black;
+    color: white;
     text-decoration: none;
+}
+.datosDB p{
+    color: orange;
 }
 
 h4{

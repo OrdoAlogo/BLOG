@@ -560,7 +560,7 @@ function cargarTopPosts(){
         ?>  
         <div class="datosDB">
         <a id="postLateral" href="paginaPost.php?tipo=visita&idPost=<?php echo $fila['id_post']; ?>"> <h2><?php echo $fila['titulo'] ?> </h2> </a>
-            <p>Nº visitas: <?php echo $fila['visitas']; ?> </p>
+            <p>Visitas: <?php echo $fila['visitas']; ?> </p>
         </div>     
         <?php
     }
@@ -582,7 +582,6 @@ function cargarTopUsuarios(){
         ?>
         <div class="datosDB">
             <a id="postLateral" href="index.php?palabra=<?php echo $col['nickname']?>"><?php echo $col['nickname'] ?> </a>
-            <p>Nº post_: <?php echo $col['post'] ?></p>
         </div>
 
     <?php

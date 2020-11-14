@@ -55,12 +55,11 @@ tr,td{text-align: center; margin: 0 auto;}
 
 .comentarios{ 
     border: 2px solid #29220A;
-    
     margin:0 auto;
     margin-top: 100px; 
     width: 80%; 
     /* COLOR COMENTARIOS */
-    background-color: rgba(22, 25, 219, 0.11);
+    background-color: rgba(22, 25, 219, 0.11); 
     /* box-shadow: 4px 4px 5px rgba(0,0,0,1); */
     border-radius: 1em;
     margin-bottom:10px; 
@@ -72,9 +71,17 @@ tr,td{text-align: center; margin: 0 auto;}
 }
 .comentarios h3{margin: 0 auto;  text-align:center;  color:white;}
 
-.cajaPost{display: flex; flex-direction: row; justify-content:space-between; justify-items: center; align-items: start; margin-top: 20px; padding: 20px;
-            margin: 0 auto; width: 80%
-            ;  background: red;}
+.cajaPost{
+    display: flex; 
+    flex-direction: row; 
+    justify-content:space-between; 
+    justify-items: center; 
+    align-items: start;
+    margin-top: 20px; 
+    padding: 20px;   
+    margin: 0 auto; 
+    width: 80%;
+}
 
 #tituloPost{text-align: left; color: orange;}
 #contenido{color:white; text-align: justify;}
