@@ -7,7 +7,7 @@
      background:#29220A;
     
  }
- .mainPost{background:#5F4C0B; width:70%;  margin:0 auto; height:auto; margin-top: 50;}
+ .mainPost{background:#5F4C0B; width:70%;  margin:0 auto; height:auto; margin-top: 50;display:contents;}
 
 section{
     position:relative;
