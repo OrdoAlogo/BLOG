@@ -48,6 +48,7 @@ textarea{
     height: 30%;
     width: 95%;
     font-size: 1.3rem;
+    resize: none;
 }
 
 

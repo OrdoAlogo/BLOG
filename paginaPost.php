@@ -28,14 +28,13 @@
     <main class="mainPost">   
         <div class="cajaPost">
             <div class="postCompleto">
+            <?php if(cargarFotoPost($_GET["idPost"])!=null){; ?>
+                <img id="imagenPost"src='<?php echo (cargarFotoPost($_GET["idPost"]))?>' style="float:right;" >
+            <?php }?>
                 <h1 id="tituloPost"><?php echo(cargarTituloPost($_GET["idPost"]))?></h1>
                 <p id="contenido"><?php echo(CargarPost($_GET["idPost"]));?></p>
             </div>
-            <div class="divImagen">
-                <?php if(cargarFotoPost($_GET["idPost"])!=null){; ?>
-                <img src='<?php echo (cargarFotoPost($_GET["idPost"]))?>' alt="" >
-                <?php }?>
-            </div>
+          
           
             
         </div>
@@ -44,8 +43,8 @@
             <div class="formC">
                     <h3>Escriba aquí su comentario</h3> <br>
                     <form  id="comen" method="$_GET">       
-                        <textarea id = "textoArea" cols="40" rows="1" name="comentario" maxlength = "500" placeholder="Limite carateres: 400" > </textarea> 
-                        <button  class="envio"><span class="icon-direction"></span></button> 
+                        <textarea id = "textoArea" cols="170" rows="2" name="comentario" maxlength = "500" placeholder="Limite carateres: 400" > </textarea> 
+                        <button margin="1em" width="100%"class="envio"><span class="icon-direction"></span></button> 
                         <input type="hidden" name="tipo" value="InsertarComentario">
                         <input type="hidden" name="idPost" value="<?php echo ($_GET['idPost']) ?>">
                         
