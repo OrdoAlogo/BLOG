@@ -37,8 +37,6 @@ if ($_SERVER["REQUEST_METHOD"]=='GET'){
             header('Location: ../ajustes.php');
 
         }
-
-        
     }
 
     if(isset( $_GET["tipo"])){
@@ -100,13 +98,18 @@ function comprobarExistencia($nickname,$contraseña,$login){
         foreach ($usuario as $usu => $valor){
             $contraseñabase = desencriptarTexto($valor['contrasena']);
             if($contraseñabase == $contraseña){
-                session_start();
-                $_SESSION["usuarioLogeado"] = $valor['nickname'];
-                $_SESSION["fotoLogeado"] = $valor['foto_nick'];
-                $_SESSION["tipo"] = $valor['tipo_de_usuario'];
-                header('Location: index.php');
-                
 
+                if($valor['estado']==0){
+                    session_start();
+                    $_SESSION["usuarioLogeado"] = $valor['nickname'];
+                    $_SESSION["fotoLogeado"] = $valor['foto_nick'];
+                    $_SESSION["tipo"] = $valor['tipo_de_usuario'];
+                    header('Location: index.php');
+                }else{
+                    echo '<script type="text/javascript">loginVetado();</script>';
+                }
+                
+        
             }else{
                 echo '<script type="text/javascript">loginError();</script>';
             }
@@ -134,66 +137,78 @@ function insertarUsuario($loginBD){
     $stmt = $loginBD->prepare('SELECT e_mail FROM usuarios WHERE e_mail= :email;');
     $stmt->execute(['email' => $email]);
     $correo =$stmt->fetch();
-    //Aqui comprobaremos que todos los datos se han subido 
-    if(empty($nick)||empty($email)||empty($contra)){
-        //Aqui llamamos a una funcion JavaScript para que lance un mensaje
-        echo '<script type="text/javascript">faltaDatos();</script>';
+
+
+    if(!empty($nick) && !empty($email) && !empty($contra) && !isset($correo[0])==$email && !isset($nombre[0])==$nick ){
+        if (is_uploaded_file($_FILES['arch']['tmp_name'])) { 
+            //Valida el nombre del archivo
+            if(empty($_FILES['arch']['name'])){
+                //No tiene nombre 
+                exit;
+            }
+            $upload_file_name = $email.".png";
+            $upload_file_name = $nick.".png";
+            if(strlen ($upload_file_name)>100){
+                    //nombre muy largo 
+                exit;
+            }
+            //quita los caracteres no alfanumericos
+            $upload_file_name = preg_replace("/[^A-Za-z0-9 \.\-_]/", '', $upload_file_name);
+            //limite de tamañp
+            if ($_FILES['arch']['size'] > 1000000) {
+                //echo " archivo demasiado pesado ";
+                exit;        
+            }
+            //Guarda la imagen
+            $dest='img/usuarios/'.$upload_file_name;
+            if (move_uploaded_file($_FILES['arch']['tmp_name'], $dest)) {
+                //echo 'Imagen subida !';
+            }
+            //Insertamos al usuario en la BD encriptando su contraseña
+            $stmt = $loginBD->prepare('INSERT INTO usuarios (nickname, contrasena, foto_nick, e_mail, tipo_de_usuario, estado ) VALUES (:nick, :contra, :foto_nick, :email, :tipo_de_usuario, :estado )');
+            $contra = encriptarTexto($contra);
+            $stmt->execute(
+                array(
+                    'nick' => $nick,
+                    'contra' => $contra,
+                    'foto_nick'=>$dest,
+                    'email' => $email,
+                    'tipo_de_usuario'=>$tipo_de_usuario,
+
+                    'estado'=>$estado 
+                )
+            ); 
+
+        }else{
+            echo '<script type="text/javascript">faltaFoto();</script>';
+        }
+
+        
     }else{
-        if(isset($correo[0])==$email){
-        //Aqui llamamos a una funcion JavaScript para que lance un mensaje
-        echo '<script type="text/javascript">registroExisteEmail();</script>';
-        }
-        if(isset($nombre[0])==$nick){
-           //Aqui llamamos a una funcion JavaScript para que lance un mensaje
-            echo '<script type="text/javascript">registroExisteNick();</script>';
-        }
-        else{
-            if (is_uploaded_file($_FILES['arch']['tmp_name'])) { 
-                //Valida el nombre del archivo
-                if(empty($_FILES['arch']['name']))
-                {
-                    //No tiene nombre 
-                    exit;
-                }
-                $upload_file_name = $email.".png";
 
-                $upload_file_name = $nick.".png";
-                if(strlen ($upload_file_name)>100)
-                {
-                     //nombre muy largo 
-                    exit;
-                }
-                //quita los caracteres no alfanumericos
-                $upload_file_name = preg_replace("/[^A-Za-z0-9 \.\-_]/", '', $upload_file_name);
-                //limite de tamañp
-                if ($_FILES['arch']['size'] > 1000000) 
-                {
-                    //echo " archivo demasiado pesado ";
-                    exit;        
-                }
-                //Guarda la imagen
-                            $dest='img/usuarios/'.$upload_file_name;
-                            if (move_uploaded_file($_FILES['arch']['tmp_name'], $dest)) 
-                            {
-                                //echo 'Imagen subida !';
-                            }
-                //Insertamos al usuario en la BD encriptando su contraseña
-                $stmt = $loginBD->prepare('INSERT INTO usuarios (nickname, contrasena, foto_nick, e_mail, tipo_de_usuario, estado ) VALUES (:nick, :contra, :foto_nick, :email, :tipo_de_usuario, :estado )');
-                $contra = encriptarTexto($contra);
-                $stmt->execute(
-                    array(
-                        'nick' => $nick,
-                        'contra' => $contra,
-                        'foto_nick'=>$dest,
-                        'email' => $email,
-                        'tipo_de_usuario'=>$tipo_de_usuario,
-
-                        'estado'=>$estado )); 
-    
+        if(empty($nick)||empty($email)||empty($contra)){
+            //Aqui llamamos a una función JavaScript para que lance un mensaje
+            echo '<script type="text/javascript">faltaDatos();</script>';
+        }else{
+            if(isset($correo[0])==$email){
+                //Aqui llamamos a una función JavaScript para que lance un mensaje
+                echo '<script type="text/javascript">registroExisteEmail();</script>';
+            }
+            if(isset($nombre[0])==$nick){
+                //Aqui llamamos a una función JavaScript para que lance un mensaje
+                echo '<script type="text/javascript">registroExisteNick();</script>';
             }
         }
+        
 
-    }   
+    }
+
+
+      
+
+
+
+
 }
 //Esta funcion devuelve el contenido del post
 function CargarPost($id){
@@ -749,7 +764,7 @@ function cargarComentariosBlog(){
         <div>
             <p class="usuario"> <?php echo $filaC['nickname']?></p>
             <p class="contenido"><?php echo $filaC['comentario']?></p>
-            <p class="fecha"> <?php echo $filaC['fecha']?></p>
+            <p class="fechaComentario"> <?php echo $filaC['fecha']?></p>
             <?php
             $user = $filaC['nickname'];
             //Un usuario solo puede eliminar sus comentarios en cambio el moderador podra eliminar todos

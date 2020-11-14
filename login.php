@@ -45,17 +45,16 @@
         <div class="sesion">
             <h4>INICIAR SESIÓN</h4>
             <form id="Login" action="" method="$_GET">
-                <label for="Nick">Nickname
-                    </br>
-                    <input type="text" name="Nick" id="Nick"><br>
-                </label></br>
+                <label for="Nick">Nickname</label></br>
+                <input type="text" name="Nick" id="Nick"><br>
                 
-                <label for="Contra"> Contraseña
-                    </br>
-                    <input type="password" name="Contra"><br>
-                    <input type="hidden" name="tipo" value="Login">
-                </label><br>
+                <label for="Contra"> Contraseña</label><br>
+                <input type="password" name="Contra"><br>
+                <input type="hidden" name="tipo" value="Login">
+
                 <p id="loginError" class="existe"> Nick o contraseña erronea.</p>
+                <p id="loginVetado" class="existe"> Usuario vetado.</p>
+
                 <input class="boton" type="submit" onclick="" value="Entrar">
                 <input class="boton" type="reset" value="Borrar"/>
             </form>
@@ -64,34 +63,30 @@
         <div class="nuevosUser">
             <h4>REGISTRARSE</h4>
                 <form id="Registro" action="" method="post" enctype="multipart/form-data">
-                <label for="Nick">Nickname
-                            </br>
-                            <input type="text" id="nick" name="nick"><br>
-                            <p id="nickExiste" class="existe"> El nick ya existe</p>
-                        </label></br>
-                        <label for="mail">Email
-                            </br>
-                            <input type="text"  id="email" name="email"><br>
-                            <p id="emailExiste"class="existe"> El email ya existe</p>
-                        </label></br>
-                    
-                        <label for="Contra"> Contraseña
-                            </br>
-                            <input type="password" id="contra" name="contra" onkeydown="longContrasenia()" onkeyup="longContrasenia()"><br>
-                        </label><br>
-                        <label for="Arch"> Archivo</label><br>
-                        <input type="file" id="arch" name="arch"><br>
-                        <p id="faltaDato" class="existe">Faltan Datos</p>
-                        <input type="hidden" name="tipo" id ="tipo" value="Registro"> 
-                        <button id="btnRegistro" onclick="validarForm()" class="boton">REGISTRARSE</button>
-                        <input class="boton" type="reset"  value="Borrar"/>
+                    <label for="Nick">Nickname</label></br>
+                    <input type="text" id="nick" name="nick"><br>
+                    <p id="nickExiste" class="existe"> El nick ya está en uso.</p>
+
+                    <label for="mail">Email </label></br>
+                    <input type="text"  id="email" name="email"><br>
+                    <p id="emailExiste"class="existe"> El email ya está en uso.</p>
+                        
+                    <label for="Contra"> Contraseña</label><br>
+                    <input type="password" id="contra" name="contra" onkeydown="longContrasenia()" onkeyup="longContrasenia()"><br>
+
+                    <label for="Arch"> Foto de perfil</label><br>
+                    <input type="file" id="arch" name="arch"><br>
+
+                    <p id="faltaDato" class="existe">Introduzca todos los datos.</p>
+                    <p id="faltaFoto" class="existe">Añada una foto.</p>
+
+                    <input type="hidden" name="tipo" id ="tipo" value="Registro"> 
+                    <button id="btnRegistro" onclick="validarForm()" class="boton">REGISTRARSE</button>
+                    <input class="boton" type="reset"  value="Borrar"/>
                 </form>
         </div>
 
     </main>
-
-    <footer>
-    </footer>
 
 </body>
 <script src="JSCRIPT/usuario.js" type="text/javascript"></script>

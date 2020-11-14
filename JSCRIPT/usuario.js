@@ -56,14 +56,28 @@ function loginError(){
     });
     
 }
+
+/* Al loguearse, si el usuario esta vetado aparece un texto rojo advirtiendo*/
+function loginVetado(){
+    document.addEventListener("DOMContentLoaded", function () { 
+        document.getElementById("loginVetado").style.display = "block";
+    });
+    
+}
 /* Al registrarse, si algún campo esta vacio.
 Aparece un texto rojo advirtiendo */
 function faltaDatos(){
     document.addEventListener("DOMContentLoaded", function () { 
         document.getElementById("faltaDato").style.display = "block";
     });
-    
+} 
 
+/* Al registrarse, si algún campo esta vacio.
+Aparece un texto rojo advirtiendo */
+function faltaFoto(){
+    document.addEventListener("DOMContentLoaded", function () { 
+        document.getElementById("faltaFoto").style.display = "block";
+    });
 } 
 /* Al cambiar la contraseña, si la contraseña actual no es correcta.
 Aparece un texto rojo advirtiendo */
