@@ -29,7 +29,7 @@
         <div class="cajaPost">
             <div class="postCompleto">
             <?php if(cargarFotoPost($_GET["idPost"])!=null){; ?>
-                <img id="imagenPost"src='<?php echo (cargarFotoPost($_GET["idPost"]))?>' style="float:right;" >
+                <img id="imagenPost"src='<?php echo (cargarFotoPost($_GET["idPost"]))?>' style="float:right;width:300px;height:200px;margin-top:40px" >
             <?php }?>
                 <h1 id="tituloPost"><?php echo(cargarTituloPost($_GET["idPost"]))?></h1>
                 <p id="contenido"><?php echo(CargarPost($_GET["idPost"]));?></p>
