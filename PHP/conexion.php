@@ -827,8 +827,7 @@ function encriptarTexto($contraseña){
     $claveEncriptar = "benchblog"; 
     $resultado = openssl_encrypt($contraseña, $cifrado, 
             $claveEncriptar, $opciones, $iv); 
-    return($resultado);?>
-    <?php
+    return($resultado);
 }
 //Esta funcion desencripta las contraseñas 
 function desencriptarTexto($contraseña){
